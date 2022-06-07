@@ -1,7 +1,65 @@
-{% extends 'layouts/default_form.html' %}
+{% extends 'layouts/base.html' %}
+
+{% load static %}
 
 {% block title %}Регистрация{% endblock title %}
 
 {% block buttons %}
-<input class='btn btn-success' type="submit" value="Зарегистрироваться">
 {% endblock buttons %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="block_white" style="font-size: 18px;">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Generic errors -->
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                        <li><em>{{ error }}</em></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <p>
+                    <input class="form_input" type="text" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="Логин">
+                </p>
+
+                <p>
+                    <input class="form_input" type="email" name="email" required="" id="id_email" placeholder="Почта">
+                </p>
+
+                <p>
+                    <input class="form_input" type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
+                </p>
+
+                <p>
+                    <input class="form_input" type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
+                </p>
+
+                {% for field in form.visible_fields %}
+                <!-- Field errors-->
+                {% if field.errors %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <em>{{ error }}</em>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                {% endfor %}
+
+                <input type="hidden" name="next" value='{{ next }}'>
+                <div style="margin-top: 25px;">
+                    <input class='button button_green main_input' type="submit" value="Зарегистрироваться" style="font-size: 18px !important;">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -74,6 +74,19 @@ a {
   padding: 30px 30px;
 }
 
+.form_input {
+  width: 100%;
+  border-radius: 4px;
+  background-color: #e6e6e6;
+  border: 2px solid #01a8e5;
+  color: #000;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: normal;
+  padding: 17px 20px 11px;
+  outline: none;
+}
+
 .opened_block {
   display: block !important;
 }
