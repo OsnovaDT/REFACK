@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Ввод кода{% endblock title %}
+
+
+{% block content %}
+    <form action="{% url 'refactoring:refactor' %}" method="post" novalidate>
+        {% csrf_token %}
+
+        {% if errors %}
+            {{ errors }}
+        {% endif %}
+
+        <div>
+            <textarea style="resize: none; padding: 25px; border-radius: 4px;" name="code" cols="100" rows="20" class="code_field" placeholder="Введите Python-код" autofocus></textarea>
+        </div>
+
+        <div style="text-align: center; margin-top: 15px;">
+            <input type="submit" class="btn btn-success" value="Отрефакторить">
+        </div>
+    </form>
+{% endblock content %}

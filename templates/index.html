@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Главная{% endblock title %}
+
+{% block content %}
+    <div class="base_container container">
+        <h1 class="main_title">Как вы хотите передать код?</h1>
+        <div class="row">
+            <div class="col-md-5">
+                <input type="button" class="btn btn-primary main_input" value="Прикрепить файл">
+            </div>
+            <div class=" offset-md-2 col-md-5">
+                <a href="{% url 'refactoring:manual_input' %}">
+                    <input type="button" class="btn btn-success main_input" value="Ввести вручную">
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
