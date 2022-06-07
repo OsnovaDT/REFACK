@@ -1,30 +1,90 @@
+$green_color: #15c6b9;
+$blue_color: #01a8e5;
+
 body{
-    background-color: #373740 !important;
-    color: #FFF !important;
+    background-color: #e6e6e6 !important;
 }
 
-h1::selection{
-    background-color: #D1D0D9;
+nav{
+    background-color: #414f57 !important;
 }
 
-a::selection{
-    background-color: #373740;
+a{
+    color: #fff !important;
+    font-size: 14px;
+}
+
+.text{
+    &_blue{
+        color: #01a8e5;
+    }
+}
+
+.title{
+    &_small{
+        font-size: 16px;
+    }
+
+    &_big{
+        font-size: 45px;
+    }
+}
+
+.title2{
+    font-size: 30px;
+    line-height: 27px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 48px;
+}
+
+.button{
     color: #FFF;
+    font-weight: 400;
+    border-radius: 8px;
+    font-size: 24px !important;
+
+    &_green{
+        background-color: $green_color;
+
+        &:hover{
+            background-color: $blue_color;
+        }
+    }
+
+    &_blue{
+        background-color: $blue_color;
+
+        &:hover{
+            background-color: $green_color;
+        }
+    }
 }
+
 
 .main{
     &_input{
-        height: 100px;
-        width: 100%;
-        font-size: 24px !important;
+        padding: 12px 39px;
     }
 
     &_title{
         text-align: center;
         margin-bottom: 30px;
+        font-size: 45px;
+        font-weight: 700;
     }
 }
 
-a{
-    color: #373740 !important;
+.block{
+    &_simple{
+        margin-top: 100px;
+    }
+
+    &_white{
+        background: #fff;
+        box-shadow: 3px 3px 6px 1px rgba(65,72,75,0.26);
+        border-radius: 8px;
+        font-size: 30px;
+        padding: 30px 30px;
+    }
 }
