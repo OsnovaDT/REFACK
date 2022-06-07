@@ -1,0 +1,30 @@
+body{
+    background-color: #373740 !important;
+    color: #FFF !important;
+}
+
+h1::selection{
+    background-color: #D1D0D9;
+}
+
+a::selection{
+    background-color: #373740;
+    color: #FFF;
+}
+
+.main{
+    &_input{
+        height: 100px;
+        width: 100%;
+        font-size: 24px !important;
+    }
+
+    &_title{
+        text-align: center;
+        margin-bottom: 30px;
+    }
+}
+
+a{
+    color: #373740 !important;
+}
