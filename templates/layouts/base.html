@@ -38,24 +38,23 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 {{ user.username }}
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class='dropdown-item' href='#'>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="navbarDropdownMenu">
+                                <a class='dropdown-item dropdown_href' href="{% url 'account:logout' %}">
                                     Выйти
                                 </a>
-                                <a class='dropdown-item' href='#'>
+                                <a class='dropdown-item dropdown_href' href='#'>
                                     Сменить пароль
                                 </a>
                             </div>
                         </li>
                     {% else %}
                         <a class='navbar-brand' href="{% url 'account:login' %}">Войти</a>
+                        <a class='navbar-brand' href="{% url 'account:registration' %}">Регистрация</a>
                     {% endif %}
                 </div>
 
                 <a class='navbar-brand' href="{% url 'refactoring:instruction' %}">Инструкция</a>
                 <a class='navbar-brand' href="{% url 'refactoring:rules' %}">Правила рефакторинга</a>
-                <a class='navbar-brand' href="{% url 'refactoring:rules' %}">Регистрация</a>
-                <a class='navbar-brand' href="{% url 'refactoring:rules' %}">Авторизация</a>
             </div>
         </nav>
         <div class="base_container container">

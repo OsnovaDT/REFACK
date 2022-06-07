@@ -11,6 +11,10 @@ a {
   font-size: 14px;
 }
 
+.dropdown_href {
+  color: #000 !important;
+}
+
 .text_blue {
   color: #01a8e5;
 }
@@ -68,6 +72,10 @@ a {
   border-radius: 8px;
   font-size: 30px;
   padding: 30px 30px;
+}
+
+.opened_block {
+  display: block !important;
 }
 
 /*# sourceMappingURL=styles.css.map */
