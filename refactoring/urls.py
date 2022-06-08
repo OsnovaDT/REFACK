@@ -18,27 +18,31 @@ urlpatterns = [
     ),
 
     path(
-        'manual_input',
+        'manual_input/',
         ManualCodeInputView.as_view(),
         name='manual_input',
     ),
+
     path(
-        'refactor',
+        'refactor/',
         refactor_code_handler,
         name='refactor',
     ),
+
     path(
-        'results',
+        'results/',
         RefactoringResultsView.as_view(),
         name='results',
     ),
+
     path(
-        'instruction',
+        'instruction/',
         InstructionView.as_view(),
         name='instruction',
     ),
+
     path(
-        'rules',
+        'rules/',
         RulesView.as_view(),
         name='rules',
     ),
