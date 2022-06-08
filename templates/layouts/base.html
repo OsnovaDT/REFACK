@@ -27,7 +27,7 @@
     <body>
         <nav class='navbar navbar-expand-lg'>
             <a class='navbar-brand' href="{% url 'refactoring:index' %}">
-                <img src='{% static "images/logo.jpeg" %}' width='50' height='50'>
+                <img src='{% static "images/logo.png" %}' width='87' height='59'>
             </a>
 
             <div class='collapse navbar-collapse'>
@@ -35,14 +35,14 @@
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
+                                aria-haspopup="true" aria-expanded="false" style="font-size: 18px;">
                                 {{ user.username }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="navbarDropdownMenu">
                                 <a class='dropdown-item dropdown_href' href="{% url 'account:logout' %}">
                                     Выйти
                                 </a>
-                                <a class='dropdown-item dropdown_href' href='#'>
+                                <a class='dropdown-item dropdown_href' href="{% url 'account:password_change' %}">
                                     Сменить пароль
                                 </a>
                             </div>

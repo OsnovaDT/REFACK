@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="text-center block_white">
+            <p>
+                {% block text %}
+                {% endblock text %}
+            </p>
+
+            <p>
+                <a href="{% url 'refactoring:index' %}">
+                    <input class='button button_green main_input' type="submit" value="Главная" style="font-size: 18px !important;">
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -4,30 +4,58 @@
 
 {% block content %}
     <div class="block_white" style="font-size: 18px;">
-        {% for key, value in results.items %}
-            <p>{{ key }}: <span class="blue_text">{{ value }}</span></p> 
-        {% endfor %}
+        {% if results.items %}
+            {% for key, value in results.items %}
+                <p>{{ key }}: <span class="blue_text">{{ value }}</span></p> 
+            {% endfor %}
+        {% else %}
+            <h1 style='text-align: center;'>Приложение не нашло грязного кода!</h1>
+        {% endif %}
     </div>
 
-    <div class="block_simple">
-        <h2 class="title2">Вы можете скачать рекомендации</h2>
+    {% if results.items %}
+        <div style='margin-top: 25px; text-align: center;'>
+            <div class="row">
+                <div class="col-md-4 offset-md-2">
+                    <a href="{% url 'refactoring:manual_input' %}">
+                        <input class='button button_blue main_input' type="submit" value="Отрефакторить еще раз" style="font-size: 18px !important;">
+                    </a>
+                </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <input type="button" class="button button_green main_input" value="PDF">
-            </div>
-
-            <div class="col-md-4">
-                <a href="{% url 'refactoring:manual_input' %}">
-                    <input type="button" class="button button_green main_input" value="JSON">
-                </a>
-            </div>
-
-            <div class="col-md-4">
-                <a href="{% url 'refactoring:manual_input' %}">
-                    <input type="button" class="button button_green main_input" value="XML">
-                </a>
+                <div class="col-md-4">
+                    <a href="{% url 'refactoring:index' %}">
+                        <input class='button button_blue main_input' type="submit" value="Главная" style="font-size: 18px !important;">
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div class="block_simple">
+            <h2 class="title2">Вы можете скачать рекомендации</h2>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="button" class="button button_green main_input" value="PDF">
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% url 'refactoring:manual_input' %}">
+                        <input type="button" class="button button_green main_input" value="JSON">
+                    </a>
+                </div>
+
+                <div class="col-md-4">
+                    <a href="{% url 'refactoring:manual_input' %}">
+                        <input type="button" class="button button_green main_input" value="XML">
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div style='margin-top: 25px; text-align: center;'>
+            <a href="{% url 'refactoring:index' %}">
+                <input class='button button_green main_input' type="submit" value="Главная" style="font-size: 18px !important;">
+            </a>
+        </div>
+    {% endif %}
 {% endblock content %}

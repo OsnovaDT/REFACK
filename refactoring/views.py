@@ -33,6 +33,8 @@ def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
 
         for key, value in code_errors.items():
             code_errors[key] = ', '.join(value)
+        if len(code_errors) == 0:
+            code_errors = 'Ваш код чистый!'
     except Exception as error:
         getLogger().error(f'Error: {error}')
         code_errors = {}
