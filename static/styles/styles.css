@@ -11,6 +11,22 @@ a {
   font-size: 14px;
 }
 
+textarea {
+  width: 100%;
+  border-radius: 4px;
+  background-color: #FFF;
+  border: 2px solid #01a8e5;
+  color: #000;
+  font-size: 16px;
+  font-style: italic;
+  letter-spacing: normal;
+  padding: 20px 20px 11px;
+  outline: none;
+  resize: none;
+  min-height: 140px;
+  resize: none;
+}
+
 .dropdown_href {
   color: #000 !important;
 }
