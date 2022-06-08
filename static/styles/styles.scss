@@ -18,7 +18,7 @@ textarea{
     width: 100%;
     border-radius: 4px;
     background-color: #FFF;
-    border: 2px solid #01a8e5;
+    border: 2px solid $blue_color;
     color: #000;
     font-size: 16px;
     font-style: italic;
@@ -40,7 +40,7 @@ textarea{
 
 .text{
     &_blue{
-        color: #01a8e5;
+        color: $blue_color;
     }
 }
 
@@ -86,7 +86,6 @@ textarea{
     }
 }
 
-
 .main{
     &_input{
         padding: 12px 39px;
@@ -119,7 +118,7 @@ textarea{
     width: 100%;
     border-radius: 4px;
     background-color: #e6e6e6;
-    border: 2px solid #01a8e5;
+    border: 2px solid $blue_color;
     color: #000;
     font-size: 16px;
     font-style: italic;
