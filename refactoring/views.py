@@ -7,7 +7,7 @@ from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.response import HttpResponse
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse
 
 from refactoring.code_inspector import CodeInspector
 
@@ -77,5 +77,18 @@ def download_results_in_json(request: WSGIRequest):
     )
     response['Content-Disposition'] = \
         'attachment; filename=refactoring_results.json;'
+
+    return response
+
+
+def download_results_in_pdf(request: WSGIRequest):
+    """Handler for downloading PDF file with refactoring results"""
+
+    response = FileResponse(
+        request.POST['results'],
+        content_type='application/pdf',
+    )
+    response['Content-Disposition'] = \
+        'attachment; filename=refactoring_results.pdf;'
 
     return response

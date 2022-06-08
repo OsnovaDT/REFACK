@@ -5,7 +5,7 @@ from django.urls import path
 from refactoring.views import (
     ManualCodeInputView, IndexView, refactor_code_handler,
     RefactoringResultsView, InstructionView, RulesView,
-    download_results_in_json,
+    download_results_in_json, download_results_in_pdf,
 )
 
 
@@ -52,5 +52,11 @@ urlpatterns = [
         'json_download/',
         download_results_in_json,
         name='json_download',
+    ),
+
+    path(
+        'pdf_download/',
+        download_results_in_pdf,
+        name='pdf_download',
     ),
 ]
