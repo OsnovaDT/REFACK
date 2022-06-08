@@ -6,7 +6,7 @@
     <div class="block_white" style="font-size: 18px;">
         {% if results.items %}
             {% for key, value in results.items %}
-                <p>{{ key }}: <span class="blue_text">{{ value }}</span></p> 
+                <p>{{ key }}: <span class="blue_text" style="font-weight: 700;">{{ value }}</span></p> 
             {% endfor %}
         {% else %}
             <h1 style='text-align: center;'>Приложение не нашло грязного кода!</h1>
@@ -39,9 +39,12 @@
                 </div>
 
                 <div class="col-md-4">
-                    <a href="{% url 'refactoring:manual_input' %}">
-                        <input type="button" class="button button_green main_input" value="JSON">
-                    </a>
+                    <form action="{% url 'refactoring:json_download' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="results" value="{{ results }}">
+                        <input type="submit" class="button button_green main_input" value="JSON">
+                    </form>
                 </div>
 
                 <div class="col-md-4">

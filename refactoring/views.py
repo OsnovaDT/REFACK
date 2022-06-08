@@ -1,11 +1,13 @@
 """Views of refactoring app"""
 
 from logging import getLogger
+from json import loads
 
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.response import HttpResponse
+from django.http import JsonResponse
 
 from refactoring.code_inspector import CodeInspector
 
@@ -32,7 +34,8 @@ def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
         code_errors = code_inspector.errors
 
         for key, value in code_errors.items():
-            code_errors[key] = ', '.join(value)
+            code_errors[key] = ", ".join(value)
+
         if len(code_errors) == 0:
             code_errors = 'Ваш код чистый!'
     except Exception as error:
@@ -60,3 +63,19 @@ class RefactoringResultsView(TemplateView):
     """View for refactoring results page"""
 
     template_name = 'refactoring_results.html'
+
+
+def download_results_in_json(request: WSGIRequest):
+    """Handler for downloading JSON file with refactoring results"""
+
+    results = request.POST['results']
+    results = results.replace('\'', '\"')
+
+    response = JsonResponse(
+        loads(results),
+        json_dumps_params={'ensure_ascii': False},
+    )
+    response['Content-Disposition'] = \
+        'attachment; filename=refactoring_results.json;'
+
+    return response
