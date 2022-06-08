@@ -53,9 +53,13 @@
                 </div>
 
                 <div class="col-md-4">
-                    <a href="{% url 'refactoring:manual_input' %}">
-                        <input type="button" class="button button_green main_input" value="XML">
-                    </a>
+
+                    <form action="{% url 'refactoring:xml_download' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="results" value="{{ results }}">
+                        <input type="submit" class="button button_green main_input" value="XML">
+                    </form>
                 </div>
             </div>
         </div>

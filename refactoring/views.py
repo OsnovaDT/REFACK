@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.http.response import HttpResponse
 from django.http import JsonResponse, FileResponse
+from dicttoxml import dicttoxml
 
 from refactoring.code_inspector import CodeInspector
 
@@ -90,5 +91,21 @@ def download_results_in_pdf(request: WSGIRequest):
     )
     response['Content-Disposition'] = \
         'attachment; filename=refactoring_results.pdf;'
+
+    return response
+
+
+def download_results_in_xml(request: WSGIRequest):
+    """Handler for downloading XML file with refactoring results"""
+
+    results = request.POST['results']
+    results = loads(results.replace('\'', '\"'))
+
+    response = FileResponse(
+        str(dicttoxml(results)),
+        content_type='application/xml',
+    )
+    response['Content-Disposition'] = \
+        'attachment; filename=refactoring_results.xml;'
 
     return response
