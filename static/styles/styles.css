@@ -113,4 +113,9 @@ textarea {
   display: block !important;
 }
 
+.instruction_block {
+  text-align: center;
+  margin-top: 25px;
+}
+
 /*# sourceMappingURL=styles.css.map */
