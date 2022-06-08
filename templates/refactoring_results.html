@@ -3,41 +3,31 @@
 {% block title %}Результаты рефакторинга{% endblock title %}
 
 {% block content %}
-<style>
-    input{
-        background-color: grey !important;
-        border-color: grey !important;
-    }
-</style>
-    <div style="background-color: #D1D0D9; color: #373740; width: 100%; height: 400px; padding: 20px;">
-        {{ results }}
+    <div class="block_white" style="font-size: 18px;">
+        {% for key, value in results.items %}
+            <p>{{ key }}: <span class="blue_text">{{ value }}</span></p> 
+        {% endfor %}
     </div>
 
-    <h2 style="margin: 20px 0; text-align: center;">Вы можете скачать рекомендации</h2>
+    <div class="block_simple">
+        <h2 class="title2">Вы можете скачать рекомендации</h2>
 
-    <div class="row">
-        <div class="col-md-4">
-            <input type="button" class="btn btn-primary main_input" value="PDF">
+        <div class="row">
+            <div class="col-md-4">
+                <input type="button" class="button button_green main_input" value="PDF">
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'refactoring:manual_input' %}">
+                    <input type="button" class="button button_green main_input" value="JSON">
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a href="{% url 'refactoring:manual_input' %}">
+                    <input type="button" class="button button_green main_input" value="XML">
+                </a>
+            </div>
         </div>
-        <div class="col-md-4">
-            <a href="{% url 'refactoring:manual_input' %}">
-                <input type="button" class="btn btn-success main_input" value="JSON">
-            </a>
-
-{% comment %}
-    
-
-<div style="text-align: center;">
-    <h5 style="color: green; text-align: center; margin-top: 20px;">PDF файл успешно скачан</h5>
-</div>
-{% endcomment %}
-        </div>
-
-        <div class="col-md-4">
-            <a href="{% url 'refactoring:manual_input' %}">
-                <input type="button" class="btn btn-success main_input" value="XML">
-            </a>
-        </div>
-
     </div>
 {% endblock content %}

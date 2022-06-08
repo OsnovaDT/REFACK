@@ -34,6 +34,10 @@ textarea{
     color: #000 !important;
 }
 
+.blue_text{
+    color: $blue_color;
+}
+
 .text{
     &_blue{
         color: #01a8e5;
@@ -63,6 +67,7 @@ textarea{
     font-weight: 400;
     border-radius: 8px;
     font-size: 24px !important;
+    outline: none;
 
     &_green{
         background-color: $green_color;
@@ -98,6 +103,7 @@ textarea{
 .block{
     &_simple{
         margin-top: 100px;
+        text-align: center;
     }
 
     &_white{
