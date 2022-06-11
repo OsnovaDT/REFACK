@@ -122,4 +122,15 @@ textarea {
   margin-bottom: 25px;
 }
 
+#save_recomendations_link {
+  color: #15c6b9 !important;
+}
+#save_recomendations_link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+#save_recomendations_form {
+  text-align: right;
+}
+
 /*# sourceMappingURL=styles.css.map */

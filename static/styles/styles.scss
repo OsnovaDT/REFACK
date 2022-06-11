@@ -139,3 +139,18 @@ textarea{
 .rules_text{
     margin-bottom: 25px;
 }
+
+#save_recomendations{
+    &_link{
+        color: $green_color !important;
+
+        &:hover{
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    &_form{
+        text-align: right;
+    }
+}

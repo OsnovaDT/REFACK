@@ -6,11 +6,15 @@ from json import loads
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
-from django.http.response import HttpResponse
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, FileResponse
+from django.http.response import HttpResponse
 from dicttoxml import dicttoxml
 
 from refactoring.code_inspector import CodeInspector
+from refactoring.models import UserRecomendation
 
 
 class ManualCodeInputView(TemplateView):
@@ -19,12 +23,31 @@ class ManualCodeInputView(TemplateView):
     template_name = 'manual_code_input.html'
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     """View for index page"""
 
     template_name = 'index.html'
 
 
+class InstructionView(LoginRequiredMixin, TemplateView):
+    """View for instruction page"""
+
+    template_name = 'instruction.html'
+
+
+class RulesView(LoginRequiredMixin, TemplateView):
+    """View for rules page"""
+
+    template_name = 'rules.html'
+
+
+class RefactoringResultsView(LoginRequiredMixin, TemplateView):
+    """View for refactoring results page"""
+
+    template_name = 'refactoring_results.html'
+
+
+@login_required()
 def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
     """Handler for code refactoring"""
 
@@ -44,28 +67,34 @@ def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
         code_errors = {}
 
     return render(
-        request, 'refactoring_results.html', {'results': code_errors},
+        request,
+        'refactoring_results.html',
+        {
+            'results': code_errors,
+            'code': code,
+        },
     )
 
 
-class InstructionView(TemplateView):
-    """View for instruction page"""
+@login_required()
+def save_recomendations(request: WSGIRequest) -> JsonResponse:
+    """Save refactoring recomendations for the user"""
 
-    template_name = 'instruction.html'
+    recomendation = request.GET.get('recomendation', None)
+    code = request.GET.get('code', None)
+    user_login = request.GET.get('user', None)
+
+    if recomendation and code and user_login:
+        UserRecomendation.objects.create(
+            user=get_user_model().objects.get(username=user_login),
+            code=code,
+            recomendation=recomendation,
+        )
+
+    return JsonResponse({})
 
 
-class RulesView(TemplateView):
-    """View for rules page"""
-
-    template_name = 'rules.html'
-
-
-class RefactoringResultsView(TemplateView):
-    """View for refactoring results page"""
-
-    template_name = 'refactoring_results.html'
-
-
+@login_required()
 def download_results_in_json(request: WSGIRequest):
     """Handler for downloading JSON file with refactoring results"""
 
@@ -82,6 +111,7 @@ def download_results_in_json(request: WSGIRequest):
     return response
 
 
+@login_required()
 def download_results_in_pdf(request: WSGIRequest):
     """Handler for downloading PDF file with refactoring results"""
 
@@ -95,6 +125,7 @@ def download_results_in_pdf(request: WSGIRequest):
     return response
 
 
+@login_required()
 def download_results_in_xml(request: WSGIRequest):
     """Handler for downloading XML file with refactoring results"""
 

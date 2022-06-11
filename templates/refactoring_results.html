@@ -5,6 +5,16 @@
 {% block content %}
     <div class="block_white" style="font-size: 18px;">
         {% if results.items %}
+            {# Save link #}
+            <form action="{% url 'refactoring:save_recomendations' %}" method="post" id="save_recomendations_form">
+                {% csrf_token %}
+
+                <input type="hidden" name="recomendation" value="{{ results }}">
+                <input type="hidden" name="user" value="{{ user }}">
+                <input type="hidden" name="code" value="{{ code }}">
+                <a id="save_recomendations_link">Сохранить рекомендации</a>
+            </form>
+
             {% for key, value in results.items %}
                 <p>{{ key }}: <span class="blue_text" style="font-weight: 700;">{{ value }}</span></p> 
             {% endfor %}
@@ -70,4 +80,20 @@
             </a>
         </div>
     {% endif %}
+
+    <script>
+        $(document).ready(function () {
+            $('#save_recomendations_form').on('submit', function () {
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{% url 'refactoring:save_recomendations' %}",
+                    success: function (response) {
+                        $('#save_recomendations_form').hide()
+                    }
+                });
+
+                return false;
+            });
+        })
+    </script>
 {% endblock content %}

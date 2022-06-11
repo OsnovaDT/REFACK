@@ -6,7 +6,7 @@ from refactoring.views import (
     ManualCodeInputView, IndexView, refactor_code_handler,
     RefactoringResultsView, InstructionView, RulesView,
     download_results_in_json, download_results_in_pdf,
-    download_results_in_xml,
+    download_results_in_xml, save_recomendations,
 )
 
 
@@ -65,5 +65,11 @@ urlpatterns = [
         'xml_download/',
         download_results_in_xml,
         name='xml_download',
+    ),
+
+    path(
+        'save_recomendations/',
+        save_recomendations,
+        name='save_recomendations',
     ),
 ]
