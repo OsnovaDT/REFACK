@@ -4,6 +4,7 @@ from logging import getLogger
 from json import loads
 
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 from django.shortcuts import render
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth import get_user_model
@@ -15,6 +16,17 @@ from dicttoxml import dicttoxml
 
 from refactoring.code_inspector import CodeInspector
 from refactoring.models import UserRecomendation
+
+
+class UserRecommendationsListView(LoginRequiredMixin, ListView):
+    """User recommendations"""
+
+    template_name = 'user_recommendations.html'
+
+    context_object_name = 'recommendations'
+
+    def get_queryset(self):
+        return UserRecomendation.objects.filter(user=self.request.user)
 
 
 class ManualCodeInputView(TemplateView):

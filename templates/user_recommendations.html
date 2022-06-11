@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block title %}Рекомендации пользователя {{ user }}{% endblock title %}
+
+{% block content %}
+    <h1 class="user_recommendations_title">Ваши рекомендации</h1>
+
+    {% for recommendation in recommendations %}
+        <div class="block_white user_recommendations_block">
+            <h6>{{ recommendation.code }}</h6>
+
+            <hr>
+
+            <h5>{{ recommendation.recomendation }}</h5=>
+        </div>
+    {% endfor %}
+{% endblock content %}

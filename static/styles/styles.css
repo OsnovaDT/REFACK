@@ -133,4 +133,15 @@ textarea {
   text-align: right;
 }
 
+.user_recommendations_block {
+  margin-bottom: 25px;
+  text-align: left;
+  border-bottom: 5px solid #01a8e5;
+}
+.user_recommendations_title {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
 /*# sourceMappingURL=styles.css.map */
