@@ -39,6 +39,21 @@ class FunctionNode(DefaltNode):
 
         return self._get_attr_from_info('type')
 
+    @property
+    def type_annotation(self) -> str | None:
+        """Type annotation that specified after function definition.
+
+        For example for this function:
+
+        def get_name() -> str:
+            pass
+
+        type annotations will be str
+
+        """
+
+        return self._get_attr_from_info('type_annotation')
+
 
 class ClassNode(DefaltNode):
     """Contain all info about class from user's code"""

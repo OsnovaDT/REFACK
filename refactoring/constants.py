@@ -22,3 +22,6 @@ ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION = \
 
 ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS = \
     "Для этого класса должна быть указана документация"
+
+ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION = \
+    "Для функций должна быть указана подсказка возвращаемого типа"

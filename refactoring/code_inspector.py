@@ -8,6 +8,7 @@ from refactoring.constants import (
     ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
     ERROR_CAMEL_CASE_CLASSES, ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION,
     ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS,
+    ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION,
 )
 
 
@@ -85,6 +86,7 @@ class CodeRuleChecker:
         self.__functions_naming_style_is_snake_case()
         self.__classes_naming_style_is_camel_case()
         self.__all_modules_have_documentation()
+        self.__all_functions_have_type_annotation()
 
     @property
     def __functions(self) -> tuple:
@@ -140,6 +142,15 @@ class CodeRuleChecker:
                 self.errors[
                     ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS
                 ].append(class_.name)
+
+    def __all_functions_have_type_annotation(self) -> None:
+        """Check that all functions have type annotation (e.g. -> str)"""
+
+        for func in self.__functions:
+            if not func.type_annotation:
+                self.errors[
+                    ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION
+                ].append(func.name)
 
     def __functions_naming_style_is_snake_case(self) -> None:
         """Check that functions and methods have Snake case naming style"""
