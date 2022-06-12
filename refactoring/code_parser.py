@@ -7,6 +7,8 @@ Code modules are: functions, classes, variables, etc.
 from collections import defaultdict
 from ast import NodeVisitor, FunctionDef, Return, ClassDef, get_docstring
 
+from refactoring.nodes import FunctionNode, ClassNode
+
 
 def get_action_type(action: Return) -> str:
     """Return type of the code action"""
@@ -55,21 +57,25 @@ class CodeParser(NodeVisitor):
     def __init__(self):
         self.code_modules = defaultdict(list)
 
-    def visit_FunctionDef(self, function_node: FunctionDef):
-        """Functions parser"""
+    def visit_FunctionDef(self, function_definition: FunctionDef):
+        """Parse function definition and add to all functions"""
 
-        function_type = get_function_type(function_node.body)
-
-        # TODO Create a class for function
         self.code_modules['functions'].append(
-            (function_node.name, function_type, get_docstring(function_node))
+            FunctionNode({
+                'name': function_definition.name,
+                'type': get_function_type(function_definition.body),
+                'docstring': get_docstring(function_definition),
+            }),
         )
 
-    def visit_ClassDef(self, class_node: ClassDef):
-        """Classes parser"""
+    def visit_ClassDef(self, class_definition: ClassDef):
+        """Parse class definition and add to all classes"""
 
         self.code_modules['classes'].append(
-            (class_node.name, get_docstring(class_node))
+            ClassNode({
+                'name': class_definition.name,
+                'docstring': get_docstring(class_definition),
+            }),
         )
 
     @property

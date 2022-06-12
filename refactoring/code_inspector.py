@@ -129,35 +129,35 @@ class CodeRuleChecker:
     def __all_modules_have_documentation(self) -> None:
         """Check that all modules have documentation"""
 
-        for name, _, documentation in self.__functions:
-            if not documentation:
+        for func in self.__functions:
+            if not func.docstring:
                 self.errors[
                     ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION
-                ].append(name)
+                ].append(func.name)
 
-        for name, documentation in self.__classes:
-            if not documentation:
+        for class_ in self.__classes:
+            if not class_.docstring:
                 self.errors[
                     ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS
-                ].append(name)
+                ].append(class_.name)
 
     def __functions_naming_style_is_snake_case(self) -> None:
         """Check that functions and methods have Snake case naming style"""
 
-        for name, _, _ in self.__functions:
-            naming_style = self.__get_naming_style(name)
+        for func in self.__functions:
+            naming_style = self.__get_naming_style(func.name)
 
             if naming_style != NamingStyle.snake_case:
-                self.errors[ERROR_SNAKE_CASE_FUNCTIONS].append(name)
+                self.errors[ERROR_SNAKE_CASE_FUNCTIONS].append(func.name)
 
     def __classes_naming_style_is_camel_case(self) -> None:
         """Check that classes have Camel case naming style"""
 
-        for name, _ in self.__classes:
-            naming_style = self.__get_naming_style(name)
+        for class_ in self.__classes:
+            naming_style = self.__get_naming_style(class_.name)
 
             if naming_style != NamingStyle.camel_case:
-                self.errors[ERROR_CAMEL_CASE_CLASSES].append(name)
+                self.errors[ERROR_CAMEL_CASE_CLASSES].append(class_.name)
 
     def __get_functions_starts_with_get(self) -> None:
         """Check that return functions start with the «get» prefix
@@ -170,9 +170,10 @@ class CodeRuleChecker:
 
         """
 
-        for name, type_, _ in self.__functions:
-            if type_ == 'return' and not is_get_function_correct(name, type_):
-                self.errors[ERROR_PREFIX_GET].append(name)
+        for func in self.__functions:
+            if func.type == 'return' and \
+                    not is_get_function_correct(func.name, func.type):
+                self.errors[ERROR_PREFIX_GET].append(func.name)
 
     def __bool_functions_starts_with_is(self) -> None:
         """Check that bool return functions start with the «is» prefix
@@ -185,7 +186,7 @@ class CodeRuleChecker:
 
         """
 
-        for name, type_, _ in self.__functions:
-            if type_ == 'return bool' \
-                    and not is_bool_function_correct(name, type_):
-                self.errors[ERROR_PREFIX_IS].append(name)
+        for func in self.__functions:
+            if func.type == 'return bool' \
+                    and not is_bool_function_correct(func.name, func.type):
+                self.errors[ERROR_PREFIX_IS].append(func.name)
