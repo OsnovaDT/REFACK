@@ -5,7 +5,7 @@ Code modules are: functions, classes, variables, etc.
 """
 
 from collections import defaultdict
-from ast import NodeVisitor, FunctionDef, Return, ClassDef
+from ast import NodeVisitor, FunctionDef, Return, ClassDef, get_docstring
 
 
 def get_action_type(action: Return) -> str:
@@ -62,13 +62,15 @@ class CodeParser(NodeVisitor):
 
         # TODO Create a class for function
         self.code_modules['functions'].append(
-            (function_node.name, function_type)
+            (function_node.name, function_type, get_docstring(function_node))
         )
 
     def visit_ClassDef(self, class_node: ClassDef):
         """Classes parser"""
 
-        self.code_modules['classes'].append(class_node.name)
+        self.code_modules['classes'].append(
+            (class_node.name, get_docstring(class_node))
+        )
 
     @property
     def modules(self) -> dict:

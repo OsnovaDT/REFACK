@@ -6,7 +6,8 @@ from collections import defaultdict
 from refactoring.code_parser import CodeParser
 from refactoring.constants import (
     ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
-    ERROR_CAMEL_CASE_CLASSES,
+    ERROR_CAMEL_CASE_CLASSES, ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION,
+    ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS,
 )
 
 
@@ -83,6 +84,7 @@ class CodeRuleChecker:
         self.__bool_functions_starts_with_is()
         self.__functions_naming_style_is_snake_case()
         self.__classes_naming_style_is_camel_case()
+        self.__all_modules_have_documentation()
 
     @property
     def __functions(self) -> tuple:
@@ -124,10 +126,25 @@ class CodeRuleChecker:
 
         return naming_style
 
+    def __all_modules_have_documentation(self) -> None:
+        """Check that all modules have documentation"""
+
+        for name, _, documentation in self.__functions:
+            if not documentation:
+                self.errors[
+                    ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION
+                ].append(name)
+
+        for name, documentation in self.__classes:
+            if not documentation:
+                self.errors[
+                    ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS
+                ].append(name)
+
     def __functions_naming_style_is_snake_case(self) -> None:
         """Check that functions and methods have Snake case naming style"""
 
-        for name, _ in self.__functions:
+        for name, _, _ in self.__functions:
             naming_style = self.__get_naming_style(name)
 
             if naming_style != NamingStyle.snake_case:
@@ -136,7 +153,7 @@ class CodeRuleChecker:
     def __classes_naming_style_is_camel_case(self) -> None:
         """Check that classes have Camel case naming style"""
 
-        for name in self.__classes:
+        for name, _ in self.__classes:
             naming_style = self.__get_naming_style(name)
 
             if naming_style != NamingStyle.camel_case:
@@ -153,7 +170,7 @@ class CodeRuleChecker:
 
         """
 
-        for name, type_ in self.__functions:
+        for name, type_, _ in self.__functions:
             if type_ == 'return' and not is_get_function_correct(name, type_):
                 self.errors[ERROR_PREFIX_GET].append(name)
 
@@ -168,7 +185,7 @@ class CodeRuleChecker:
 
         """
 
-        for name, type_ in self.__functions:
+        for name, type_, _ in self.__functions:
             if type_ == 'return bool' \
                     and not is_bool_function_correct(name, type_):
                 self.errors[ERROR_PREFIX_IS].append(name)
