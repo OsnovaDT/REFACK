@@ -25,3 +25,6 @@ ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS = \
 
 ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION = \
     "Для функций должна быть указана подсказка возвращаемого типа"
+
+ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT = \
+    "Для аргумента функции должна быть указана подсказка типа"

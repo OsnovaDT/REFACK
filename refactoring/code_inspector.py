@@ -9,6 +9,7 @@ from refactoring.constants import (
     ERROR_CAMEL_CASE_CLASSES, ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION,
     ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS,
     ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION,
+    ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT,
 )
 
 
@@ -87,6 +88,7 @@ class CodeRuleChecker:
         self.__classes_naming_style_is_camel_case()
         self.__all_modules_have_documentation()
         self.__all_functions_have_type_annotation()
+        self.__all_functions_have_type_annotation_for_arguments()
 
     @property
     def __functions(self) -> tuple:
@@ -142,6 +144,16 @@ class CodeRuleChecker:
                 self.errors[
                     ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS
                 ].append(class_.name)
+
+    def __all_functions_have_type_annotation_for_arguments(self) -> None:
+        """Check that all functions have type annotation for arguments"""
+
+        for func in self.__functions:
+            for arg in func.args:
+                if not arg.annotation:
+                    self.errors[
+                        ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT
+                    ].append(f'аргумент "{arg.arg}" для функции {func.name}')
 
     def __all_functions_have_type_annotation(self) -> None:
         """Check that all functions have type annotation (e.g. -> str)"""

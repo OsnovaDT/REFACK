@@ -7,7 +7,7 @@ class DefaltNode:
     def __init__(self, info: dict):
         self.__info = info
 
-    def _get_attr_from_info(self, attr_name: str) -> str | None:
+    def _get_attr_from_info(self, attr_name: str) -> str | list | None:
         """Look for attribute in function info and return it or None"""
 
         if attr_name in self.__info.keys():
@@ -53,6 +53,12 @@ class FunctionNode(DefaltNode):
         """
 
         return self._get_attr_from_info('type_annotation')
+
+    @property
+    def args(self) -> list | None:
+        """Function arguments"""
+
+        return self._get_attr_from_info('args')
 
 
 class ClassNode(DefaltNode):

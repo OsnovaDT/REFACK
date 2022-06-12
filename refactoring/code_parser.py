@@ -66,6 +66,7 @@ class CodeParser(NodeVisitor):
                 'type': get_function_type(function_definition.body),
                 'docstring': get_docstring(function_definition),
                 'type_annotation': function_definition.returns,
+                'args': function_definition.args.args,
             }),
         )
 
