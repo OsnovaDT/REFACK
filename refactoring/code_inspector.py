@@ -6,6 +6,7 @@ from collections import defaultdict
 from refactoring.code_parser import CodeParser
 from refactoring.constants import (
     ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
+    ERROR_CAMEL_CASE_CLASSES,
 )
 
 
@@ -81,6 +82,7 @@ class CodeRuleChecker:
         self.__get_functions_starts_with_get()
         self.__bool_functions_starts_with_is()
         self.__functions_naming_style_is_snake_case()
+        self.__classes_naming_style_is_camel_case()
 
     @property
     def __functions(self) -> tuple:
@@ -92,6 +94,17 @@ class CodeRuleChecker:
             code_functions = []
 
         return tuple(code_functions)
+
+    @property
+    def __classes(self) -> tuple:
+        """Return classes from the code"""
+
+        if 'classes' in self.code_modules.keys():
+            code_classes = self.code_modules['classes']
+        else:
+            code_classes = []
+
+        return tuple(code_classes)
 
     def __get_naming_style(self, name: str) -> NamingStyle:
         """Return naming style for the name.
@@ -119,6 +132,15 @@ class CodeRuleChecker:
 
             if naming_style != NamingStyle.snake_case:
                 self.errors[ERROR_SNAKE_CASE_FUNCTIONS].append(name)
+
+    def __classes_naming_style_is_camel_case(self) -> None:
+        """Check that classes have Camel case naming style"""
+
+        for name in self.__classes:
+            naming_style = self.__get_naming_style(name)
+
+            if naming_style != NamingStyle.camel_case:
+                self.errors[ERROR_CAMEL_CASE_CLASSES].append(name)
 
     def __get_functions_starts_with_get(self) -> None:
         """Check that return functions start with the «get» prefix

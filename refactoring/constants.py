@@ -13,3 +13,6 @@ ERROR_PREFIX_IS = \
 ERROR_SNAKE_CASE_FUNCTIONS = \
     "Функции и методы должны иметь стиль именования " \
     "Snake case (согласно PEP 8)"
+
+ERROR_CAMEL_CASE_CLASSES = \
+    "Классы должны иметь стиль именования Camel case (согласно PEP 8)"
