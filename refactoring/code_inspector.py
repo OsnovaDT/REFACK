@@ -4,7 +4,9 @@ from ast import parse
 from collections import defaultdict
 
 from refactoring.code_parser import CodeParser
-from refactoring.constants import ERROR_PREFIX_GET, ERROR_PREFIX_IS
+from refactoring.constants import (
+    ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
+)
 
 
 def is_bool_function_correct(name: str, type_: str) -> bool:
@@ -58,6 +60,14 @@ class CodeInspector:
         return dict(self.code_rule_checker.errors)
 
 
+class NamingStyle:
+    """Naming styles for functions, methods, classes, etc"""
+
+    snake_case = 'Snake Case'
+
+    camel_case = 'Camel case'
+
+
 class CodeRuleChecker:
     """Contains methods for checking code on the rules"""
 
@@ -70,6 +80,7 @@ class CodeRuleChecker:
 
         self.__get_functions_starts_with_get()
         self.__bool_functions_starts_with_is()
+        self.__functions_naming_style_is_snake_case()
 
     @property
     def __functions(self) -> tuple:
@@ -81,6 +92,33 @@ class CodeRuleChecker:
             code_functions = []
 
         return tuple(code_functions)
+
+    def __get_naming_style(self, name: str) -> NamingStyle:
+        """Return naming style for the name.
+
+        Possible naming styles:
+        1) Snake case - get_user_login
+        2) Camel case - getUserLogin or GetUserLogin
+
+        """
+
+        naming_style = ''
+
+        if name.islower() and '_' in name:
+            naming_style = NamingStyle.snake_case
+        else:
+            naming_style = NamingStyle.camel_case
+
+        return naming_style
+
+    def __functions_naming_style_is_snake_case(self) -> None:
+        """Check that functions and methods have Snake case naming style"""
+
+        for name, _ in self.__functions:
+            naming_style = self.__get_naming_style(name)
+
+            if naming_style != NamingStyle.snake_case:
+                self.errors[ERROR_SNAKE_CASE_FUNCTIONS].append(name)
 
     def __get_functions_starts_with_get(self) -> None:
         """Check that return functions start with the «get» prefix

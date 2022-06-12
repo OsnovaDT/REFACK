@@ -60,7 +60,7 @@ class CodeParser(NodeVisitor):
 
         function_type = get_function_type(function_node.body)
 
-        # TODO: Create a class for function
+        # TODO Create a class for function
         self.code_modules['functions'].append(
             (function_node.name, function_type)
         )
