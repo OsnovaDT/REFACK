@@ -18,7 +18,9 @@
             <div class="row">
                 {# Button left #}
                 <div class="offset-md-1 col-md-5">
-                    <input type="button" class="button button_green main_input" value="Передать код в файле">
+                    <a href="{% url 'refactoring:file_input' %}">
+                        <input type="button" class="button button_green main_input" value="Передать код в файле">
+                    </a>
                 </div>
 
                 {# Button right #}

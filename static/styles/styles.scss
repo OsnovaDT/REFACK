@@ -168,3 +168,13 @@ textarea{
         margin-bottom: 25px;
     }
 }
+
+#code_upload{
+    &_input {
+        display: none;
+    }
+
+    &_button:hover{
+        cursor: pointer;
+    }
+}

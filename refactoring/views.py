@@ -1,6 +1,5 @@
 """Views of refactoring app"""
 
-from logging import getLogger
 from json import loads
 
 from django.views.generic.base import TemplateView
@@ -14,8 +13,8 @@ from django.http import JsonResponse, FileResponse
 from django.http.response import HttpResponse
 from dicttoxml import dicttoxml
 
-from refactoring.code_inspector import CodeInspector
 from refactoring.models import UserRecomendation
+from refactoring.utils import get_code_errors
 
 
 class UserRecommendationsListView(LoginRequiredMixin, ListView):
@@ -33,6 +32,12 @@ class ManualCodeInputView(TemplateView):
     """View for manual code input"""
 
     template_name = 'manual_code_input.html'
+
+
+class FileCodeInputView(TemplateView):
+    """View for file code input"""
+
+    template_name = 'file_code_input.html'
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -60,29 +65,32 @@ class RefactoringResultsView(LoginRequiredMixin, TemplateView):
 
 
 @login_required()
-def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
-    """Handler for code refactoring"""
+def refactoring_code_from_file(request: WSGIRequest):
+    """Refactor code from file"""
 
-    try:
-        code = request.POST['code']
-
-        code_inspector = CodeInspector(code)
-        code_errors = code_inspector.errors
-
-        for key, value in code_errors.items():
-            code_errors[key] = ", ".join(value)
-
-        if len(code_errors) == 0:
-            code_errors = 'Ваш код чистый!'
-    except Exception as error:
-        getLogger().error(f'Error: {error}')
-        code_errors = {}
+    code = request.FILES['code_upload'].read()
 
     return render(
         request,
         'refactoring_results.html',
         {
-            'results': code_errors,
+            'results': get_code_errors(code),
+            'code': code,
+        },
+    )
+
+
+@login_required()
+def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
+    """Handler for code refactoring"""
+
+    code = request.POST['code']
+
+    return render(
+        request,
+        'refactoring_results.html',
+        {
+            'results': get_code_errors(code),
             'code': code,
         },
     )

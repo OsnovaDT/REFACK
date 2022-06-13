@@ -5,8 +5,9 @@ from django.urls import path
 from refactoring.views import (
     ManualCodeInputView, IndexView, refactor_code_handler,
     RefactoringResultsView, InstructionView, RulesView,
-    download_results_in_json, download_results_in_pdf,
+    download_results_in_json, download_results_in_pdf, FileCodeInputView,
     download_results_in_xml, save_recomendations, UserRecommendationsListView,
+    refactoring_code_from_file,
 )
 
 
@@ -23,6 +24,18 @@ urlpatterns = [
         'manual_input/',
         ManualCodeInputView.as_view(),
         name='manual_input',
+    ),
+
+    path(
+        'file_input/',
+        FileCodeInputView.as_view(),
+        name='file_input',
+    ),
+
+    path(
+        'refactoring_for_file/',
+        refactoring_code_from_file,
+        name='refactoring_for_file',
     ),
 
     path(

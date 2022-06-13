@@ -1,0 +1,50 @@
+{% extends 'layouts/base.html' %}
+
+{% load static %}
+
+{% block title %}Передача кода через файл{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="block_white" style="font-size: 18px;">
+            <form action="{% url 'refactoring:refactoring_for_file' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Generic errors -->
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for error in form.non_field_errors %}
+                        <li><em>{{ error }}</em></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <label class="title2">Выберите Python-файл</label>
+
+                <div style="margin-bottom: 25px;">
+                    <input type="file" required="" id="code_upload_input" name="code_upload" accept=".py">
+                    <span id='code_upload_button'>Выбранный файл: </span><span id='uploaded_code'></span>
+                </div> 
+
+                {% for field in form.visible_fields %}
+                <!-- Field errors-->
+
+                {% if field.errors %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <em>{{ error }}</em>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+                {% endfor %}
+
+                <input class='button button_green main_input' type="submit" value="Отрефакторить" style="font-size: 18px !important;">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

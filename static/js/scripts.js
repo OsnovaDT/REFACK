@@ -11,3 +11,11 @@ $('#save_recomendations_link').on('click', function(e){
     $('#save_recomendations_form').submit();
     e.preventDefault();
 });
+
+$('#code_upload_button').click(function(){
+    $("#code_upload_input").trigger('click');
+});
+
+$("#code_upload_input").change(function(){
+    $('#uploaded_code').text(this.value.replace(/C:\\fakepath\\/i, ''))
+});

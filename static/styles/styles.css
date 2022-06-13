@@ -144,4 +144,11 @@ textarea {
   margin-bottom: 25px;
 }
 
+#code_upload_input {
+  display: none;
+}
+#code_upload_button:hover {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=styles.css.map */
