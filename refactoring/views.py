@@ -68,7 +68,7 @@ class RefactoringResultsView(LoginRequiredMixin, TemplateView):
 def refactoring_code_from_file(request: WSGIRequest):
     """Refactor code from file"""
 
-    code = request.FILES['code_upload'].read()
+    code = request.FILES['code_upload'].read().decode('UTF-8')
 
     return render(
         request,
@@ -107,8 +107,11 @@ def save_recomendations(request: WSGIRequest) -> JsonResponse:
     if recomendation and code and user_login:
         UserRecomendation.objects.create(
             user=get_user_model().objects.get(username=user_login),
-            code=code,
-            recomendation=recomendation,
+            code=code.replace('\n', '<br>').replace(' ', '&nbsp;'),
+            recomendation=recomendation.replace(', ', '<br><br>')
+            .replace('{', '')
+            .replace('}', '')
+            .replace("'", ''),
         )
 
     return JsonResponse({})

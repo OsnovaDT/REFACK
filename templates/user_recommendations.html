@@ -5,15 +5,22 @@
 {% block title %}Рекомендации пользователя {{ user }}{% endblock title %}
 
 {% block content %}
-    <h1 class="user_recommendations_title">Ваши рекомендации</h1>
+    {% if recommendations %}
+        <h1 class="user_recommendations_title">Ваши рекомендации</h1>
 
-    {% for recommendation in recommendations %}
-        <div class="block_white user_recommendations_block">
-            <h6>{{ recommendation.code }}</h6>
+        {% for recommendation in recommendations %}
+            <div class="block_white user_recommendations_block">
+                {% autoescape off %}
 
-            <hr>
+                <h6>{{ recommendation.code }}</h6>
 
-            <h5>{{ recommendation.recomendation }}</h5>
-        </div>
-    {% endfor %}
+                <hr>
+
+                <h5>{{ recommendation.recomendation }}</h5>
+                {% endautoescape %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <h1 class="user_recommendations_title">Вы еще не сохраняли рекомендации</h1>
+    {% endif %}
 {% endblock content %}
