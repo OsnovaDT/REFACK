@@ -26,3 +26,5 @@ class UserRecomendation(models.Model):
         """Metainformation about UserRecomendation model"""
 
         verbose_name = 'Рекомендации по рефакторингу'
+
+        ordering = ['-date']
