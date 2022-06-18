@@ -2,6 +2,7 @@
 
 from os import path
 from pathlib import Path
+
 from decouple import config
 
 
@@ -23,7 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Custom apps
     'refactoring',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
 
 # INTERNATIONALIZATION

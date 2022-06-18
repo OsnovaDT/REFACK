@@ -1,19 +1,23 @@
-"""Urls of project app"""
+"""Main urls of project"""
 
-from django.contrib import admin
-from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path, include
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('account/', include('account.urls')),
+    # Refactoring app
     path('', include('refactoring.urls')),
+
+    # Account app
+    path('account/', include('account.urls')),
+
+    # Admin panel
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT,
     )
