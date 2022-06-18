@@ -1,0 +1,186 @@
+1) РЕФАКТОРИНГ
+    1. Отрефакторить приложение account
+        - tests/
+        - admin.py
+        - apps.py
+        - forms.py
+        - models.py
+        - urls.py
+        - views.py
+    2. Отрефакторить проект refac
+        - asgi.py
+        - settings.py
+        - urls.py
+        - wsgi.py
+    3. Отрефакторить приложение refactoring
+        - tests/
+        - admin.py
+        - apps.py
+        - code_inspector.py
+        - code_parser.py
+        - constants.py
+        - models.py
+        - nodes.py
+        - urls.py
+        - utils.py
+        - views.py
+        - Переименовать файлы в соответствии с их наполнением
+    4. Отрефакторить статику
+        - js/scripts.js
+        - styles/styles.css
+        - Переименовать styles/ в css/
+    5. Отрефакторить шаблоны
+        - Вынести дублирование в layout-ы
+        - Распределить шаблоны по папкам
+        - account/
+            - login.html
+            - registration.html
+            - password_change.html
+            - password_changed.html
+        - layouts/
+            - base.html
+            - default_form.html
+            - implemented.html
+        - file_code_input.html
+        - index.html
+        - instruction.html
+        - manual_code_input.html
+        - refactoring_results.html
+        - rules.html
+        - user_recommendations.html
+    6. Отрефакторить прочие файлы
+        - .gitignore
+        - manage.py
+        - requirements.txt
+    7. Переименовать папку проекта
+
+2) GITHUB
+    1. Переименовать репозиторий
+    2. Добавить описание
+    3. Добавить технологии
+    4. Написать README
+
+3) ТЕСТЫ
+    1. Написать тесты для приложения account
+        - Проверка полей формы регистрации
+    2. Написать тесты для приложения refactoring
+        - code_inspector.py
+            - is_bool_function_correct
+            - is_get_function_correct
+            - CodeInspector
+            - NamingStyle
+            - CodeRuleChecker
+                - _check_all_rules
+                - __functions
+                - __classes
+                - __get_naming_style
+                - __all_modules_have_documentation
+                - __all_functions_have_type_annotation_for_arguments
+                - __all_functions_have_type_annotation
+                - __functions_naming_style_is_snake_case
+                - __classes_naming_style_is_camel_case
+                - __get_functions_starts_with_get
+                - __bool_functions_starts_with_is
+        - code_parser.py
+            - get_action_type
+            - get_function_type
+            - CodeParser
+                - visit_FunctionDef
+                - visit_ClassDef
+                - modules
+        - models.py
+            - UserRecomendation
+        - nodes.py
+            - DefaltNode
+                - _get_attr_from_info
+                - name
+                - docstring
+            - FunctionNode
+                - type
+                - type_annotation
+                - args
+            - ClassNode
+        - utils.py
+            - get_code_errors
+        - views.py
+            - UserRecommendationsListView
+                - Наличие LoginRequiredMixin
+                - get_queryset
+            - IndexView
+                - Наличие LoginRequiredMixin
+            - InstructionView
+                - Наличие LoginRequiredMixin
+            - RulesView
+                - Наличие LoginRequiredMixin
+            - RefactoringResultsView
+                - Наличие LoginRequiredMixin
+            - refactoring_code_from_file
+            - refactor_code_handler
+            - save_recomendations
+            - download_results_in_json
+            - download_results_in_pdf
+            - download_results_in_xml
+    3. Написать тесты для static/js/scripts.js
+        - navbarDropdownMenuLink -> click
+        - save_recomendations_link -> click
+        - code_upload_button -> click
+        - code_upload_input -> change
+    4. Написать прочие тесты
+        - Написать тесты на стутус-коды страниц
+        - Написать тесты на то что все ссылки не битые
+        - Написать тесты на то что на англ странице нет русского текста
+        - Написать Selenium-тесты на проверку работы форм
+        - Написать тест на работу темной темы
+
+4) ФУНКЦИОНАЛ
+    1. Документация
+        - Добавить приложиние documentation
+        - Добавить раздел с документациями
+        - Написать и добавить пользовательскую документацию
+        - Заменить инструкцию на пользовательскую документацию
+        - Написать и добавить техническую документацию
+        - Посмотреть какие еще документации можно написать
+    2. UI
+        - Добавить английский язык
+        - Добавить темную тему
+        - Добавить стрелочку вверх
+        - Добавить футер
+        - Поменять дизайн
+        - Поменять стиль нажатия "Выйти" и "Сменить пароль"
+        - Добавить подсветку в поле ввода кода
+        - Добавить нумерацию в поле ввода кода
+        - Добавить автотабуляцию в поле ввода кода
+        - Сделать вывод рекомендаций справа от поля ввода кода
+        - Добавить фронт-валидацию
+        - Добавить подсветку Warning и Error рекомендаций
+    3. Приложение account
+        - Пофиксить сброс пароля
+        - Пофиксить вывод ошибок в формах
+        - Пофиксить подтверждение почты
+    4. Рефакторинг
+        - Добавить правило что переменные и поля имеют одинаковый стиль именования
+        - Добавить проверки методов
+        - Добавить обработку дублирования
+        - Добавить автоматическую проверку синтаксиса кода
+        - Добавить разграничение рекомендаций на Warning и Error
+        - Добавить правило на длину функции
+        - Добавить правило на число аргументов
+        - Добавить правило на отступы между классами и функциями
+        - Добавить правило на отступы между методами и полями
+        - Убрать правило наличия документации для дандер-методов
+        - Посмотреть проверки линтеров и других приложений и добавить их\
+        - Добавить проверку на только один возврат return
+        - * Добавить разграничения правил для Django, Flask и прочих проектов
+        - Добавить все возможные правила по PEP 8
+            - ...
+        - Улучшить скачивание файлов
+            - Выровнять текст в JSON-файле
+            - Сделать нормальное скачивание PDF
+            - Сделать нормальное скачивание XML
+            - Добавить возможность передачи нескольких файлов
+            - Добавить возможность передачи целого проекта как папку
+            - Добавить возможность передачи целого проекта как ссылку на Github
+    5. Пользователь
+        - Добавить страницу пользователя
+        - Добавить возможность удаления пользовательских рекомендаций (AJAX)
+        - Добавить сокрытие части кода и рекомендаций (AJAX)
