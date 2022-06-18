@@ -5,6 +5,6 @@ from os import environ
 from django.core.wsgi import get_wsgi_application
 
 
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'refac.settings')
+environ.setdefault('DJANGO_SETTINGS_MODULE', 'refack.settings')
 
 application = get_wsgi_application()

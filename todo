@@ -7,7 +7,7 @@
         - models.py ✅
         - urls.py ✅
         - views.py ✅
-    2. Отрефакторить проект refac ✅
+    2. Отрефакторить проект refack ✅
         - asgi.py ✅
         - settings.py ✅
         - urls.py ✅
@@ -52,7 +52,7 @@
         - .gitignore
         - manage.py
         - requirements.txt
-    7. Переименовать папку проекта
+    7. Переименовать папку проекта ✅
 
 2) GITHUB ✅
     1. Переименовать репозиторий ✅

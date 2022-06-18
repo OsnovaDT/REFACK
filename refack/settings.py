@@ -39,7 +39,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'refac.urls'
+ROOT_URLCONF = 'refack.urls'
 
 TEMPLATES = [
     {
@@ -117,6 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-WSGI_APPLICATION = 'refac.wsgi.application'
+WSGI_APPLICATION = 'refack.wsgi.application'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
