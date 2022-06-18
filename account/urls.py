@@ -1,12 +1,11 @@
 """Urls of account app"""
 
-from django.urls import path
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView,
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from django.urls import reverse_lazy
+from django.urls import path, reverse_lazy
 
 from account.views import RegistrationView
 
@@ -14,6 +13,7 @@ from account.views import RegistrationView
 app_name = 'account'
 
 urlpatterns = [
+    # Login and logout
     path(
         'login/',
         LoginView.as_view(
@@ -26,6 +26,13 @@ urlpatterns = [
         'logout/',
         LogoutView.as_view(),
         name='logout',
+    ),
+
+    # Registration
+    path(
+        'registration/',
+        RegistrationView.as_view(),
+        name='registration',
     ),
 
     # Password change
@@ -83,11 +90,4 @@ urlpatterns = [
         ),
         name='password_reset_complete',
     ),
-
-    # Registration
-    path(
-        'registration/',
-        RegistrationView.as_view(),
-        name='registration',
-    )
 ]

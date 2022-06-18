@@ -4,44 +4,47 @@ from django.test import TestCase
 
 
 class PagesTests(TestCase):
-    """Tests for account's pages"""
+    """Tests for pages of account app"""
 
-    def test_login(self):
-        """Test index page"""
+    __ACCOUNT_URL = '/account/'
 
-        response = self.client.get('/account/login/')
+    def test_login(self) -> None:
+        """Test login page"""
+
+        response = self.client.get(self.__ACCOUNT_URL + 'login/')
 
         self.assertEqual(response.status_code, 200)
 
-    def test_logout(self):
+    def test_logout(self) -> None:
         """Test logout page"""
 
-        response = self.client.get('/account/logout/')
+        response = self.client.get(self.__ACCOUNT_URL + 'logout/')
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response.url, '/account/login/')
+        self.assertEqual(response.url, self.__ACCOUNT_URL + 'login/')
 
-    def test_password_change(self):
+    def test_password_change(self) -> None:
         """Test password change page"""
 
-        response = self.client.get('/account/password_change/')
+        response = self.client.get(self.__ACCOUNT_URL + 'password_change/')
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
             response.url,
-            '/account/login/?next=/account/password_change/'
+            self.__ACCOUNT_URL + 'login/?next=' +
+            self.__ACCOUNT_URL + 'password_change/'
         )
 
-    def test_password_reset(self):
+    def test_password_reset(self) -> None:
         """Test password reset page"""
 
-        response = self.client.get('/account/password_reset/')
+        response = self.client.get(self.__ACCOUNT_URL + 'password_reset/')
 
         self.assertEqual(response.status_code, 200)
 
-    def test_registration(self):
+    def test_registration(self) -> None:
         """Test registration page"""
 
-        response = self.client.get('/account/registration/')
+        response = self.client.get(self.__ACCOUNT_URL + 'registration/')
 
         self.assertEqual(response.status_code, 200)

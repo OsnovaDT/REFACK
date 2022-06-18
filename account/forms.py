@@ -1,21 +1,18 @@
 """Forms of account app"""
 
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class RegistrationForm(UserCreationForm):
-    """Form for user registration"""
+    """User registration form"""
 
     email = forms.EmailField()
 
     class Meta:
-        """Meta information about the form"""
+        """RegistrationForm info"""
 
-        fields = (
-            'username', 'email',
-            'password1', 'password2',
-        )
+        fields = ('username', 'email', 'password1', 'password2',)
 
         model = User

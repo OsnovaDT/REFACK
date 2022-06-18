@@ -1,13 +1,13 @@
 """Views of account app"""
 
-from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
 from account.forms import RegistrationForm
 
 
 class RegistrationView(CreateView):
-    """View for user registration"""
+    """View for user registration form"""
 
     form_class = RegistrationForm
 
