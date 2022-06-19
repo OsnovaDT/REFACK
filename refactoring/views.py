@@ -13,19 +13,19 @@ from django.http import JsonResponse, FileResponse
 from django.http.response import HttpResponse
 from dicttoxml import dicttoxml
 
-from refactoring.models import UserRecomendation
+from refactoring.models import RefactoringRecommendation
 from refactoring.utils import get_code_errors
 
 
-class UserRecommendationsListView(LoginRequiredMixin, ListView):
-    """User recommendations"""
+class SavedRecommendationsListView(LoginRequiredMixin, ListView):
+    """User's saved recommendations"""
 
-    template_name = 'user_recommendations.html'
+    template_name = 'saved_recommendations.html'
 
     context_object_name = 'recommendations'
 
     def get_queryset(self):
-        return UserRecomendation.objects.filter(user=self.request.user)
+        return RefactoringRecommendation.objects.filter(user=self.request.user)
 
 
 class ManualCodeInputView(TemplateView):
@@ -58,14 +58,8 @@ class RulesView(LoginRequiredMixin, TemplateView):
     template_name = 'rules.html'
 
 
-class RefactoringResultsView(LoginRequiredMixin, TemplateView):
-    """View for refactoring results page"""
-
-    template_name = 'refactoring_results.html'
-
-
 @login_required()
-def refactoring_code_from_file(request: WSGIRequest):
+def refactor_code_from_file(request: WSGIRequest):
     """Refactor code from file"""
 
     code = request.FILES['code_upload'].read().decode('UTF-8')
@@ -81,7 +75,7 @@ def refactoring_code_from_file(request: WSGIRequest):
 
 
 @login_required()
-def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
+def refactor_code(request: WSGIRequest) -> HttpResponse:
     """Handler for code refactoring"""
 
     code = request.POST['code']
@@ -97,18 +91,18 @@ def refactor_code_handler(request: WSGIRequest) -> HttpResponse:
 
 
 @login_required()
-def save_recomendations(request: WSGIRequest) -> JsonResponse:
-    """Save refactoring recomendations for the user"""
+def save_recommendations(request: WSGIRequest) -> JsonResponse:
+    """Save refactoring recommendations for the user"""
 
-    recomendation = request.GET.get('recomendation', None)
+    recommendation = request.GET.get('recommendation', None)
     code = request.GET.get('code', None)
     user_login = request.GET.get('user', None)
 
-    if recomendation and code and user_login:
-        UserRecomendation.objects.create(
+    if recommendation and code and user_login:
+        RefactoringRecommendation.objects.create(
             user=get_user_model().objects.get(username=user_login),
             code=code.replace('\n', '<br>').replace(' ', '&nbsp;'),
-            recomendation=recomendation.replace(', ', '<br><br>')
+            recommendation=recommendation.replace(', ', '<br><br>')
             .replace('{', '')
             .replace('}', '')
             .replace("'", ''),

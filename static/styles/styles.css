@@ -123,23 +123,23 @@ textarea {
   font-size: 24px;
 }
 
-#save_recomendations_link {
+#save_recommendations_link {
   color: #15c6b9 !important;
 }
-#save_recomendations_link:hover {
+#save_recommendations_link:hover {
   cursor: pointer;
   text-decoration: underline;
 }
-#save_recomendations_form {
+#save_recommendations_form {
   text-align: right;
 }
 
-.user_recommendations_block {
+.saved_recommendations_block {
   margin-bottom: 25px;
   text-align: left;
   border-bottom: 5px solid #01a8e5;
 }
-.user_recommendations_title {
+.saved_recommendations_title {
   text-align: center;
   font-weight: 700;
   margin-bottom: 25px;

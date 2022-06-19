@@ -4,7 +4,7 @@
 
 
 {% block content %}
-    <form action="{% url 'refactoring:refactor' %}" method="post" novalidate>
+    <form action="{% url 'refactoring:code_refactoring' %}" method="post" novalidate>
         {% csrf_token %}
 
         {% if errors %}

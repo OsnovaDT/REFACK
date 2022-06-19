@@ -6,13 +6,13 @@
     <div class="block_white" style="font-size: 18px;">
         {% if results.items %}
             {# Save link #}
-            <form action="{% url 'refactoring:save_recomendations' %}" method="post" id="save_recomendations_form">
+            <form action="{% url 'refactoring:save_recommendations' %}" method="post" id="save_recommendations_form">
                 {% csrf_token %}
 
-                <input type="hidden" name="recomendation" value="{{ results }}">
+                <input type="hidden" name="recommendation" value="{{ results }}">
                 <input type="hidden" name="user" value="{{ user }}">
                 <input type="hidden" name="code" value="{{ code }}">
-                <a id="save_recomendations_link">Сохранить рекомендации</a>
+                <a id="save_recommendations_link">Сохранить рекомендации</a>
             </form>
 
             {% for key, value in results.items %}
@@ -45,7 +45,7 @@
 
             <div class="row">
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:pdf_download' %}" method="post">
+                    <form action="{% url 'refactoring:download_pdf' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:json_download' %}" method="post">
+                    <form action="{% url 'refactoring:download_json' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -64,7 +64,7 @@
 
                 <div class="col-md-4">
 
-                    <form action="{% url 'refactoring:xml_download' %}" method="post">
+                    <form action="{% url 'refactoring:download_xml' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -83,12 +83,12 @@
 
     <script>
         $(document).ready(function () {
-            $('#save_recomendations_form').on('submit', function () {
+            $('#save_recommendations_form').on('submit', function () {
                 $.ajax({
                     data: $(this).serialize(),
-                    url: "{% url 'refactoring:save_recomendations' %}",
+                    url: "{% url 'refactoring:save_recommendations' %}",
                     success: function (response) {
-                        $('#save_recomendations_form').hide()
+                        $('#save_recommendations_form').hide()
                     }
                 });
 

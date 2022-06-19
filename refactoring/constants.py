@@ -1,14 +1,8 @@
-"""All constants"""
+"""Constants of refactoring app"""
 
-# Errors
+ERROR_PREFIX_GET = "Функции должны начинаться с префикса «get»"
 
-COMMON_ERRORS = (AttributeError, TypeError,)
-
-ERROR_PREFIX_GET = \
-    "Функции должны начинаться с префикса «get»"
-
-ERROR_PREFIX_IS = \
-    "Функции должны начинаться с префикса «is»"
+ERROR_PREFIX_IS = "Функции должны начинаться с префикса «is»"
 
 ERROR_SNAKE_CASE_FUNCTIONS = \
     "Функции и методы должны иметь стиль именования " \

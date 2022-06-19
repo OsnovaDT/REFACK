@@ -1,14 +1,14 @@
-"""Admin panel for refactoring app"""
+"""Admin panel of refactoring app"""
 
-from django.contrib import admin
+from django.contrib.admin import ModelAdmin, register
 
-from refactoring.models import UserRecomendation
+from refactoring.models import RefactoringRecommendation
 
 
-@admin.register(UserRecomendation)
-class UserRecomendationAdmin(admin.ModelAdmin):
-    """Admin for UserRecomendation model"""
+@register(RefactoringRecommendation)
+class RefactoringRecommendation(ModelAdmin):
+    """Admin for RefactoringRecommendation model"""
 
-    list_display = ('user', 'code', 'recomendation', 'date')
+    list_display = ('user', 'code', 'recommendation', 'date')
 
     list_filter = ('user',)

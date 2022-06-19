@@ -7,8 +7,8 @@ $('#navbarDropdownMenuLink').on('click', function(){
     }
 });
 
-$('#save_recomendations_link').on('click', function(e){
-    $('#save_recomendations_form').submit();
+$('#save_recommendations_link').on('click', function(e){
+    $('#save_recommendations_form').submit();
     e.preventDefault();
 });
 

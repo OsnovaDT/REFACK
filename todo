@@ -17,17 +17,18 @@
             - constants.py ✅
             - test_code_inspector.py ✅
             - test_views.py ✅
-        - admin.py
-        - apps.py
+        - admin.py ✅
+        - apps.py ✅
         - code_inspector.py
         - code_parser.py
-        - constants.py
+        - constants.py ✅
         - models.py
         - nodes.py
         - urls.py
-        - utils.py
+        - utils.py ✅
         - views.py
         - Переименовать файлы в соответствии с их наполнением
+        - Объединить миграции
     4. Отрефакторить статику
         - js/scripts.js
         - styles/styles.css
@@ -50,7 +51,7 @@
         - manual_code_input.html
         - refactoring_results.html
         - rules.html
-        - user_recommendations.html
+        - saved_recommendations.html
     6. Отрефакторить прочие файлы
         - .gitignore
         - manage.py
@@ -92,7 +93,7 @@
                 - visit_ClassDef
                 - modules
         - models.py
-            - UserRecomendation
+            - UserRecommendation
         - nodes.py
             - DefaltNode
                 - _get_attr_from_info
@@ -117,15 +118,15 @@
                 - Наличие LoginRequiredMixin
             - RefactoringResultsView
                 - Наличие LoginRequiredMixin
-            - refactoring_code_from_file
-            - refactor_code_handler
-            - save_recomendations
+            - refactor_code_from_file
+            - refactor_code
+            - save_recommendations
             - download_results_in_json
             - download_results_in_pdf
             - download_results_in_xml
     3. Написать тесты для static/js/scripts.js
         - navbarDropdownMenuLink -> click
-        - save_recomendations_link -> click
+        - save_recommendations_link -> click
         - code_upload_button -> click
         - code_upload_input -> change
     4. Написать прочие тесты

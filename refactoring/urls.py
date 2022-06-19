@@ -3,11 +3,10 @@
 from django.urls import path
 
 from refactoring.views import (
-    ManualCodeInputView, IndexView, refactor_code_handler,
-    RefactoringResultsView, InstructionView, RulesView,
-    download_results_in_json, download_results_in_pdf, FileCodeInputView,
-    download_results_in_xml, save_recomendations, UserRecommendationsListView,
-    refactoring_code_from_file,
+    ManualCodeInputView, IndexView, InstructionView,
+    RulesView, FileCodeInputView, SavedRecommendationsListView,
+    download_results_in_json, download_results_in_pdf, save_recommendations,
+    download_results_in_xml, refactor_code_from_file, refactor_code,
 )
 
 
@@ -19,6 +18,8 @@ urlpatterns = [
         IndexView.as_view(),
         name='index',
     ),
+
+    # Code input
 
     path(
         'manual_input/',
@@ -32,23 +33,15 @@ urlpatterns = [
         name='file_input',
     ),
 
-    path(
-        'refactoring_for_file/',
-        refactoring_code_from_file,
-        name='refactoring_for_file',
-    ),
+    # Saved recommendations
 
     path(
-        'refactor/',
-        refactor_code_handler,
-        name='refactor',
+        'saved_recommendations/',
+        SavedRecommendationsListView.as_view(),
+        name='saved_recommendations',
     ),
 
-    path(
-        'results/',
-        RefactoringResultsView.as_view(),
-        name='results',
-    ),
+    # Instruction and rules
 
     path(
         'instruction/',
@@ -62,33 +55,45 @@ urlpatterns = [
         name='rules',
     ),
 
+    # Code refactoring
+
     path(
-        'json_download/',
+        'file_refactoring/',
+        refactor_code_from_file,
+        name='file_refactoring',
+    ),
+
+    path(
+        'code_refactoring/',
+        refactor_code,
+        name='code_refactoring',
+    ),
+
+    # Recommendations downloading
+
+    path(
+        'download_json/',
         download_results_in_json,
-        name='json_download',
+        name='download_json',
     ),
 
     path(
-        'pdf_download/',
+        'download_pdf/',
         download_results_in_pdf,
-        name='pdf_download',
+        name='download_pdf',
     ),
 
     path(
-        'xml_download/',
+        'download_xml/',
         download_results_in_xml,
-        name='xml_download',
+        name='download_xml',
     ),
 
-    path(
-        'save_recomendations/',
-        save_recomendations,
-        name='save_recomendations',
-    ),
+    # Recommendations saving
 
     path(
-        'user_recommendations/',
-        UserRecommendationsListView.as_view(),
-        name='user_recommendations',
+        'save_recommendations/',
+        save_recommendations,
+        name='save_recommendations',
     ),
 ]

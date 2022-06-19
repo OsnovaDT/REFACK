@@ -141,7 +141,7 @@ textarea{
     font-size: 24px;
 }
 
-#save_recomendations{
+#save_recommendations{
     &_link{
         color: $green_color !important;
 
@@ -156,7 +156,7 @@ textarea{
     }
 }
 
-.user_recommendations{
+.saved_recommendations{
     &_block{
         margin-bottom: 25px;
         text-align: left;
