@@ -1,5 +1,6 @@
 """Constants for testing"""
 
+
 class TestClass:
     """Empty class for testing"""
 
@@ -9,11 +10,13 @@ def test_function():
 
 
 DIFFERENT_VALUES = (
-    # Values of str and bytes type
+    # str and bytes
+    'test', 'aaaaaaaaaaa', 'check_function',
     'value', 'value_value', 'value     value', '', '!@@#Q@$Q', 'test'.encode(),
+    'a', 'b', 'A', 'B', '', '  ',
     'a' * 100, 'a' * 10_000, '\n', '\t', 'class', 'def', 'int',
 
-    # Values of int, float and bool types
+    # int, float and bool
     0, 100_000, -100, 122.12323, True, False,
 
     # Data structures
@@ -29,42 +32,51 @@ DIFFERENT_VALUES = (
     None, complex(1, 2), bin(20), hex(100), range(100),
 )
 
-# For function is_bool_function_correct
+# For testing function is_bool_function_correct
 
 BOOL_FUNCTION_TYPE = 'return bool'
 
 CORRECT_BOOL_FUNCTIONS = (
-    'is_correct', 'is_not_correct', 'isCorrect', 'isNotCorrect',
-    'is_value_set', 'is_value_not_set', 'isValueSet', 'isValueNotSet',
-    'isThisFunctionSoSuperLong', 'is_this_function_so_super_long',
-    'isserverstart',
+    'is_correct', 'is_not_correct', 'is_value_set', 'is_value_not_set',
+    'is_this_function_so_super_long',
 )
 
-INCORRECT_BOOL_FUNCTIONS = (
-    'test', 'aaaaaaaaaaa', 'IS_CORRECT', '', 'IsCorrect', 'iSValueCorrect',
-    'Is_correct', 'iS_value_correct', 'get_value', 'getValue',
-    'check_function', 'is', 'i', 's', 'IS', 'iS', 'Is', 'is_', 'IS_',
-    'iS_', 'Is_', 'a', 'b', 'A', 'B', '  '
-) + DIFFERENT_VALUES
+INCORRECT_BOOL_FUNCTIONS = DIFFERENT_VALUES + (
+    'Is_correct', 'IS_CORRECT', 'IsCorrect', 'isCorrect', 'isNotCorrect',
+    'iS_value_correct', 'iSValueCorrect', 'isValueSet', 'isValueNotSet',
+    'isThisFunctionSoSuperLong', 'isserverstart',
 
-# For function is_get_function_correct
+    'get_value', 'getValue',
+
+    'is', 'IS', 'iS', 'Is', 'is_', 'IS_', 'iS_', 'Is_',
+
+    'i', 's',
+)
+
+# For testing function is_get_function_correct
 
 GET_FUNCTION_TYPE = 'return'
 
 CORRECT_GET_FUNCTIONS = (
-    'get_value', 'get_value_from_object', 'getValue', 'getValueFromObject',
-    'get_correct_value', 'get_incorrect_value', 'getCorrectValue',
-    'getIncorrectValue', 'get_very_super_long_user_login',
-    'getVerySuperLongUserLogin', 'getvalue',
+    'get_value', 'get_value_from_object', 'get_very_super_long_user_login',
+    'get_correct_value', 'get_incorrect_value',
 )
 
-INCORRECT_GET_FUNCTIONS = (
-    'test', 'aaaaaaaaaaa', 'GET_VALUE', '', 'GETValue', 'GET_value',
-    'GetValue', 'gEtValue', 'geTValue', 'GEtValue', 'GeTValue', 'gETValue',
-    'Get_value', 'gEt_value', 'geT_value', 'GEt_value', 'GeT_value',
-    'gET_value', 'Getvalue', 'gEtvalue', 'geTvalue', 'GEtvalue', 'GeTvalue',
-    'gETvalue', 'gEt_correct_value', 'is_correct', 'isCorrect',
-    'isValueCorrect', 'check_function', 'get', 'g', 'e', 't',
-    'GET', 'Get', 'gEt', 'geT', 'GeT', 'gET', 'get_', 'GET_',
-    'Get_', 'gEt_', 'geT_', 'GeT_', 'gET_', 'a', 'b', 'A', 'B', '  '
-) + DIFFERENT_VALUES
+INCORRECT_GET_FUNCTIONS = DIFFERENT_VALUES + (
+    'GETValue', 'GEtvalue', 'GEtValue',
+    'GetValue', 'GeTvalue', 'Getvalue', 'GeTValue',
+
+    'gETvalue', 'gEtvalue', 'geTvalue', 'gEtValue', 'geTValue', 'gETValue',
+    'getValue', 'getValueFromObject', 'getCorrectValue', 'getIncorrectValue',
+    'getVerySuperLongUserLogin', 'getvalue',
+
+    'GET_value', 'GET_VALUE', 'Get_value', 'gEt_value', 'geT_value',
+    'GEt_value', 'GeT_value', 'gET_value', 'gEt_correct_value',
+
+    'is_correct', 'isCorrect', 'isValueCorrect',
+
+    'get', 'GET', 'Get', 'gEt', 'geT', 'GeT', 'gET', 'get_', 'GET_', 'Get_',
+    'gEt_', 'geT_', 'GeT_', 'gET_',
+
+    'g', 'e', 't',
+)
