@@ -17,6 +17,11 @@ from refactoring.models import RefactoringRecommendation
 from refactoring.utils import get_code_errors
 
 
+# TODO декоратор для обработки ошибок
+# except Exception as error:
+#         getLogger().error(f'Error: {error}')
+#         code_errors = {}
+
 class SavedRecommendationsListView(LoginRequiredMixin, ListView):
     """User's saved recommendations"""
 
