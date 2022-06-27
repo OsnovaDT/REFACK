@@ -17,18 +17,20 @@
             - constants.py ✅
             - test_code_inspector.py ✅
             - test_views.py ✅
+        - services/
+            - code_inspector.py
+            - code_parser.py
+            - nodes.py
+            - utils.py ✅
         - admin.py ✅
         - apps.py ✅
-        - code_inspector.py
-        - code_parser.py
         - constants.py ✅
-        - models.py
-        - nodes.py
-        - urls.py
-        - utils.py ✅
+        - models.py ✅
+        - urls.py ✅
         - views.py
         - Переименовать файлы в соответствии с их наполнением
         - Объединить миграции
+        - Вынести бизнес-логику в services/
     4. Отрефакторить статику
         - js/scripts.js
         - styles/styles.css
@@ -73,7 +75,7 @@
             - is_get_function_correct
             - CodeInspector
             - NamingStyle
-            - CodeRuleChecker
+            - CodeRulesChecker
                 - _check_all_rules
                 - __functions
                 - __classes
@@ -105,7 +107,7 @@
                 - args
             - ClassNode
         - utils.py
-            - get_code_errors
+            - get_code_recommendations
         - views.py
             - UserRecommendationsListView
                 - Наличие LoginRequiredMixin
@@ -138,6 +140,10 @@
     5. Пофиксить ворнинги при запуске тестов
 
 4) ФУНКЦИОНАЛ
+    0. Логи:
+        - Добавить логирование
+        - Добавить обработку ошибок
+        - Добавить глобальную обработку ошибок
     1. Документация
         - Добавить приложиние documentation
         - Добавить раздел с документациями
@@ -192,6 +198,7 @@
         - Добавить страницу пользователя
         - Добавить возможность удаления пользовательских рекомендаций (AJAX)
         - Добавить сокрытие части кода и рекомендаций (AJAX)
+    6. Сделать мобильную и таблетную версии
 
 5) ИДЕИ
     - Внедрить что-то на Go

@@ -1,15 +1,13 @@
-"""Class that inspect the code and save it's errors"""
+"""Contain class that checks code on clean code rules"""
 
-from ast import parse
 from collections import defaultdict
 
-from refactoring.code_parser import CodeParser
-from refactoring.constants import (
+from refactoring.services.constants import (
     ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
-    ERROR_CAMEL_CASE_CLASSES, ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION,
-    ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS,
-    ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION,
-    ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT,
+    ERROR_CAMEL_CASE_CLASSES, ERROR_DOCUMENTATION_FOR_FUNCTION,
+    ERROR_DOCUMENTATION_FOR_CLASS,
+    ERROR_TYPE_ANNOTATION_FOR_FUNCTION,
+    ERROR_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT,
 )
 
 
@@ -47,23 +45,6 @@ def is_get_function_correct(name: str, type_: str) -> bool:
     return bool(is_function_correct)
 
 
-class CodeInspector:
-    """Parse the code, check it on rules and save errors"""
-
-    def __init__(self, code: str):
-        code_parser = CodeParser()
-        code_parser.visit(parse(code))
-
-        self.code_rule_checker = CodeRuleChecker(code_parser.modules)
-        self.code_rule_checker._check_all_rules()
-
-    @property
-    def errors(self) -> dict:
-        """Code errors received from code checker"""
-
-        return dict(self.code_rule_checker.errors)
-
-
 class NamingStyle:
     """Naming styles for functions, methods, classes, etc"""
 
@@ -72,8 +53,8 @@ class NamingStyle:
     camel_case = 'Camel case'
 
 
-class CodeRuleChecker:
-    """Contains methods for checking code on the rules"""
+class CodeRulesChecker:
+    """Check code on clean code rules"""
 
     def __init__(self, code_modules: dict):
         self.code_modules = code_modules
@@ -136,13 +117,13 @@ class CodeRuleChecker:
         for func in self.__functions:
             if not func.docstring:
                 self.errors[
-                    ERROR_THERE_IS_NO_DOCUMENTATION_FOR_FUNCTION
+                    ERROR_DOCUMENTATION_FOR_FUNCTION
                 ].append(func.name)
 
         for class_ in self.__classes:
             if not class_.docstring:
                 self.errors[
-                    ERROR_THERE_IS_NO_DOCUMENTATION_FOR_CLASS
+                    ERROR_DOCUMENTATION_FOR_CLASS
                 ].append(class_.name)
 
     def __all_functions_have_type_annotation_for_arguments(self) -> None:
@@ -152,7 +133,7 @@ class CodeRuleChecker:
             for arg in func.args:
                 if not arg.annotation:
                     self.errors[
-                        ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT
+                        ERROR_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT
                     ].append(f'аргумент "{arg.arg}" для функции {func.name}')
 
     def __all_functions_have_type_annotation(self) -> None:
@@ -161,7 +142,7 @@ class CodeRuleChecker:
         for func in self.__functions:
             if not func.type_annotation:
                 self.errors[
-                    ERROR_NO_TYPE_ANNOTATION_FOR_FUNCTION
+                    ERROR_TYPE_ANNOTATION_FOR_FUNCTION
                 ].append(func.name)
 
     def __functions_naming_style_is_snake_case(self) -> None:

@@ -10,17 +10,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, FileResponse
-from django.http.response import HttpResponse
 from dicttoxml import dicttoxml
 
 from refactoring.models import RefactoringRecommendation
-from refactoring.utils import get_code_errors
+from refactoring.services.utils import (
+    get_code_recommendations, get_results_refactoring_response,
+)
 
-
-# TODO декоратор для обработки ошибок
-# except Exception as error:
-#         getLogger().error(f'Error: {error}')
-#         code_errors = {}
 
 class SavedRecommendationsListView(LoginRequiredMixin, ListView):
     """User's saved recommendations"""
@@ -73,26 +69,19 @@ def refactor_code_from_file(request: WSGIRequest):
         request,
         'refactoring_results.html',
         {
-            'results': get_code_errors(code),
+            'results': get_code_recommendations(code),
             'code': code,
         },
     )
 
 
 @login_required()
-def refactor_code(request: WSGIRequest) -> HttpResponse:
-    """Handler for code refactoring"""
+def refactor_code(request: WSGIRequest) -> JsonResponse:
+    """Refactor code and return recommendations"""
 
-    code = request.POST['code']
+    code = request.GET.get('code', '')
 
-    return render(
-        request,
-        'refactoring_results.html',
-        {
-            'results': get_code_errors(code),
-            'code': code,
-        },
-    )
+    return get_results_refactoring_response(code)
 
 
 @login_required()

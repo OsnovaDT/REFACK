@@ -4,19 +4,57 @@
 
 
 {% block content %}
-    <form action="{% url 'refactoring:code_refactoring' %}" method="post" novalidate>
-        {% csrf_token %}
+    <div class="row">
+        <div class="col-md-8">
+            <form id="refac_form" method="post" novalidate>
+                {% csrf_token %}
 
-        {% if errors %}
-            {{ errors }}
-        {% endif %}
+                {% if errors %}
+                    {{ errors }}
+                {% endif %}
 
-        <div>
-            <textarea maxlength="10000" style="resize: none; padding: 25px; border-radius: 4px; outline: none;" name="code" cols="100" rows="20" class="code_field" placeholder="Введите Python-код" autofocus></textarea>
+                <div>
+                    <textarea maxlength="10000" style="resize: none; padding: 25px; border-radius: 4px; outline: none;" name="code" cols="100" rows="20" class="code_field" placeholder="Введите Python-код" autofocus></textarea>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px;">
+                    <input type="submit" class="button button_green main_input" value="Отрефакторить">
+                </div>
+            </form>
         </div>
 
-        <div style="text-align: center; margin-top: 15px;">
-            <input type="submit" class="button button_green main_input" value="Отрефакторить">
+        <div class="col-md-4">
+            <h4>Результаты</h4>
+            <div id="refac_results"></div>
         </div>
-    </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#refac_form').on('submit', function () {
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{% url 'refactoring:code_refactoring' %}",
+                    success: function (response) {
+                        $('#refac_results').empty();
+
+                        if (response.error){
+                            $('#refac_results').append(
+                                `Ошибка: <span class="error">${response.error}</span>`
+                            )
+                        }
+                        else{
+                            for (const [rule, snippent] of Object.entries(response.code_recommendations)){
+                                $('#refac_results').append(
+                                `<p>${rule}: <span class="blue_text" style="font-weight: 700;">${snippent}</span></p>`
+                                )
+                            } 
+                        }
+                    }
+                });
+
+                return false;
+            });
+        })
+    </script>
 {% endblock content %}

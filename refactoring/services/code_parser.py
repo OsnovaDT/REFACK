@@ -7,7 +7,7 @@ Code modules are: functions, classes, variables, etc.
 from collections import defaultdict
 from ast import NodeVisitor, FunctionDef, Return, ClassDef, get_docstring
 
-from refactoring.nodes import FunctionNode, ClassNode
+from refactoring.services.nodes import FunctionNode, ClassNode
 
 
 def get_action_type(action: Return) -> str:

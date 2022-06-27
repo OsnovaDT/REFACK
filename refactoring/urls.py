@@ -3,10 +3,10 @@
 from django.urls import path
 
 from refactoring.views import (
-    ManualCodeInputView, IndexView, InstructionView,
-    RulesView, FileCodeInputView, SavedRecommendationsListView,
-    download_results_in_json, download_results_in_pdf, save_recommendations,
-    download_results_in_xml, refactor_code_from_file, refactor_code,
+    ManualCodeInputView, IndexView, InstructionView, RulesView,
+    FileCodeInputView, SavedRecommendationsListView, download_results_in_json,
+    download_results_in_pdf, save_recommendations, download_results_in_xml,
+    refactor_code_from_file, refactor_code,
 )
 
 

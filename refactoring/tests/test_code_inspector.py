@@ -2,7 +2,7 @@
 
 from django.test import TestCase
 
-from refactoring.code_inspector import (
+from refactoring.services.code_handler import (
     is_bool_function_correct, is_get_function_correct,
 )
 from refactoring.tests.constants import (

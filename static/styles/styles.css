@@ -35,6 +35,10 @@ textarea {
   color: #01a8e5;
 }
 
+.error {
+  color: #ee3030;
+}
+
 .text_blue {
   color: #01a8e5;
 }
@@ -45,7 +49,6 @@ textarea {
 .title_big {
   font-size: 45px;
 }
-
 .title2 {
   font-size: 30px;
   line-height: 27px;

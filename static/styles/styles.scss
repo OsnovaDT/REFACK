@@ -1,5 +1,6 @@
 $green_color: #15c6b9;
 $blue_color: #01a8e5;
+$error_color: #ee3030;
 
 body{
     background-color: #e6e6e6 !important;
@@ -38,6 +39,10 @@ textarea{
     color: $blue_color;
 }
 
+.error{
+    color: $error_color;
+}
+
 .text{
     &_blue{
         color: $blue_color;
@@ -52,14 +57,14 @@ textarea{
     &_big{
         font-size: 45px;
     }
-}
 
-.title2{
-    font-size: 30px;
-    line-height: 27px;
-    font-weight: 700;
-    color: #000;
-    margin-bottom: 48px;
+    &2{
+        font-size: 30px;
+        line-height: 27px;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 48px;
+    }
 }
 
 .button{
