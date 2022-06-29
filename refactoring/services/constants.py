@@ -17,8 +17,8 @@ ERROR_DOCUMENTATION_FOR_FUNCTION = \
 ERROR_DOCUMENTATION_FOR_CLASS = \
     "Для этого класса должна быть указана документация"
 
-ERROR_TYPE_ANNOTATION_FOR_FUNCTION = \
+ERROR_TYPE_HINT_FOR_FUNCTION = \
     "Для функций должна быть указана подсказка возвращаемого типа"
 
-ERROR_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT = \
+ERROR_TYPE_HINT_FOR_FUNCTION_ARGUMENT = \
     "Для аргумента функции должна быть указана подсказка типа"

@@ -81,8 +81,8 @@
                 - __classes
                 - __get_naming_style
                 - __all_modules_have_documentation
-                - __all_functions_have_type_annotation_for_arguments
-                - __all_functions_have_type_annotation
+                - __all_functions_have_type_hint_for_arguments
+                - __all_functions_have_type_hint
                 - __functions_naming_style_is_snake_case
                 - __classes_naming_style_is_camel_case
                 - __get_functions_starts_with_get
@@ -97,15 +97,15 @@
         - models.py
             - UserRecommendation
         - nodes.py
-            - DefaltNode
+            - DefaultItem
                 - _get_attr_from_info
                 - name
                 - docstring
-            - FunctionNode
+            - FunctionItem
                 - type
-                - type_annotation
+                - type_hint
                 - args
-            - ClassNode
+            - ClassItem
         - utils.py
             - get_code_recommendations
         - views.py
@@ -138,6 +138,7 @@
         - Написать Selenium-тесты на проверку работы форм
         - Написать тест на работу темной темы
     5. Пофиксить ворнинги при запуске тестов
+    6. Добавить doctest
 
 4) ФУНКЦИОНАЛ
     0. Логи:
@@ -170,6 +171,7 @@
         - Пофиксить подтверждение почты
     4. Рефакторинг
         - Добавить правило что переменные и поля имеют одинаковый стиль именования
+        - Добавить проверку методов с _ и с __
         - Добавить проверки методов
         - Добавить обработку дублирования
         - Добавить автоматическую проверку синтаксиса кода

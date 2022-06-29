@@ -7,7 +7,7 @@ Code modules are: functions, classes, variables, etc.
 from collections import defaultdict
 from ast import NodeVisitor, FunctionDef, Return, ClassDef, get_docstring
 
-from refactoring.services.nodes import FunctionNode, ClassNode
+from refactoring.services.code_items import FunctionItem, ClassItem
 
 
 def get_action_type(action: Return) -> str:
@@ -61,11 +61,11 @@ class CodeParser(NodeVisitor):
         """Parse function definition and add to all functions"""
 
         self.code_modules['functions'].append(
-            FunctionNode({
+            FunctionItem({
                 'name': function_definition.name,
                 'type': get_function_type(function_definition.body),
                 'docstring': get_docstring(function_definition),
-                'type_annotation': function_definition.returns,
+                'type_hint': function_definition.returns,
                 'args': function_definition.args.args,
             }),
         )
@@ -74,7 +74,7 @@ class CodeParser(NodeVisitor):
         """Parse class definition and add to all classes"""
 
         self.code_modules['classes'].append(
-            ClassNode({
+            ClassItem({
                 'name': class_definition.name,
                 'docstring': get_docstring(class_definition),
             }),

@@ -6,8 +6,8 @@ from refactoring.services.constants import (
     ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
     ERROR_CAMEL_CASE_CLASSES, ERROR_DOCUMENTATION_FOR_FUNCTION,
     ERROR_DOCUMENTATION_FOR_CLASS,
-    ERROR_TYPE_ANNOTATION_FOR_FUNCTION,
-    ERROR_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT,
+    ERROR_TYPE_HINT_FOR_FUNCTION,
+    ERROR_TYPE_HINT_FOR_FUNCTION_ARGUMENT,
 )
 
 
@@ -58,6 +58,8 @@ class CodeRulesChecker:
 
     def __init__(self, code_modules: dict):
         self.code_modules = code_modules
+        print('AAAAAAAAAAAA')
+        print(self.code_modules['functions'][0].docstring)
         self.errors = defaultdict(list)
 
     def _check_all_rules(self) -> None:
@@ -68,8 +70,8 @@ class CodeRulesChecker:
         self.__functions_naming_style_is_snake_case()
         self.__classes_naming_style_is_camel_case()
         self.__all_modules_have_documentation()
-        self.__all_functions_have_type_annotation()
-        self.__all_functions_have_type_annotation_for_arguments()
+        self.__all_functions_have_type_hint()
+        self.__all_functions_have_type_hint_for_arguments()
 
     @property
     def __functions(self) -> tuple:
@@ -126,23 +128,23 @@ class CodeRulesChecker:
                     ERROR_DOCUMENTATION_FOR_CLASS
                 ].append(class_.name)
 
-    def __all_functions_have_type_annotation_for_arguments(self) -> None:
+    def __all_functions_have_type_hint_for_arguments(self) -> None:
         """Check that all functions have type annotation for arguments"""
 
         for func in self.__functions:
             for arg in func.args:
                 if not arg.annotation:
                     self.errors[
-                        ERROR_TYPE_ANNOTATION_FOR_FUNCTION_ARGUMENT
+                        ERROR_TYPE_HINT_FOR_FUNCTION_ARGUMENT
                     ].append(f'аргумент "{arg.arg}" для функции {func.name}')
 
-    def __all_functions_have_type_annotation(self) -> None:
+    def __all_functions_have_type_hint(self) -> None:
         """Check that all functions have type annotation (e.g. -> str)"""
 
         for func in self.__functions:
-            if not func.type_annotation:
+            if not func.type_hint:
                 self.errors[
-                    ERROR_TYPE_ANNOTATION_FOR_FUNCTION
+                    ERROR_TYPE_HINT_FOR_FUNCTION
                 ].append(func.name)
 
     def __functions_naming_style_is_snake_case(self) -> None:
