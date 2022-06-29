@@ -31,14 +31,14 @@ def _get_error_if_code_invalid(code: bytes | str) -> str | None:
     return error
 
 
-def get_results_refactoring_response(code: bytes | str) -> JsonResponse:
-    """Return response with recommendations or error"""
+def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
+    """Return response with recommendations or with error"""
 
     code_error = _get_error_if_code_invalid(code)
 
     if code_error:
         results = {'error': code_error}
     else:
-        results = {'code_recommendations': get_code_recommendations(code)}
+        results = {'recommendations': get_code_recommendations(code)}
 
     return JsonResponse(results)

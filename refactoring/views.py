@@ -14,7 +14,7 @@ from dicttoxml import dicttoxml
 
 from refactoring.models import RefactoringRecommendation
 from refactoring.services.utils import (
-    get_code_recommendations, get_results_refactoring_response,
+    get_code_recommendations, get_recommendations_or_error_response,
 )
 
 
@@ -81,7 +81,7 @@ def refactor_code(request: WSGIRequest) -> JsonResponse:
 
     code = request.GET.get('code', '')
 
-    return get_results_refactoring_response(code)
+    return get_recommendations_or_error_response(code)
 
 
 @login_required()
