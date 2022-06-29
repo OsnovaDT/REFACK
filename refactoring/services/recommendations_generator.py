@@ -53,17 +53,15 @@ class NamingStyle:
     camel_case = 'Camel case'
 
 
-class CodeRulesChecker:
-    """Check code on clean code rules"""
+class RecommendationsGenerator:
+    """Check code on clean code rules and generate recommendations"""
 
     def __init__(self, code_modules: dict):
         self.code_modules = code_modules
-        print('AAAAAAAAAAAA')
-        print(self.code_modules['functions'][0].docstring)
-        self.errors = defaultdict(list)
+        self.__recommendations = defaultdict(list)
 
-    def _check_all_rules(self) -> None:
-        """Check code for all the rules"""
+    def generate(self) -> None:
+        """Check code for all the rules and generate recommendations"""
 
         self.__get_functions_starts_with_get()
         self.__bool_functions_starts_with_is()
@@ -118,13 +116,13 @@ class CodeRulesChecker:
 
         for func in self.__functions:
             if not func.docstring:
-                self.errors[
+                self.__recommendations[
                     ERROR_DOCUMENTATION_FOR_FUNCTION
                 ].append(func.name)
 
         for class_ in self.__classes:
             if not class_.docstring:
-                self.errors[
+                self.__recommendations[
                     ERROR_DOCUMENTATION_FOR_CLASS
                 ].append(class_.name)
 
@@ -134,7 +132,7 @@ class CodeRulesChecker:
         for func in self.__functions:
             for arg in func.args:
                 if not arg.annotation:
-                    self.errors[
+                    self.__recommendations[
                         ERROR_TYPE_HINT_FOR_FUNCTION_ARGUMENT
                     ].append(f'аргумент "{arg.arg}" для функции {func.name}')
 
@@ -143,7 +141,7 @@ class CodeRulesChecker:
 
         for func in self.__functions:
             if not func.type_hint:
-                self.errors[
+                self.__recommendations[
                     ERROR_TYPE_HINT_FOR_FUNCTION
                 ].append(func.name)
 
@@ -154,7 +152,7 @@ class CodeRulesChecker:
             naming_style = self.__get_naming_style(func.name)
 
             if naming_style != NamingStyle.snake_case:
-                self.errors[ERROR_SNAKE_CASE_FUNCTIONS].append(func.name)
+                self.__recommendations[ERROR_SNAKE_CASE_FUNCTIONS].append(func.name)
 
     def __classes_naming_style_is_camel_case(self) -> None:
         """Check that classes have Camel case naming style"""
@@ -163,7 +161,7 @@ class CodeRulesChecker:
             naming_style = self.__get_naming_style(class_.name)
 
             if naming_style != NamingStyle.camel_case:
-                self.errors[ERROR_CAMEL_CASE_CLASSES].append(class_.name)
+                self.__recommendations[ERROR_CAMEL_CASE_CLASSES].append(class_.name)
 
     def __get_functions_starts_with_get(self) -> None:
         """Check that return functions start with the «get» prefix
@@ -179,7 +177,7 @@ class CodeRulesChecker:
         for func in self.__functions:
             if func.type == 'return' and \
                     not is_get_function_correct(func.name, func.type):
-                self.errors[ERROR_PREFIX_GET].append(func.name)
+                self.__recommendations[ERROR_PREFIX_GET].append(func.name)
 
     def __bool_functions_starts_with_is(self) -> None:
         """Check that bool return functions start with the «is» prefix
@@ -195,4 +193,10 @@ class CodeRulesChecker:
         for func in self.__functions:
             if func.type == 'return bool' \
                     and not is_bool_function_correct(func.name, func.type):
-                self.errors[ERROR_PREFIX_IS].append(func.name)
+                self.__recommendations[ERROR_PREFIX_IS].append(func.name)
+
+    @property
+    def recommendations(self) -> dict:
+        """Refactoring recommendations"""
+
+        return self.__recommendations

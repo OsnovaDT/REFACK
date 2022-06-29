@@ -14,17 +14,18 @@
         - wsgi.py ✅
     3. Отрефакторить приложение refactoring
         - tests/ ✅
-            - constants.py ✅
             - test_code_inspector.py ✅
             - test_views.py ✅
+            - constants.py ✅
         - services/
-            - code_inspector.py
+            - code_handler.py ✅
+            - code_items.py ✅
             - code_parser.py
-            - nodes.py
+            - constants.py
+            - recommendations_generator.py
             - utils.py ✅
         - admin.py ✅
         - apps.py ✅
-        - constants.py ✅
         - models.py ✅
         - urls.py ✅
         - views.py
@@ -75,8 +76,8 @@
             - is_get_function_correct
             - CodeInspector
             - NamingStyle
-            - CodeRulesChecker
-                - _check_all_rules
+            - RecommendationsGenerator
+                - _generate
                 - __functions
                 - __classes
                 - __get_naming_style

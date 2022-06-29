@@ -1,23 +1,33 @@
-"""Class that inspect the code and save it's errors"""
+"""Handle user's code.
+
+1. Parse the code;
+2. Generate refactoring recommendations.
+
+"""
 
 from ast import parse
 
 from refactoring.services.code_parser import CodeParser
-from refactoring.services.rules_checker import CodeRulesChecker
+from refactoring.services.recommendations_generator import (
+    RecommendationsGenerator,
+)
 
 
 class CodeHandler:
-    """Parse the code, check it on rules and save errors"""
+    """Contain user's code recommendations"""
 
     def __init__(self, code: str):
-        code_parser = CodeParser()
-        code_parser.visit(parse(code))
+        parser = CodeParser()
+        parser.visit(parse(code))
 
-        self.__code_rules_checker = CodeRulesChecker(code_parser.modules)
-        self.__code_rules_checker._check_all_rules()
+        self.__recommendations_generator = RecommendationsGenerator(
+            parser.code_items
+        )
 
     @property
     def recommendations(self) -> dict:
-        """Code recommendations received from code checker"""
+        """Recommendations for refactoring user's code"""
 
-        return dict(self.__code_rules_checker.errors)
+        self.__recommendations_generator.generate()
+
+        return self.__recommendations_generator.recommendations

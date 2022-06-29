@@ -55,12 +55,12 @@ class CodeParser(NodeVisitor):
     """Parse the code and save it's modules"""
 
     def __init__(self):
-        self.code_modules = defaultdict(list)
+        self.__code_items = defaultdict(list)
 
     def visit_FunctionDef(self, function_definition: FunctionDef):
         """Parse function definition and add to all functions"""
 
-        self.code_modules['functions'].append(
+        self.__code_items['functions'].append(
             FunctionItem({
                 'name': function_definition.name,
                 'type': get_function_type(function_definition.body),
@@ -73,7 +73,7 @@ class CodeParser(NodeVisitor):
     def visit_ClassDef(self, class_definition: ClassDef):
         """Parse class definition and add to all classes"""
 
-        self.code_modules['classes'].append(
+        self.__code_items['classes'].append(
             ClassItem({
                 'name': class_definition.name,
                 'docstring': get_docstring(class_definition),
@@ -81,7 +81,7 @@ class CodeParser(NodeVisitor):
         )
 
     @property
-    def modules(self) -> dict:
+    def code_items(self) -> dict:
         """Return code modules"""
 
-        return dict(self.code_modules)
+        return dict(self.__code_items)
