@@ -2,12 +2,10 @@
 
 from collections import defaultdict
 
-from refactoring.services.constants import (
-    ERROR_PREFIX_GET, ERROR_PREFIX_IS, ERROR_SNAKE_CASE_FUNCTIONS,
-    ERROR_CAMEL_CASE_CLASSES, ERROR_DOCUMENTATION_FOR_FUNCTION,
-    ERROR_DOCUMENTATION_FOR_CLASS,
-    ERROR_TYPE_HINT_FOR_FUNCTION,
-    ERROR_TYPE_HINT_FOR_FUNCTION_ARGUMENT,
+from refactoring.services.constants.rules import (
+    PREFIX_GET, PREFIX_IS, SNAKE_CASE_STYLE, CAMEL_CASE_STYLE,
+    FUNCTION_DOCUMENTATION, CLASS_DOCUMENTATION, FUNCTION_TYPE_HINT,
+    ARGUMENT_TYPE_HINT,
 )
 
 
@@ -117,13 +115,13 @@ class RecommendationsGenerator:
         for func in self.__functions:
             if not func.docstring:
                 self.__recommendations[
-                    ERROR_DOCUMENTATION_FOR_FUNCTION
+                    FUNCTION_DOCUMENTATION
                 ].append(func.name)
 
         for class_ in self.__classes:
             if not class_.docstring:
                 self.__recommendations[
-                    ERROR_DOCUMENTATION_FOR_CLASS
+                    CLASS_DOCUMENTATION
                 ].append(class_.name)
 
     def __all_functions_have_type_hint_for_arguments(self) -> None:
@@ -133,7 +131,7 @@ class RecommendationsGenerator:
             for arg in func.args:
                 if not arg.annotation:
                     self.__recommendations[
-                        ERROR_TYPE_HINT_FOR_FUNCTION_ARGUMENT
+                        ARGUMENT_TYPE_HINT
                     ].append(f'аргумент "{arg.arg}" для функции {func.name}')
 
     def __all_functions_have_type_hint(self) -> None:
@@ -142,7 +140,7 @@ class RecommendationsGenerator:
         for func in self.__functions:
             if not func.type_hint:
                 self.__recommendations[
-                    ERROR_TYPE_HINT_FOR_FUNCTION
+                    FUNCTION_TYPE_HINT
                 ].append(func.name)
 
     def __functions_naming_style_is_snake_case(self) -> None:
@@ -152,7 +150,7 @@ class RecommendationsGenerator:
             naming_style = self.__get_naming_style(func.name)
 
             if naming_style != NamingStyle.snake_case:
-                self.__recommendations[ERROR_SNAKE_CASE_FUNCTIONS].append(func.name)
+                self.__recommendations[SNAKE_CASE_STYLE].append(func.name)
 
     def __classes_naming_style_is_camel_case(self) -> None:
         """Check that classes have Camel case naming style"""
@@ -161,7 +159,7 @@ class RecommendationsGenerator:
             naming_style = self.__get_naming_style(class_.name)
 
             if naming_style != NamingStyle.camel_case:
-                self.__recommendations[ERROR_CAMEL_CASE_CLASSES].append(class_.name)
+                self.__recommendations[CAMEL_CASE_STYLE].append(class_.name)
 
     def __get_functions_starts_with_get(self) -> None:
         """Check that return functions start with the «get» prefix
@@ -177,7 +175,7 @@ class RecommendationsGenerator:
         for func in self.__functions:
             if func.type == 'return' and \
                     not is_get_function_correct(func.name, func.type):
-                self.__recommendations[ERROR_PREFIX_GET].append(func.name)
+                self.__recommendations[PREFIX_GET].append(func.name)
 
     def __bool_functions_starts_with_is(self) -> None:
         """Check that bool return functions start with the «is» prefix
@@ -193,7 +191,7 @@ class RecommendationsGenerator:
         for func in self.__functions:
             if func.type == 'return bool' \
                     and not is_bool_function_correct(func.name, func.type):
-                self.__recommendations[ERROR_PREFIX_IS].append(func.name)
+                self.__recommendations[PREFIX_IS].append(func.name)
 
     @property
     def recommendations(self) -> dict:
