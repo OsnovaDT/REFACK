@@ -13,7 +13,7 @@ from django.http import JsonResponse, FileResponse
 from dicttoxml import dicttoxml
 
 from refactoring.models import RefactoringRecommendation
-from refactoring.services.utils import (
+from refactoring.services import (
     get_code_recommendations, get_recommendations_or_error_response,
 )
 

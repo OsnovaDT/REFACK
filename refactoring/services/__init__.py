@@ -1,4 +1,4 @@
-"""Other business logic"""
+"""Main business logic"""
 
 from ast import NodeVisitor, parse
 
