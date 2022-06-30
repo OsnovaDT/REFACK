@@ -1,10 +1,9 @@
 """Main business logic"""
 
-from ast import NodeVisitor, parse
-
 from django.http import JsonResponse
 
 from refactoring.services.code_handler import CodeHandler
+from refactoring.services.utils import get_error_if_code_invalid
 
 
 def get_code_recommendations(code: bytes | str) -> dict:
@@ -18,23 +17,10 @@ def get_code_recommendations(code: bytes | str) -> dict:
     }
 
 
-def _get_error_if_code_invalid(code: bytes | str) -> str | None:
-    """Return error if code is invalid else None"""
-
-    error = None
-
-    try:
-        NodeVisitor().visit(parse(code))
-    except Exception as exception_error:
-        error = str(exception_error)
-
-    return error
-
-
 def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
     """Return response with recommendations or with error"""
 
-    code_error = _get_error_if_code_invalid(code)
+    code_error = get_error_if_code_invalid(code)
 
     if code_error:
         results = {'error': code_error}
