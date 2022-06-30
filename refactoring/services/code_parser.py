@@ -1,87 +1,107 @@
-"""Class that parse the code and save it's modules
+"""Parse user's code and save it's items.
 
-Code modules are: functions, classes, variables, etc.
+For parsing uses «ast» module.
+
+Code items:
+1. Functions (FunctionItem);
+2. Classes (ClassItem).
 
 """
 
 from collections import defaultdict
-from ast import NodeVisitor, FunctionDef, Return, ClassDef, get_docstring
+from ast import (
+    NodeVisitor, FunctionDef, Return, ClassDef, get_docstring, Pass
+)
 
 from refactoring.services.code_items import FunctionItem, ClassItem
-
-
-def get_action_type(action: Return) -> str:
-    """Return type of the code action"""
-
-    try:
-        action_value = action.value.value
-
-        if isinstance(action_value, bool):
-            action_type = 'return bool'
-        else:
-            action_type = 'return'
-    except:
-        action_type = ''
-
-    return str(action_type)
-
-
-def get_function_type(function_body: list) -> str:
-    """Return type of function
-
-    Types:
-    1) return - function returns a value (exclude boolean):
-        1. Has action with Return type
-        2. Type of the action is not bool
-    2) return bool - function returns boolean:
-        1. Has action with Return type
-        2. Type of the action is bool
-
-    """
-
-    function_type = ''
-
-    for action in function_body:
-        if isinstance(action, Return):
-            # Обработка исключения для get_action_type
-            function_type = get_action_type(action)
-
-            break
-
-    return function_type
+from refactoring.services.constants.return_types import (
+    BOOL_TYPE, NOT_BOOL_TYPE,
+)
 
 
 class CodeParser(NodeVisitor):
-    """Parse the code and save it's modules"""
+    """Parse user's code, save and return it's items"""
 
     def __init__(self):
         self.__code_items = defaultdict(list)
 
-    def visit_FunctionDef(self, function_definition: FunctionDef):
-        """Parse function definition and add to all functions"""
+    @staticmethod
+    def __get_type_of_return(return_: Return) -> str:
+        """Get type of code returned.
+
+        Types:
+        1. bool (e.g. return True, return False)
+        2. not bool (e.g. return 1, return 1.23, return "string")
+
+        """
+
+        value_of_return = return_.value.value
+
+        if isinstance(value_of_return, bool):
+            type_of_return = BOOL_TYPE
+        else:
+            type_of_return = NOT_BOOL_TYPE
+
+        return type_of_return
+
+    def __get_function_type(self, function_body: list) -> str:
+        """Return type of the function.
+
+        Types:
+        1. bool - function returns boolean
+        2. not bool - function returns not boolean
+        3. pass - function uses pass operator
+
+        """
+
+        function_type = ''
+
+        for action in function_body:
+            if isinstance(action, Return):
+                function_type = self.__get_type_of_return(action)
+
+                break
+
+            if isinstance(action, Pass):
+                function_type = 'pass'
+
+        return function_type
+
+    def visit_FunctionDef(self, function: FunctionDef) -> None:
+        """Function parser.
+
+        1. Create FunctionItem object for the function;
+        2. Add it to all function items.
+
+        """
 
         self.__code_items['functions'].append(
             FunctionItem({
-                'name': function_definition.name,
-                'type': get_function_type(function_definition.body),
-                'docstring': get_docstring(function_definition),
-                'type_hint': function_definition.returns,
-                'args': function_definition.args.args,
+                'name': function.name,
+                'type': self.__get_function_type(function.body),
+                'docstring': get_docstring(function),
+                'type_hint': function.returns,
+                'args': function.args.args,
             }),
         )
 
-    def visit_ClassDef(self, class_definition: ClassDef):
-        """Parse class definition and add to all classes"""
+    def visit_ClassDef(self, class_: ClassDef) -> None:
+        """Class parser.
+
+        1. Create ClassItem object for the class;
+        2. Add it to all class items.
+
+        """
 
         self.__code_items['classes'].append(
             ClassItem({
-                'name': class_definition.name,
-                'docstring': get_docstring(class_definition),
+                'name': class_.name,
+                'docstring': get_docstring(class_),
             }),
         )
 
     @property
     def code_items(self) -> dict:
-        """Return code modules"""
+        """Return code items (functions, classes, etc.)"""
 
         return dict(self.__code_items)

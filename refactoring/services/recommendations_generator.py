@@ -7,6 +7,9 @@ from refactoring.services.constants.rules import (
     FUNCTION_DOCUMENTATION, CLASS_DOCUMENTATION, FUNCTION_TYPE_HINT,
     ARGUMENT_TYPE_HINT,
 )
+from refactoring.services.constants.return_types import (
+    BOOL_TYPE, NOT_BOOL_TYPE,
+)
 
 
 def is_bool_function_correct(name: str, type_: str) -> bool:
@@ -16,7 +19,7 @@ def is_bool_function_correct(name: str, type_: str) -> bool:
 
     match name, type_:
         case str(name), str(type_):
-            is_function_correct = type_ == 'return bool' \
+            is_function_correct = type_ == BOOL_TYPE \
                 and name.startswith('is') \
                 and name != 'is' \
                 and name != 'is_'
@@ -33,7 +36,7 @@ def is_get_function_correct(name: str, type_: str) -> bool:
 
     match name, type_:
         case str(name), str(type_):
-            is_function_correct = type_ == 'return' \
+            is_function_correct = type_ == NOT_BOOL_TYPE \
                 and name.startswith('get') \
                 and name != 'get' \
                 and name != 'get_'
@@ -173,7 +176,7 @@ class RecommendationsGenerator:
         """
 
         for func in self.__functions:
-            if func.type == 'return' and \
+            if func.type == NOT_BOOL_TYPE and \
                     not is_get_function_correct(func.name, func.type):
                 self.__recommendations[PREFIX_GET].append(func.name)
 
@@ -189,7 +192,7 @@ class RecommendationsGenerator:
         """
 
         for func in self.__functions:
-            if func.type == 'return bool' \
+            if func.type == BOOL_TYPE \
                     and not is_bool_function_correct(func.name, func.type):
                 self.__recommendations[PREFIX_IS].append(func.name)
 

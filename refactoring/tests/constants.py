@@ -34,7 +34,7 @@ DIFFERENT_VALUES = (
 
 # For testing function is_bool_function_correct
 
-BOOL_FUNCTION_TYPE = 'return bool'
+BOOL_FUNCTION_TYPE = 'bool'
 
 CORRECT_BOOL_FUNCTIONS = (
     'is_correct', 'is_not_correct', 'is_value_set', 'is_value_not_set',
@@ -55,7 +55,7 @@ INCORRECT_BOOL_FUNCTIONS = DIFFERENT_VALUES + (
 
 # For testing function is_get_function_correct
 
-GET_FUNCTION_TYPE = 'return'
+NOT_BOOL_FUNCTION_TYPE = 'not bool'
 
 CORRECT_GET_FUNCTIONS = (
     'get_value', 'get_value_from_object', 'get_very_super_long_user_login',
