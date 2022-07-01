@@ -8,9 +8,7 @@
 from ast import parse
 
 from refactoring.services.code_parser import CodeParser
-from refactoring.services.recommendations_generator import (
-    RecommendationsGenerator,
-)
+from refactoring.services.rules_checker import CleanCodeRulesChecker
 
 
 class CodeHandler:
@@ -20,7 +18,7 @@ class CodeHandler:
         parser = CodeParser()
         parser.visit(parse(code))
 
-        self.__recommendations_generator = RecommendationsGenerator(
+        self.__rules_checker = CleanCodeRulesChecker(
             parser.code_items
         )
 
@@ -28,6 +26,4 @@ class CodeHandler:
     def recommendations(self) -> dict:
         """Recommendations for refactoring user's code"""
 
-        self.__recommendations_generator.generate()
-
-        return self.__recommendations_generator.recommendations
+        return self.__rules_checker.recommendations

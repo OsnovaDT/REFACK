@@ -1,10 +1,8 @@
 1) РЕФАКТОРИНГ
     1. Отрефакторить приложение account ✅
         - tests/ ✅
-        - admin.py ✅
         - apps.py ✅
         - forms.py ✅
-        - models.py ✅
         - urls.py ✅
         - views.py ✅
     2. Отрефакторить проект config ✅
@@ -18,11 +16,12 @@
             - test_views.py ✅
             - constants.py ✅
         - services/
+            - __init__.py ✅
             - code_handler.py ✅
             - code_items.py ✅
-            - code_parser.py
-            - constants.py
-            - recommendations_generator.py
+            - code_parser.py ✅
+            - constants.py ✅
+            - rules_checker.py ✅
             - utils.py ✅
         - admin.py ✅
         - apps.py ✅
@@ -87,8 +86,8 @@
                 - __all_functions_have_type_hint
                 - __functions_naming_style_is_snake_case
                 - __classes_naming_style_is_camel_case
-                - __get_functions_starts_with_get
-                - __bool_functions_starts_with_is
+                - __not_bool_functions_start_with_get
+                - __bool_functions_start_with_is
         - code_parser.py
             - get_action_type
             - get_function_type

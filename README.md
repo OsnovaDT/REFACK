@@ -14,8 +14,8 @@ sudo docker-compose up --build
 # Used refactoring rules
 * Names of functions and methods that return bool should start with «is» prefix
 * Names of functions and methods that return another type should start with «get» prefix
-* All functions and methods have «Snake case» naming style
-* All classes have «Camel case» naming style
+* All functions and methods have snake_case naming style
+* All classes have CapWords naming style
 * Every function and class has documentation
 * Every function has type hinting
 * Every function's argument has type hinting

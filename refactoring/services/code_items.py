@@ -20,6 +20,12 @@ class DefaultItem:
     def __repr__(self) -> str | None:
         return self.name
 
+    def __eq__(self, item_2) -> bool:
+        return self.name == item_2.name
+
+    def __hash__(self) -> int:
+        return hash(str(self.name))
+
     def _get_attr(self, attr_name: str) -> str | list | None:
         """Return attr from item's attributes or None"""
 
@@ -45,6 +51,23 @@ class DefaultItem:
 
 class FunctionItem(DefaultItem):
     """Function item"""
+
+    def is_starts_with_prefix(self, prefix: str) -> bool:
+        """Return True if the function name starts with the prefix
+        and is not equal to it.
+
+        """
+
+        match self.name:
+            case str(self.name):
+                is_starts_with_prefix_ = \
+                    self.name.startswith(prefix) \
+                    and self.name != prefix \
+                    and self.name != prefix + '_' 
+            case _:
+                is_starts_with_prefix_ = False
+
+        return is_starts_with_prefix_
 
     @property
     def type(self) -> str | None:
