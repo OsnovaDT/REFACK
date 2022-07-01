@@ -1,4 +1,22 @@
-"""Contain class that checks code on clean code rules"""
+"""Refactoring recommendations generator.
+
+Check user's code on clean code rules and generate recommendations.
+
+Clean code rules:
+1. From PEP8:
+    1) All functions and methods have snake_case naming style;
+    2) All classes have CamelCase naming style;
+    3) All functions, methods and classes have documentation.
+
+2. Others:
+    1) If function / method returns boolean, its name should starts
+        with «is» prefix;
+    2) If function / method returns not boolean, its name should starts
+        with «get» prefix;
+    3) All functions and methods have type hints;
+    4) All arguments for functions / methods have type hints.
+
+"""
 
 from collections import defaultdict
 
