@@ -1,4 +1,6 @@
-"""Constants with refactoring rules"""
+"""Constants of services app"""
+
+# REFACTORING RULES
 
 # Naming
 
@@ -23,3 +25,20 @@ CLASS_DOCUMENTATION = "Для классов не указана докумен�
 FUNCTION_TYPE_HINT = "Для функций не указан type hint"
 
 ARGUMENT_TYPE_HINT = "Для аргументов функций не указан type hint"
+
+
+# TYPES OF RETURN COMMAND
+
+BOOL_TYPE = 'bool'
+
+NOT_BOOL_TYPE = 'not bool'
+
+
+# NAMING STYLES
+
+class NamingStyle:
+    """Contain naming styles for functions, classes, methods, etc."""
+
+    SNAKE_CASE = 'Snake Case'
+
+    CAMEL_CASE = 'Camel case'

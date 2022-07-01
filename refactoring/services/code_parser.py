@@ -14,9 +14,7 @@ from ast import (
 )
 
 from refactoring.services.code_items import FunctionItem, ClassItem
-from refactoring.services.constants.return_types import (
-    BOOL_TYPE, NOT_BOOL_TYPE,
-)
+from refactoring.services.constants import BOOL_TYPE, NOT_BOOL_TYPE
 
 
 class CodeParser(NodeVisitor):

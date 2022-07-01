@@ -2,13 +2,10 @@
 
 from collections import defaultdict
 
-from refactoring.services.constants.rules import (
+from refactoring.services.constants import (
     PREFIX_GET, PREFIX_IS, SNAKE_CASE_STYLE, CAMEL_CASE_STYLE,
     FUNCTION_DOCUMENTATION, CLASS_DOCUMENTATION, FUNCTION_TYPE_HINT,
-    ARGUMENT_TYPE_HINT,
-)
-from refactoring.services.constants.return_types import (
-    BOOL_TYPE, NOT_BOOL_TYPE,
+    ARGUMENT_TYPE_HINT, BOOL_TYPE, NOT_BOOL_TYPE, NamingStyle,
 )
 
 
@@ -44,14 +41,6 @@ def is_get_function_correct(name: str, type_: str) -> bool:
             is_function_correct = False
 
     return bool(is_function_correct)
-
-
-class NamingStyle:
-    """Naming styles for functions, methods, classes, etc"""
-
-    snake_case = 'Snake Case'
-
-    camel_case = 'Camel case'
 
 
 class RecommendationsGenerator:
@@ -106,9 +95,9 @@ class RecommendationsGenerator:
         naming_style = ''
 
         if name.islower() and '_' in name:
-            naming_style = NamingStyle.snake_case
+            naming_style = NamingStyle.SNAKE_CASE
         else:
-            naming_style = NamingStyle.camel_case
+            naming_style = NamingStyle.CAMEL_CASE
 
         return naming_style
 
@@ -152,7 +141,7 @@ class RecommendationsGenerator:
         for func in self.__functions:
             naming_style = self.__get_naming_style(func.name)
 
-            if naming_style != NamingStyle.snake_case:
+            if naming_style != NamingStyle.SNAKE_CASE:
                 self.__recommendations[SNAKE_CASE_STYLE].append(func.name)
 
     def __classes_naming_style_is_camel_case(self) -> None:
@@ -161,7 +150,7 @@ class RecommendationsGenerator:
         for class_ in self.__classes:
             naming_style = self.__get_naming_style(class_.name)
 
-            if naming_style != NamingStyle.camel_case:
+            if naming_style != NamingStyle.CAMEL_CASE:
                 self.__recommendations[CAMEL_CASE_STYLE].append(class_.name)
 
     def __get_functions_starts_with_get(self) -> None:

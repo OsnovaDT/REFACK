@@ -1,4 +1,4 @@
-"""Main business logic"""
+"""Business logic used in views"""
 
 from django.http import JsonResponse
 
