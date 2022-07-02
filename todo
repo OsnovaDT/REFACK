@@ -15,7 +15,7 @@
             - test_code_inspector.py ✅
             - test_views.py ✅
             - constants.py ✅
-        - services/
+        - services/ ✅
             - __init__.py ✅
             - code_handler.py ✅
             - code_items.py ✅
@@ -28,9 +28,9 @@
         - models.py ✅
         - urls.py ✅
         - views.py
-        - Переименовать файлы в соответствии с их наполнением
+        - Переименовать файлы в соответствии с их наполнением ✅
         - Объединить миграции
-        - Вынести бизнес-логику в services/
+        - Вынести бизнес-логику в services/ ✅
     4. Отрефакторить статику
         - js/scripts.js
         - styles/styles.css
