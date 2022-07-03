@@ -1,4 +1,4 @@
-"""Utils for main business logic functions"""
+"""Utils for business logic"""
 
 from ast import NodeVisitor, parse
 

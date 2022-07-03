@@ -15,10 +15,6 @@
         - urls.py ✅
         - wsgi.py ✅
     3. Отрефакторить приложение refactoring
-        - tests/ ✅
-            - test_code_inspector.py ✅
-            - test_views.py ✅
-            - constants.py ✅
         - services/ ✅
             - __init__.py ✅
             - code_handler.py ✅
@@ -27,11 +23,14 @@
             - constants.py ✅
             - rules_checker.py ✅
             - utils.py ✅
+        - tests/ ✅
+            - constants.py ✅
+            - test_urls.py ✅
         - admin.py ✅
         - apps.py ✅
         - models.py ✅
         - urls.py ✅
-        - views.py
+        - views.py ✅
         - Переименовать файлы в соответствии с их наполнением ✅
         - Объединить миграции ✅
         - Вынести бизнес-логику в services/ ✅
@@ -127,8 +126,8 @@
                 - Наличие LoginRequiredMixin
             - refactor_code_from_file
             - refactor_code
-            - save_recommendations
-            - download_results_in_json
+            - save_recommendation
+            - download_recommendations_in_json
             - download_results_in_pdf
             - download_results_in_xml
     3. Написать тесты для static/js/scripts.js

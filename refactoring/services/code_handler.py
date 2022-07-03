@@ -12,15 +12,13 @@ from refactoring.services.rules_checker import CleanCodeRulesChecker
 
 
 class CodeHandler:
-    """Contain user's code recommendations"""
+    """Parse code and return refactoring recommendations"""
 
     def __init__(self, code: str):
         parser = CodeParser()
         parser.visit(parse(code))
 
-        self.__rules_checker = CleanCodeRulesChecker(
-            parser.code_items
-        )
+        self.__rules_checker = CleanCodeRulesChecker(parser.code_items)
 
     @property
     def recommendations(self) -> dict:

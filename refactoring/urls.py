@@ -4,15 +4,17 @@ from django.urls import path
 
 from refactoring.views import (
     ManualCodeInputView, IndexView, InstructionView, RulesView,
-    FileCodeInputView, SavedRecommendationsListView, download_results_in_json,
-    download_results_in_pdf, save_recommendations, download_results_in_xml,
-    refactor_code_from_file, refactor_code,
+    FileCodeInputView, RefactoringRecommendationListView,
+    download_recommendations_in_json, download_results_in_pdf,
+    save_recommendation, download_results_in_xml, refactor_code_from_file,
+    refactor_code,
 )
 
 
 app_name = 'refactoring'
 
 urlpatterns = [
+    # Index page
     path(
         '',
         IndexView.as_view(),
@@ -37,7 +39,7 @@ urlpatterns = [
 
     path(
         'saved_recommendations/',
-        SavedRecommendationsListView.as_view(),
+        RefactoringRecommendationListView.as_view(),
         name='saved_recommendations',
     ),
 
@@ -73,7 +75,7 @@ urlpatterns = [
 
     path(
         'download_json/',
-        download_results_in_json,
+        download_recommendations_in_json,
         name='download_json',
     ),
 
@@ -92,8 +94,8 @@ urlpatterns = [
     # Recommendations saving
 
     path(
-        'save_recommendations/',
-        save_recommendations,
-        name='save_recommendations',
+        'save_recommendation/',
+        save_recommendation,
+        name='save_recommendation',
     ),
 ]

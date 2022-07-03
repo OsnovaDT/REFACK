@@ -6,8 +6,8 @@ from refactoring.models import RefactoringRecommendation
 
 
 @register(RefactoringRecommendation)
-class RefactoringRecommendation(ModelAdmin):
-    """Admin for RefactoringRecommendation model"""
+class RefactoringRecommendationAdmin(ModelAdmin):
+    """Admin panel for RefactoringRecommendation model"""
 
     list_display = ('user', 'code', 'recommendation', 'date')
 

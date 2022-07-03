@@ -3,8 +3,8 @@
 For parsing uses «ast» module.
 
 Code items:
-1. Functions (FunctionItem);
-2. Classes (ClassItem).
+1. Function (FunctionItem);
+2. Class (ClassItem).
 
 """
 
@@ -28,8 +28,8 @@ class CodeParser(NodeVisitor):
         """Get type of code returned.
 
         Types:
-        1. bool (e.g. return True, return False)
-        2. not bool (e.g. return 1, return 1.23, return "string")
+        1. bool (e.g. return True, return False);
+        2. not bool (e.g. return 1, return 1.23, return "string").
 
         """
 
@@ -46,9 +46,9 @@ class CodeParser(NodeVisitor):
         """Return type of the function.
 
         Types:
-        1. bool - function returns boolean
-        2. not bool - function returns not boolean
-        3. pass - function uses pass operator
+        1. bool - function returns boolean;
+        2. not bool - function returns not boolean;
+        3. pass - function uses pass operator.
 
         """
 
@@ -100,6 +100,6 @@ class CodeParser(NodeVisitor):
 
     @property
     def code_items(self) -> dict:
-        """Return code items (functions, classes, etc.)"""
+        """Return code items"""
 
         return dict(self.__code_items)

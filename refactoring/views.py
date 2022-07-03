@@ -2,65 +2,67 @@
 
 from json import loads
 
+from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.handlers.wsgi import WSGIRequest
+from django.http import FileResponse, JsonResponse
+from django.http.response import HttpResponse
+from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from django.shortcuts import render
-from django.core.handlers.wsgi import WSGIRequest
-from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, FileResponse
 from dicttoxml import dicttoxml
 
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
     get_code_recommendations, get_recommendations_or_error_response,
+    get_code_to_display_in_html, get_recommendation_to_display_in_html,
+    get_str_for_deserialization,
 )
+from refactoring.constants import FILE_DEFAULT_DISPOSITION
 
 
-class SavedRecommendationsListView(LoginRequiredMixin, ListView):
-    """User's saved recommendations"""
-
-    template_name = 'saved_recommendations.html'
-
-    context_object_name = 'recommendations'
-
-    def get_queryset(self):
-        return RefactoringRecommendation.objects.filter(user=self.request.user)
+# Code input
 
 
 class ManualCodeInputView(TemplateView):
-    """View for manual code input"""
+    """Manual code input"""
 
     template_name = 'manual_code_input.html'
 
 
 class FileCodeInputView(TemplateView):
-    """View for file code input"""
+    """File code input"""
 
     template_name = 'file_code_input.html'
 
 
+# Index, instruction and rules pages
+
+
 class IndexView(LoginRequiredMixin, TemplateView):
-    """View for index page"""
+    """Index page"""
 
     template_name = 'index.html'
 
 
 class InstructionView(LoginRequiredMixin, TemplateView):
-    """View for instruction page"""
+    """Instruction page"""
 
     template_name = 'instruction.html'
 
 
 class RulesView(LoginRequiredMixin, TemplateView):
-    """View for rules page"""
+    """Rules page"""
 
     template_name = 'rules.html'
 
 
+# Refactoring
+
+
 @login_required()
-def refactor_code_from_file(request: WSGIRequest):
+def refactor_code_from_file(request: WSGIRequest) -> HttpResponse:
     """Refactor code from file"""
 
     code = request.FILES['code_upload'].read().decode('UTF-8')
@@ -77,77 +79,92 @@ def refactor_code_from_file(request: WSGIRequest):
 
 @login_required()
 def refactor_code(request: WSGIRequest) -> JsonResponse:
-    """Refactor code and return recommendations"""
+    """Refactor code and return recommendations or error"""
 
     code = request.GET.get('code', '')
 
     return get_recommendations_or_error_response(code)
 
 
+# Refactoring recommendations
+
+
+class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
+    """Refactoring recommendations owned by the user"""
+
+    template_name = 'saved_recommendations.html'
+
+    context_object_name = 'recommendations'
+
+    def get_queryset(self):
+        return RefactoringRecommendation.objects.filter(
+            user=self.request.user,
+        )
+
+
 @login_required()
-def save_recommendations(request: WSGIRequest) -> JsonResponse:
-    """Save refactoring recommendations for the user"""
+def save_recommendation(request: WSGIRequest) -> JsonResponse:
+    """Save refactoring recommendation for the user"""
 
     recommendation = request.GET.get('recommendation', None)
+
     code = request.GET.get('code', None)
+
     user_login = request.GET.get('user', None)
 
     if recommendation and code and user_login:
         RefactoringRecommendation.objects.create(
             user=get_user_model().objects.get(username=user_login),
-            code=code.replace('\n', '<br>').replace(' ', '&nbsp;'),
-            recommendation=recommendation.replace(', ', '<br><br>')
-            .replace('{', '')
-            .replace('}', '')
-            .replace("'", ''),
+            code=get_code_to_display_in_html(code),
+            recommendation=get_recommendation_to_display_in_html(
+                recommendation,
+            ),
         )
 
     return JsonResponse({})
 
 
 @login_required()
-def download_results_in_json(request: WSGIRequest):
-    """Handler for downloading JSON file with refactoring results"""
+def download_recommendations_in_json(request: WSGIRequest) -> JsonResponse:
+    """Download JSON file with refactoring recommendations"""
 
-    results = request.POST['results']
-    results = results.replace('\'', '\"')
+    recommendations = get_str_for_deserialization(request.POST['results'])
 
     response = JsonResponse(
-        loads(results),
+        loads(recommendations),
         json_dumps_params={'ensure_ascii': False},
     )
-    response['Content-Disposition'] = \
-        'attachment; filename=refactoring_results.json;'
+    response['Content-Disposition'] = FILE_DEFAULT_DISPOSITION + 'json;'
 
     return response
 
 
 @login_required()
-def download_results_in_pdf(request: WSGIRequest):
-    """Handler for downloading PDF file with refactoring results"""
+def download_results_in_pdf(request: WSGIRequest) -> FileResponse:
+    """Download PDF file with refactoring recommendations"""
 
     response = FileResponse(
         request.POST['results'],
         content_type='application/pdf',
     )
-    response['Content-Disposition'] = \
-        'attachment; filename=refactoring_results.pdf;'
+
+    response['Content-Disposition'] = FILE_DEFAULT_DISPOSITION + 'pdf;'
 
     return response
 
 
 @login_required()
-def download_results_in_xml(request: WSGIRequest):
-    """Handler for downloading XML file with refactoring results"""
+def download_results_in_xml(request: WSGIRequest) -> FileResponse:
+    """Download XML file with refactoring recommendations"""
 
-    results = request.POST['results']
-    results = loads(results.replace('\'', '\"'))
+    recommendations = request.POST['results']
+    recommendations = loads(get_str_for_deserialization(recommendations))
 
     response = FileResponse(
-        str(dicttoxml(results)),
+        str(dicttoxml(recommendations)),
         content_type='application/xml',
     )
-    response['Content-Disposition'] = \
-        'attachment; filename=refactoring_results.xml;'
+
+    response['Content-Disposition'] = FILE_DEFAULT_DISPOSITION + 'xml;'
 
     return response

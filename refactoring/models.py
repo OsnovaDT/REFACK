@@ -5,7 +5,7 @@ from django.db import models
 
 
 class RefactoringRecommendation(models.Model):
-    """Saved user's refactoring recommendation"""
+    """Refactoring recommendation that user saved"""
 
     user = models.ForeignKey(
         get_user_model(),
@@ -23,7 +23,7 @@ class RefactoringRecommendation(models.Model):
     )
 
     class Meta:
-        """RefactoringRecommendation model info"""
+        """Info of RefactoringRecommendation model"""
 
         verbose_name = 'Рекомендация по рефакторингу'
 

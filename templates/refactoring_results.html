@@ -6,7 +6,7 @@
     <div class="block_white" style="font-size: 18px;">
         {% if results.items %}
             {# Save link #}
-            <form action="{% url 'refactoring:save_recommendations' %}" method="post" id="save_recommendations_form">
+            <form action="{% url 'refactoring:save_recommendation' %}" method="post" id="save_recommendations_form">
                 {% csrf_token %}
 
                 <input type="hidden" name="recommendation" value="{{ results }}">
@@ -86,7 +86,7 @@
             $('#save_recommendations_form').on('submit', function () {
                 $.ajax({
                     data: $(this).serialize(),
-                    url: "{% url 'refactoring:save_recommendations' %}",
+                    url: "{% url 'refactoring:save_recommendation' %}",
                     success: function (response) {
                         $('#save_recommendations_form').hide()
                     }

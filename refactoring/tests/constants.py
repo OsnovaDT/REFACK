@@ -1,4 +1,4 @@
-"""Constants for testing"""
+"""Constants for testing refactoring app"""
 
 
 class TestClass:

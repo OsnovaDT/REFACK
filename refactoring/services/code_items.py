@@ -1,6 +1,6 @@
 """Contain classes for code's items.
 
-Code item is any code module. E.g. function or class.
+Code item is any code module. E.g. function, variable, class, etc.
 It's used by code parser.
 
 E.g. for function parser actions will be next:
@@ -53,19 +53,21 @@ class FunctionItem(DefaultItem):
     """Function item"""
 
     def is_starts_with_prefix(self, prefix: str) -> bool:
-        """Return True if the function name starts with the prefix
-        and is not equal to it.
+        """Check is the function starts with the prefix.
+
+        Return True if:
+        1. The function name starts with the prefix;
+        2. The function name is not equal to prefix;
+        3. The function name is not equal to prefix + underscore.
 
         """
 
-        match self.name:
-            case str(self.name):
-                is_starts_with_prefix_ = \
-                    self.name.startswith(prefix) \
-                    and self.name != prefix \
-                    and self.name != prefix + '_' 
-            case _:
-                is_starts_with_prefix_ = False
+        if isinstance(prefix, str):
+            is_starts_with_prefix_ = self.name.startswith(prefix) \
+                and self.name != prefix \
+                and self.name != prefix + '_'
+        else:
+            is_starts_with_prefix_ = False
 
         return is_starts_with_prefix_
 
@@ -73,8 +75,8 @@ class FunctionItem(DefaultItem):
     def type(self) -> str | None:
         """Function type.
 
-        All possible types are in services/code_parser.py
-        in «get_function_type» function.
+        All possible types described in services/code_parser.py
+        in CodeParser.__get_function_type method.
 
         """
 
