@@ -8,7 +8,8 @@
         - forms.py ✅
         - urls.py ✅
         - views.py ✅
-    2. Отрефакторить проект config ✅
+    2. Отрефакторить папку проекта - config ✅
+        - .sh ✅
         - asgi.py ✅
         - settings.py ✅
         - urls.py ✅

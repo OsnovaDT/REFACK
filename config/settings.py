@@ -6,7 +6,7 @@ from pathlib import Path
 from decouple import config
 
 
-# IMPORTANT
+# MAIN
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
