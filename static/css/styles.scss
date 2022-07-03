@@ -1,0 +1,172 @@
+// Colors
+
+$green: #15c6b9;
+
+$blue: #01a8e5;
+
+$red: #ee3030;
+
+$white: #fff;
+
+$grey: #e6e6e6;
+
+$black: #000;
+
+$dark: #414f57;
+
+$shadow: rgba(65,72,75,0.26);
+
+// Fonts
+
+$bold: 700;
+
+// Tags
+
+a{
+    color: $white !important;
+}
+
+body{
+    background-color: $grey !important;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"]{
+    width: 100%;
+    border-radius: 4px;
+    background-color: $grey;
+    border: 2px solid $blue;
+    font-size: 16px;
+    font-style: italic;
+    padding: 17px 20px 11px;
+    outline: none;
+}
+
+nav{
+    background-color: $dark;
+}
+
+textarea{
+    width: 100%;
+    border: 2px solid $blue;
+    font-style: italic;
+}
+
+// Classes
+
+.block_white{
+    background: $white;
+    margin-bottom: 100px;
+    box-shadow: 3px 3px 6px 1px $shadow;
+    border-radius: 8px;
+    font-size: 30px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.button{
+    &_green, &_blue{
+        color: $white;
+        border-radius: 8px;
+        font-size: 24px;
+        outline: none;
+        padding: 12px 39px;
+    }
+
+    &_green{
+        background-color: $green;
+
+        &:hover{
+            background-color: $blue;
+        }
+    }
+
+    &_blue{
+        background-color: $blue;
+
+        &:hover{
+            background-color: $green;
+        }
+    }
+}
+
+.code_item{
+    color: $blue;
+    font-weight: $bold;
+}
+
+.drop{
+    &ped{
+        display: block !important;
+    }
+
+    &down_menu_item{
+        color: $black !important;
+    }
+}
+
+.error{
+    color: $red;
+}
+
+.refactoring_rule{
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+.saved_recommendation{
+    margin-bottom: 25px;
+    text-align: left;
+    border-bottom: 5px solid $blue;
+}
+
+.text{
+    &_small{
+        font-size: 16px;
+    }
+
+    &_middle{
+        font-size: 30px;
+        font-weight: $bold;
+        margin-bottom: 48px;
+    }
+
+    &_big{
+        font-size: 45px;
+        color: $blue;
+    }
+}
+
+.title{
+    text-align: center;
+    font-weight: $bold;
+}
+
+// IDs
+
+#save_recommendations{
+    &_link{
+        color: $green !important;
+
+        &:hover{
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    &_form{
+        text-align: right;
+    }
+}
+
+#file_upload{
+    &:hover{
+        cursor: pointer;
+    }
+
+    &_input {
+        display: none;
+    }
+}

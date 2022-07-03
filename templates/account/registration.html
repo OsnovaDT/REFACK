@@ -27,19 +27,19 @@
                 {% endif %}
 
                 <p>
-                    <input class="form_input" type="text" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="Логин">
+                    <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username" placeholder="Логин">
                 </p>
 
                 <p>
-                    <input class="form_input" type="email" name="email" required="" id="id_email" placeholder="Почта">
+                    <input type="email" name="email" required="" id="id_email" placeholder="Почта">
                 </p>
 
                 <p>
-                    <input class="form_input" type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
+                    <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" aria-autocomplete="list" placeholder="Пароль">
                 </p>
 
                 <p>
-                    <input class="form_input" type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
+                    <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="Подтверждение пароля">
                 </p>
 
                 {% for field in form.visible_fields %}
@@ -56,7 +56,7 @@
 
                 <input type="hidden" name="next" value='{{ next }}'>
                 <div style="margin-top: 25px;">
-                    <input class='button button_green main_input' type="submit" value="Зарегистрироваться" style="font-size: 18px !important;">
+                    <input class='button_green' type="submit" value="Зарегистрироваться" style="font-size: 18px !important;">
                 </div>
             </form>
         </div>

@@ -6,27 +6,27 @@
     <div class="base_container container" style="text-align: center;">
         <div class="col-md-10 offset-md-1 block_white">
             <div>
-                <strong class="text_blue title_big">REFACK</strong>
+                <strong class="text_big">REFACK</strong>
                 <br>
                 <strong>приложение для рефакторинга Python-кода</strong>
             </div>
-                <p class="title_small">Делает код на Python чище, читабильнее и лучше</p>
+            <p class="text_small">Делает код на Python чище, читабильнее и лучше</p>
         </div>
 
-        <div class="block_simple">
-            <h2 class="title2">Начните прямо сейчас</h2>
+        <div>
+            <h2 class="text_middle">Начните прямо сейчас</h2>
             <div class="row">
                 {# Button left #}
                 <div class="offset-md-1 col-md-5">
                     <a href="{% url 'refactoring:file_input' %}">
-                        <input type="button" class="button button_green main_input" value="Передать код в файле">
+                        <input type="button" class="button_green" value="Передать код в файле">
                     </a>
                 </div>
 
                 {# Button right #}
                 <div class="col-md-5">
                     <a href="{% url 'refactoring:manual_input' %}">
-                        <input type="button" class="button button_blue main_input" value="Ввести код вручную">
+                        <input type="button" class="button_blue" value="Ввести код вручную">
                     </a>
                 </div>
             </div>

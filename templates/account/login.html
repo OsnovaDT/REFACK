@@ -23,11 +23,11 @@
                 {% endif %}
 
                 <p>
-                    <input class="form_input" type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="Логин">
+                    <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="Логин">
                 </p>
 
                 <p>
-                    <input class="form_input" type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Пароль">
+                    <input type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Пароль">
                 </p>
 
                 {% for field in form.visible_fields %}
@@ -48,13 +48,13 @@
 
             <div class="row" style="margin-top: 25px;">
                 <div class="col-md-6">
-                    <input class='button button_green main_input' type="submit" id="formSubmitButton" value="Войти" style="font-size: 18px !important;">
+                    <input class='button_green' type="submit" id="formSubmitButton" value="Войти" style="font-size: 18px !important;">
                 </div>
 
                 <div class="col-md-6">
                     <p>
                         <a class='text-dark' href="{% url 'account:password_reset' %}">
-                            <input class='button button_blue main_input' type="submit" value="Забыли пароль?" style="font-size: 18px !important">
+                            <input class='button_blue' type="submit" value="Забыли пароль?" style="font-size: 18px !important">
                         </a>
                     </p>
                 </div>

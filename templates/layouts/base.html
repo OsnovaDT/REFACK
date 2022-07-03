@@ -13,7 +13,7 @@
 
         {# Styles #}
 
-        <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
@@ -39,13 +39,13 @@
                                 {{ user.username }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdown_menu_link" id="dropdown_menu">
-                                <a class='dropdown-item dropdown_href' href="{% url 'account:logout' %}">
+                                <a class='dropdown-item dropdown_menu_item' href="{% url 'account:logout' %}">
                                     Выйти
                                 </a>
-                                <a class='dropdown-item dropdown_href' href="{% url 'account:password_change' %}">
+                                <a class='dropdown-item dropdown_menu_item' href="{% url 'account:password_change' %}">
                                     Сменить пароль
                                 </a>
-                                <a class='dropdown-item dropdown_href' href="{% url 'refactoring:saved_recommendations' %}">
+                                <a class='dropdown-item dropdown_menu_item' href="{% url 'refactoring:saved_recommendations' %}">
                                     Мои рекомендации
                                 </a>
                             </div>
