@@ -1,21 +1,25 @@
-$('#navbarDropdownMenuLink').on('click', function(){
-    if ($('#navbarDropdownMenu').hasClass('opened_block')){
-        $('#navbarDropdownMenu').removeClass('opened_block');
+// Dropdown menu
+$('#dropdown_menu_link').on('click', function(){
+    if ($('#dropdown_menu').hasClass('dropped')){
+        $('#dropdown_menu').removeClass('dropped');
     }
     else{
-        $('#navbarDropdownMenu').addClass('opened_block');
+        $('#dropdown_menu').addClass('dropped');
     }
 });
 
-$('#save_recommendations_link').on('click', function(e){
+// Refactoring recommendations
+$('#save_recommendations_link').on('click', function(event){
     $('#save_recommendations_form').submit();
-    e.preventDefault();
+
+    event.preventDefault();
 });
 
-$('#code_upload_button').click(function(){
-    $("#code_upload_input").trigger('click');
+// File upload
+$('#file_upload').click(function(){
+    $("#file_upload_input").trigger('click');
 });
 
-$("#code_upload_input").change(function(){
-    $('#uploaded_code').text(this.value.replace(/C:\\fakepath\\/i, ''))
+$("#file_upload_input").change(function(){
+    $('#uploaded_file').text(this.value.replace(/C:\\fakepath\\/i, ''));
 });

@@ -14,7 +14,7 @@
         - settings.py ✅
         - urls.py ✅
         - wsgi.py ✅
-    3. Отрефакторить приложение refactoring
+    3. Отрефакторить приложение refactoring ✅
         - services/ ✅
             - __init__.py ✅
             - code_handler.py ✅
@@ -35,7 +35,7 @@
         - Объединить миграции ✅
         - Вынести бизнес-логику в services/ ✅
     4. Отрефакторить статику
-        - js/scripts.js
+        - js/scripts.js ✅
         - styles/styles.css
         - Переименовать styles/ в css/
     5. Отрефакторить шаблоны
@@ -133,8 +133,8 @@
     3. Написать тесты для static/js/scripts.js
         - navbarDropdownMenuLink -> click
         - save_recommendations_link -> click
-        - code_upload_button -> click
-        - code_upload_input -> change
+        - file_upload -> click
+        - file_upload_input -> change
     4. Написать прочие тесты
         - Написать тесты на стутус-коды страниц
         - Написать тесты на то что все ссылки не битые

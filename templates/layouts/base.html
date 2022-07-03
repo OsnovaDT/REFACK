@@ -34,11 +34,11 @@
                 <div class='navbar-nav'>
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown_menu_link" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false" style="font-size: 18px;">
                                 {{ user.username }}
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="navbarDropdownMenu">
+                            <div class="dropdown-menu" aria-labelledby="dropdown_menu_link" id="dropdown_menu">
                                 <a class='dropdown-item dropdown_href' href="{% url 'account:logout' %}">
                                     Выйти
                                 </a>

@@ -132,7 +132,7 @@ textarea{
     outline: none;
 }
 
-.opened_block{
+.dropped{
     display: block !important;
 }
 
@@ -175,12 +175,12 @@ textarea{
     }
 }
 
-#code_upload{
-    &_input {
-        display: none;
+#file_upload{
+    &:hover{
+        cursor: pointer;
     }
 
-    &_button:hover{
-        cursor: pointer;
+    &_input {
+        display: none;
     }
 }

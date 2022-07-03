@@ -112,7 +112,7 @@ textarea {
   outline: none;
 }
 
-.opened_block {
+.dropped {
   display: block !important;
 }
 
@@ -148,11 +148,11 @@ textarea {
   margin-bottom: 25px;
 }
 
-#code_upload_input {
-  display: none;
-}
-#code_upload_button:hover {
+#file_upload:hover {
   cursor: pointer;
+}
+#file_upload_input {
+  display: none;
 }
 
 /*# sourceMappingURL=styles.css.map */
