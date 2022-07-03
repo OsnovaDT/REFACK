@@ -7,7 +7,7 @@ from account.forms import RegistrationForm
 
 
 class RegistrationView(CreateView):
-    """View for user registration form"""
+    """View for user registration"""
 
     form_class = RegistrationForm
 
