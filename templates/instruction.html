@@ -2,38 +2,32 @@
 
 {% load static %}
 
-{% block title %}Инструкция{% endblock title %}
+{% block title %}Инструкция по использованию{% endblock title %}
 
 {% block content %}
-    <h1 style="text-align: center; font-weight: 700;">Инструкция по использованию приложения</h1>
+    <h1 class="title">Инструкция по использованию приложения</h1>
 
-    <div class="block_white block_instruction">
-        <h2 class="text_middle">1. На главной странице выберите способ<br>загрузки кода, нажав на нужную кнопку.</h2>
-        <img src="{% static 'images/instruction/1.png' %}" alt="1 этап">
-    </div>
+    {% with number=1 text="На главной странице выберите способ<br>загрузки кода, нажав на нужную кнопку" img_path='images/instruction/1.png' %}
+        {% include 'layouts/instruction_block.html' %}
+    {% endwith %}
 
-    <div class="block_white">
-        <h2 class="text_middle">2. Передайте код через файл или введите его вручную.</h2>
-        <img src="{% static 'images/instruction/2.png' %}" alt="2 этап" width="992px">
-    </div>
+    {% with number=2 text="Передайте код через файл или введите его вручную" img_path='images/instruction/2.png' %}
+        {% include 'layouts/instruction_block.html' %}
+    {% endwith %}
 
-    <div class="block_white">
-        <h2 class="text_middle">3. Нажмите кнопку «Отрефакторить».</h2>
-        <img src="{% static 'images/instruction/3.png' %}" alt="3 этап" width="992px">
-    </div>
+    {% with number=3 text="Нажмите кнопку «Отрефакторить»" img_path='images/instruction/3.png' %}
+        {% include 'layouts/instruction_block.html' %}
+    {% endwith %}
 
-    <div class="block_white">
-        <h2 class="text_middle">4. Если в вашем коде нет проблем,<br>вы увидите соответствующее сообщение.</h2>
-        <img src="{% static 'images/instruction/4.png' %}" alt="4 этап" width="992px">
-    </div>
+    {% with number=4 text="Если в вашем коде нет проблем,<br>вы увидите соответствующее сообщение" img_path='images/instruction/4.png' %}
+        {% include 'layouts/instruction_block.html' %}
+    {% endwith %}
 
-    <div class="block_white">
-        <h2 class="text_middle">5. Если в вашем коде есть проблемы,<br>приложение укажет на них.</h2>
-        <img src="{% static 'images/instruction/5.png' %}" alt="5 этап" width="992px">
-    </div>
+    {% with number=5 text="Если в вашем коде есть проблемы,<br>приложение укажет на них" img_path='images/instruction/5.png' %}
+        {% include 'layouts/instruction_block.html' %}
+    {% endwith %}
 
-    <div class="block_white" style="margin-bottom: 25px;">
-        <h2 class="text_middle">6. Также вы можете скачать список проблем,<br>на которые указало приложение.</h2>
-        <img src="{% static 'images/instruction/6.png' %}" alt="6 этап" width="992px">
-    </div>
+    {% with number=6 text="Также вы можете скачать список проблем,<br>на которые указало приложение" img_path='images/instruction/6.png' %}
+        {% include 'layouts/instruction_block.html' %}
+    {% endwith %}
 {% endblock content %}

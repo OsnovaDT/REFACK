@@ -49,14 +49,15 @@
         - layouts/
             - base.html ✅
             - default_form.html
+            - instruction_block.html ✅
             - success.html ✅
         - file_code_input.html
         - index.html
-        - instruction.html
+        - instruction.html ✅
         - manual_code_input.html
         - refactoring_results.html
-        - rules.html
-        - saved_recommendations.html
+        - rules.html ✅
+        - saved_recommendations.html ✅
     6. Отрефакторить прочие файлы
         - .gitignore
         - manage.py
