@@ -68,15 +68,19 @@ textarea {
   display: block !important;
 }
 
+.left_align {
+  text-align: left !important;
+}
+
+.error {
+  color: #ee3030;
+}
+
 .nav-link, .navbar-brand {
   color: #fff;
 }
 .nav-link:hover, .navbar-brand:hover {
   color: #fff;
-}
-
-.error {
-  color: #ee3030;
 }
 
 .refactoring_rule {

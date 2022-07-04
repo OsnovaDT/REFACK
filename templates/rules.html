@@ -1,19 +1,19 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}Используемые правила{% endblock title %}
+{% block title %}Используемые правила рефакторинга{% endblock title %}
 
 {% block content %}
-    <h1 style="text-align: center; font-weight: 700;">Используемые правила рефакторинга</h1>
+    <h1 class="title">Используемые правила рефакторинга</h1>
 
-    <div class="block_white" style="text-align: left !important;">
+    <div class="block_white left_align">
         <ol>
             <li class="refactoring_rule">Названия функций и методов, возвращающих булевое значение, должны начинаться с префикса is.</li>
             <li class="refactoring_rule">Названия функций и методов, возвращающих любое другое значение, должны начинаться с префикса get.</li>
-            <li class="refactoring_rule">Все функции и методы имеют стиль именования snake_case.</li>
-            <li class="refactoring_rule">Все классы имеют стиль именования CapWords.</li>
-            <li class="refactoring_rule">У каждой функции и класса есть документация.</li>
-            <li class="refactoring_rule">У каждой функции указана подсказка возвращаемого типа.</li>
-            <li class="refactoring_rule">У каждого аргумента функции указана подсказка типа.</li>
+            <li class="refactoring_rule">Все функции и методы должны иметь стиль именования snake_case.</li>
+            <li class="refactoring_rule">Все классы должны иметь стиль именования CapWords.</li>
+            <li class="refactoring_rule">У каждой функции и класса должна быть документация.</li>
+            <li class="refactoring_rule">У каждой функции должна быть указана подсказка возвращаемого типа.</li>
+            <li class="refactoring_rule">У каждого аргумента функции должна быть указана подсказка типа.</li>
         </ol>
     </div>
 {% endblock content %}
