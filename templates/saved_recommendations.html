@@ -1,26 +1,23 @@
 {% extends 'layouts/base.html' %}
 
-{% load static %}
-
-{% block title %}Рекомендации пользователя {{ user }}{% endblock title %}
+{% block title %}Сохраненные рекомендации пользователя {{ user }}{% endblock title %}
 
 {% block content %}
     {% if recommendations %}
         <h1 class="title">Ваши рекомендации</h1>
 
-        {% for recommendation in recommendations %}
+        {% for rec in recommendations %}
             <div class="block_white saved_recommendation">
                 {% autoescape off %}
+                    <h6>{{ rec.code }}</h6>
 
-                <h6>{{ recommendation.code }}</h6>
+                    <hr>
 
-                <hr>
-
-                <h5>{{ recommendation.recommendation }}</h5>
+                    <h5>{{ rec.recommendation }}</h5>
                 {% endautoescape %}
             </div>
         {% endfor %}
     {% else %}
-        <h1 class="title">Вы еще не сохраняли рекомендации</h1>
+        <h1 class="title">У вас нет сохраненных рекомендаций</h1>
     {% endif %}
 {% endblock content %}
