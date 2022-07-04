@@ -47,9 +47,9 @@
             - password_change.html
             - password_changed.html
         - layouts/
-            - base.html
+            - base.html ✅
             - default_form.html
-            - implemented.html
+            - success.html ✅
         - file_code_input.html
         - index.html
         - instruction.html
