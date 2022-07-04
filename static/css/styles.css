@@ -1,7 +1,3 @@
-a {
-  color: #fff !important;
-}
-
 body {
   background-color: #e6e6e6 !important;
 }
@@ -39,6 +35,9 @@ textarea {
   text-align: center;
   margin-top: 25px;
 }
+.block_content {
+  margin-top: 50px;
+}
 
 .button_green, .button_blue {
   color: #fff;
@@ -68,8 +67,12 @@ textarea {
 .dropped {
   display: block !important;
 }
-.dropdown_menu_item {
-  color: #000 !important;
+
+.nav-link, .navbar-brand {
+  color: #fff;
+}
+.nav-link:hover, .navbar-brand:hover {
+  color: #fff;
 }
 
 .error {

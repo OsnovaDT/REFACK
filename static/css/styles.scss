@@ -22,10 +22,6 @@ $bold: 700;
 
 // Tags
 
-a{
-    color: $white !important;
-}
-
 body{
     background-color: $grey !important;
 }
@@ -55,15 +51,21 @@ textarea{
 
 // Classes
 
-.block_white{
-    background: $white;
-    margin-bottom: 100px;
-    box-shadow: 3px 3px 6px 1px $shadow;
-    border-radius: 8px;
-    font-size: 30px;
-    padding: 30px;
-    text-align: center;
-    margin-top: 25px;
+.block{
+    &_white{
+        background: $white;
+        margin-bottom: 100px;
+        box-shadow: 3px 3px 6px 1px $shadow;
+        border-radius: 8px;
+        font-size: 30px;
+        padding: 30px;
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    &_content{
+        margin-top: 50px;
+    }
 }
 
 .button{
@@ -101,14 +103,22 @@ textarea{
     &ped{
         display: block !important;
     }
-
-    &down_menu_item{
-        color: $black !important;
-    }
 }
 
 .error{
     color: $red;
+}
+
+.nav{
+    &-link, 
+    &bar-brand{
+        color: $white;
+    }
+
+    &-link:hover, 
+    &bar-brand:hover{
+        color: $white;
+    }
 }
 
 .refactoring_rule{
