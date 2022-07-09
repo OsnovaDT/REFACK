@@ -35,7 +35,6 @@
                 {% csrf_token %}
 
                 <input type="hidden" name="recommendation" value="{{ results }}">
-                <input type="hidden" name="user" value="{{ user }}">
                 <input type="hidden" name="code" value="{{ code }}">
             </form>
 
@@ -89,6 +88,9 @@
                 url: "{% url 'refactoring:code_refactoring' %}",
                 success: function (response) {
                     updateRecommendationsBlock(response);
+
+                    updateSaveRecommendationFormData(response)
+
                     $('#save_recommendations_link').show();
                 },
             });

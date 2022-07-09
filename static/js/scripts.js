@@ -17,6 +17,14 @@ $('#save_recommendations_link').on('click', function(event){
     event.preventDefault();
 });
 
+function updateSaveRecommendationFormData(response){
+    let code = $("textarea[name='code']").val();
+    let recommendations = Object.entries(response.recommendations);
+
+    $("input[name='code']").val(code);
+    $("input[name='recommendation']").val(recommendations);
+};
+
 function updateRecommendationsBlock(response){
     $('#recommendations').empty();
 

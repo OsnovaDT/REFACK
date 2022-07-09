@@ -110,13 +110,9 @@ def save_recommendation(request: WSGIRequest) -> JsonResponse:
 
     code = request.GET.get('code', None)
 
-    user_login = request.GET.get('user', None)
-
-    print(recommendation, code, user_login)
-
-    if recommendation and code and user_login:
+    if recommendation and code:
         RefactoringRecommendation.objects.create(
-            user=get_user_model().objects.get(username=user_login),
+            user=get_user_model().objects.get(username=request.user),
             code=get_code_to_display_in_html(code),
             recommendation=get_recommendation_to_display_in_html(
                 recommendation,
