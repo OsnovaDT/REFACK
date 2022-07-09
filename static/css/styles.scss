@@ -47,6 +47,10 @@ textarea{
     width: 100%;
     border: 2px solid $blue;
     font-style: italic;
+    resize: none !important;
+    padding: 25px;
+    border-radius: 4px;
+    outline: none;
 }
 
 // Classes
@@ -65,6 +69,10 @@ textarea{
 
     &_content{
         margin-top: 50px;
+    }
+
+    &_with_button{
+        margin-top: 15px;
     }
 }
 
@@ -167,6 +175,10 @@ textarea{
 }
 
 // IDs
+
+#recommendations{
+    text-align: left;
+}
 
 #save_recommendations{
     &_link{

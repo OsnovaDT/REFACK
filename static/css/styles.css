@@ -23,6 +23,10 @@ textarea {
   width: 100%;
   border: 2px solid #01a8e5;
   font-style: italic;
+  resize: none !important;
+  padding: 25px;
+  border-radius: 4px;
+  outline: none;
 }
 
 .block_white {
@@ -37,6 +41,9 @@ textarea {
 }
 .block_content {
   margin-top: 50px;
+}
+.block_with_button {
+  margin-top: 15px;
 }
 
 .button_green, .button_blue {
@@ -129,6 +136,10 @@ textarea {
 }
 #save_recommendations_form {
   text-align: right;
+}
+
+#recommendations {
+  text-align: left;
 }
 
 #file_upload:hover {

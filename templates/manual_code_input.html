@@ -2,59 +2,46 @@
 
 {% block title %}Рефакторинг кода{% endblock title %}
 
-
 {% block content %}
     <div class="row">
+        {# Code input form #}
         <div class="col-md-8">
-            <form id="refac_form" method="post" novalidate>
+            <form id="refactoring_form" method="post" novalidate>
                 {% csrf_token %}
 
                 {% if errors %}
                     {{ errors }}
                 {% endif %}
 
-                <div>
-                    <textarea maxlength="10000" style="resize: none; padding: 25px; border-radius: 4px; outline: none;" name="code" cols="100" rows="20" class="code_field" placeholder="Введите Python-код" autofocus></textarea>
-                </div>
+                <textarea maxlength="10000" name="code" cols="100" rows="20"
+                    placeholder="Введите ваш код" autofocus></textarea>
 
-                <div style="text-align: center; margin-top: 15px;">
+                <div class="block_with_button">
                     <input type="submit" class="button_green" value="Отрефакторить">
                 </div>
             </form>
         </div>
 
+        {# Recommendations #}
         <div class="col-md-4">
-            <h4>Результаты</h4>
-            <div id="refac_results"></div>
+            <h4>Рекомендации</h4>
+            <div id="recommendations"></div>
         </div>
     </div>
 
     <script>
         $(document).ready(function () {
-            $('#refac_form').on('submit', function () {
+            $('#refactoring_form').on('submit', function () {
                 $.ajax({
                     data: $(this).serialize(),
                     url: "{% url 'refactoring:code_refactoring' %}",
                     success: function (response) {
-                        $('#refac_results').empty();
-
-                        if (response.error){
-                            $('#refac_results').append(
-                                `Ошибка: <span class="error">${response.error}</span>`
-                            )
-                        }
-                        else{
-                            for (const [rule, code_item] of Object.entries(response.recommendations)){
-                                $('#refac_results').append(
-                                `<p>${rule}: <span class="code_item">${code_item}</span></p>`
-                                )
-                            } 
-                        }
-                    }
+                        updateRecommendationsBlock(response);
+                    },
                 });
 
                 return false;
             });
-        })
+        });
     </script>
 {% endblock content %}

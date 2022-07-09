@@ -15,6 +15,23 @@ $('#save_recommendations_link').on('click', function(event){
     event.preventDefault();
 });
 
+function updateRecommendationsBlock(response){
+    $('#recommendations').empty();
+
+    if (response.error){
+        let error = `Ошибка: <span class="error">${response.error}</span>`;
+
+        $('#recommendations').append(error);
+    }
+    else{
+        for (const [rule, code_item] of Object.entries(response.recommendations)){
+            let recommendation = `<p>${rule}: <span class="code_item">${code_item}</span></p>`;
+
+            $('#recommendations').append(recommendation);
+        };
+    };
+};
+
 // File upload
 $('#file_upload').click(function(){
     $("#file_upload_input").trigger('click');
