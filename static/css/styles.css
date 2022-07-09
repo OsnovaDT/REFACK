@@ -49,7 +49,7 @@ textarea {
 .button_green, .button_blue {
   color: #fff;
   border-radius: 8px;
-  font-size: 24px;
+  font-size: 18px;
   outline: none;
   padding: 12px 39px;
 }
@@ -127,6 +127,10 @@ textarea {
   font-weight: 700;
 }
 
+#recommendations {
+  text-align: left;
+}
+
 #save_recommendations_link {
   color: #15c6b9 !important;
 }
@@ -136,10 +140,6 @@ textarea {
 }
 #save_recommendations_form {
   text-align: right;
-}
-
-#recommendations {
-  text-align: left;
 }
 
 #file_upload:hover {

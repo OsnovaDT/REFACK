@@ -40,3 +40,9 @@ $('#file_upload').click(function(){
 $("#file_upload_input").change(function(){
     $('#uploaded_file').text(this.value.replace(/C:\\fakepath\\/i, ''));
 });
+
+// Login
+
+$('#login_button').on('click', function(){
+    $('form').submit();
+});
