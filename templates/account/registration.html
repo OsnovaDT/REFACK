@@ -1,46 +1,32 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/account_form.html' %}
 
 {% block title %}Регистрация{% endblock title %}
 
-{% block content %}
-<div class="row">
-    <div class="col-md-6 offset-3">
-        <div class="block_white">
-            <form method="post" novalidate>
-                {% csrf_token %}
+{% block form_content %}
+    {# Login #}
+    <p><input type="text" name="username" autofocus placeholder="Логин"></p>
+    {% include 'includes/field_errors.html' with field=form.username %}
 
-                {% include 'includes/form_errors.html' %}
+    {# Email #}
+    <p><input type="email" name="email" placeholder="Почта"></p>
+    {% include 'includes/field_errors.html' with field=form.email %}
 
-                {# Login #}
-                <p><input type="text" name="username" autofocus placeholder="Логин"></p>
-                {% include 'includes/field_errors.html' with field=form.username %}
+    {# Password #}
+    <p>
+        <input type="password" name="password1" autocomplete="new-password"
+            placeholder="Пароль" aria-autocomplete="list">
+    </p>
+    {% include 'includes/field_errors.html' with field=form.password1 %}
 
-                {# Email #}
-                <p><input type="email" name="email" placeholder="Почта"></p>
-                {% include 'includes/field_errors.html' with field=form.email %}
+    {# Password repeat #}
+    <p>
+        <input type="password" name="password2" autocomplete="new-password"
+            placeholder="Подтверждение пароля">
+    </p>
+    {% include 'includes/field_errors.html' with field=form.password2 %}
 
-                {# Password #}
-                <p>
-                    <input type="password" name="password1" autocomplete="new-password"
-                        placeholder="Пароль" aria-autocomplete="list">
-                </p>
-                {% include 'includes/field_errors.html' with field=form.password1 %}
-
-                {# Password repeat #}
-                <p>
-                    <input type="password" name="password2" autocomplete="new-password"
-                        placeholder="Подтверждение пароля">
-                </p>
-                {% include 'includes/field_errors.html' with field=form.password2 %}
-
-                <input type="hidden" name="next" value='{{ next }}'>
-
-                {# Button #}
-                <div class="block_with_button">
-                    <input class='button_green' type="submit" value="Зарегистрироваться">
-                </div>
-            </form>
-        </div>
+    {# Button #}
+    <div class="block_with_button">
+        <input class='button_green' type="submit" value="Зарегистрироваться">
     </div>
-</div>
-{% endblock content %}
+{% endblock form_content %}

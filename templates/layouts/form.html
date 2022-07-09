@@ -1,0 +1,23 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <div class="block_white">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% block before_form %}{% endblock before_form %}
+
+                <input type="hidden" name="next" value='{{ next }}'>
+
+                {% include 'includes/form_errors.html' %}
+
+                {% block form_content %}{% endblock form_content %}
+            </form>
+
+            {% block after_form %}{% endblock after_form %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
