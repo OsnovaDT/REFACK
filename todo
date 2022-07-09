@@ -43,9 +43,9 @@
         - Распределить шаблоны по папкам
         - account/
             - login.html
-            - registration.html
-            - password_change.html
-            - password_changed.html
+            - registration.html ✅
+            - change_password.html ✅
+            - password_changed.html ✅
         - code_input/ ✅
             - file.html ✅
             - manual.html ✅
