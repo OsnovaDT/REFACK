@@ -46,17 +46,22 @@
             - registration.html
             - password_change.html
             - password_changed.html
+        - code_input/ ✅
+            - file.html ✅
+            - manual.html ✅
+        - includes/ ✅
+            - field_errors.html ✅
+            - form_errors.html ✅
         - layouts/
             - base.html ✅
             - default_form.html
             - instruction_block.html ✅
             - success.html ✅
-        - file_code_input.html
+        - navbar/ ✅
+            - instruction.html ✅
+            - rules.html ✅
         - index.html ✅
-        - instruction.html ✅
-        - manual_code_input.html
         - refactoring_results.html
-        - rules.html ✅
         - saved_recommendations.html ✅
     6. Отрефакторить прочие файлы
         - .gitignore
@@ -65,6 +70,9 @@
     7. Переименовать папку проекта ✅
     8. Пронать на SOLID
     9. Пофиксить сломанное
+        - Сброс пароля
+        - Рефакторинг кода в файле
+        - Проверка почты при регистрации
     10. Переделать README гифку
 
 2) GITHUB ✅
