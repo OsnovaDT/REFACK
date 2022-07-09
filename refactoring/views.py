@@ -28,13 +28,13 @@ from refactoring.constants import FILE_DEFAULT_DISPOSITION
 class ManualCodeInputView(TemplateView):
     """Manual code input"""
 
-    template_name = 'manual_code_input.html'
+    template_name = 'code_input/manual.html'
 
 
 class FileCodeInputView(TemplateView):
     """File code input"""
 
-    template_name = 'file_code_input.html'
+    template_name = 'code_input/file.html'
 
 
 # Index, instruction and rules pages
