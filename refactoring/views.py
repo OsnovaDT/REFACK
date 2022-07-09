@@ -49,13 +49,13 @@ class IndexView(LoginRequiredMixin, TemplateView):
 class InstructionView(LoginRequiredMixin, TemplateView):
     """Instruction page"""
 
-    template_name = 'instruction.html'
+    template_name = 'navbar/instruction.html'
 
 
 class RulesView(LoginRequiredMixin, TemplateView):
     """Rules page"""
 
-    template_name = 'rules.html'
+    template_name = 'navbar/rules.html'
 
 
 # Refactoring
