@@ -3,14 +3,14 @@
 {% block title %}Вход в аккаунт{% endblock title %}
 
 {% block form_content %}
-    {# Login #}
+    {# Logi input #}
     <p>
         <input type="text" name="username" autofocus autocapitalize="none"
             autocomplete="username" placeholder="Логин">
     </p>
     {% include 'includes/field_errors.html' with field=form.username %}
 
-    {# Password #}
+    {# Password input #}
     <p>
         <input type="password" name="password" autocomplete="current-password"
             placeholder="Пароль">
@@ -18,13 +18,14 @@
     {% include 'includes/field_errors.html' with field=form.password %}
 {% endblock form_content %}
 
-{# Buttons #}
 {% block after_form %}
+    {# Login button #}
     <div class="row">
         <div class="col-md-6">
-        <input class='button_green' type="submit" id="login_button" value="Войти">
+        <input class='button_green max_width' type="submit" id="login_button" value="Войти">
     </div>
 
+    {# Password reset button #}
     <div class="col-md-6">
         <p>
             <a class='text-dark' href="{% url 'account:password_reset' %}">

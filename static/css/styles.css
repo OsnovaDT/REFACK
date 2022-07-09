@@ -87,6 +87,10 @@ textarea {
   text-align: left !important;
 }
 
+.max_width {
+  width: 100%;
+}
+
 .error {
   color: #ee3030;
 }
