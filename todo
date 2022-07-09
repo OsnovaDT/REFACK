@@ -52,7 +52,7 @@
             - instruction_block.html ✅
             - success.html ✅
         - file_code_input.html
-        - index.html
+        - index.html ✅
         - instruction.html ✅
         - manual_code_input.html
         - refactoring_results.html
