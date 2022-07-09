@@ -1,50 +1,29 @@
 {% extends 'layouts/base.html' %}
 
-{% load static %}
-
-{% block title %}Передача кода через файл{% endblock title %}
+{% block title %}Рефакторинг вашего файла{% endblock title %}
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6 offset-3">
-        <div class="block_white" style="font-size: 18px;">
-            <form action="{% url 'refactoring:file_refactoring' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
+    <div class="col-md-6 offset-3 block_white">
+        <form action="{% url 'refactoring:file_refactoring' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-                <!-- Generic errors -->
-                {% if form.non_field_errors %}
-                <div class="alert alert-danger">
-                    <ul>
-                        {% for error in form.non_field_errors %}
-                        <li><em>{{ error }}</em></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+            <h1 class="title">Выберите Python-файл</h1>
 
-                <label class="text_middle">Выберите Python-файл</label>
+            {% include 'includes/form_errors.html' %}
 
-                <div style="margin-bottom: 25px;">
-                    <input type="file" required="" id="file_upload_input" name="code_upload" accept=".py">
-                    <span id='file_upload'>Выбранный файл: </span><span id='uploaded_file'></span>
-                </div> 
+            <input type="file" required id="file_upload_input" name="file_upload" accept=".py">
 
-                {% for field in form.visible_fields %}
-                <!-- Field errors-->
+            <span id='file_upload'>
+                Выбранный файл: </span><span id='uploaded_file'>
+            </span>
 
-                {% if field.errors %}
-                {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    <em>{{ error }}</em>
-                </div>
-                {% endfor %}
-                {% endif %}
+            {% include 'includes/field_errors.html' with field=form.file_upload %}
 
-                {% endfor %}
-
-                <input class='button_green' type="submit" value="Отрефакторить" style="font-size: 18px !important;">
-            </form>
-        </div>
+            <div class="block_with_button">
+                <input class='button_green' type="submit" value="Отрефакторить">
+            </div>
+        </form>
     </div>
 </div>
 {% endblock content %}

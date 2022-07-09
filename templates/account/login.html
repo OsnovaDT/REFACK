@@ -11,37 +11,19 @@
             <form method="post" novalidate>
                 {% csrf_token %}
 
-                <!-- Generic errors -->
-                {% if form.non_field_errors %}
-                <div class="alert alert-danger">
-                    <ul>
-                        {% for error in form.non_field_errors %}
-                        <li><em>{{ error }}</em></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% endif %}
+                {% include 'includes/form_errors.html' %}
 
                 <p>
                     <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username" placeholder="Логин">
                 </p>
 
+                {% include 'includes/field_errors.html' with field=form.username %}
+
                 <p>
                     <input type="password" name="password" autocomplete="current-password" required="" id="id_password" placeholder="Пароль">
                 </p>
 
-                {% for field in form.visible_fields %}
-                <!-- Field errors-->
-
-                {% if field.errors %}
-                {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    <em>{{ error }}</em>
-                </div>
-                {% endfor %}
-                {% endif %}
-
-                {% endfor %}
+                {% include 'includes/field_errors.html' with field=form.password %}
 
                 <input type="hidden" name="next" value='{{ next }}'>
             </form>

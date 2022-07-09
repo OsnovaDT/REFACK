@@ -65,7 +65,7 @@ class RulesView(LoginRequiredMixin, TemplateView):
 def refactor_code_from_file(request: WSGIRequest) -> HttpResponse:
     """Refactor code from file"""
 
-    code = request.FILES['code_upload'].read().decode('UTF-8')
+    code = request.FILES['file_upload'].read().decode('UTF-8')
 
     return render(
         request,
