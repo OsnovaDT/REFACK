@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="row">
-        {# Code input form #}
+        {# Code input #}
         <div class="col-md-8">
             <form id="refactoring_form" method="post" novalidate>
                 {% csrf_token %}
@@ -25,12 +25,58 @@
         {# Recommendations #}
         <div class="col-md-4">
             <h4>Рекомендации</h4>
+            <a id="save_recommendations_link">Сохранить</a>
+
+            <form method="post" id="save_recommendations_form">
+                {% csrf_token %}
+
+                <input type="hidden" name="recommendation" value="{{ results }}">
+                <input type="hidden" name="user" value="{{ user }}">
+                <input type="hidden" name="code" value="{{ code }}">
+            </form>
+
             <div id="recommendations"></div>
+        </div>
+
+        {# Recommendations in files #}
+        <div class="col-md-12 block_with_button">
+            <h2 class="text_middle">Вы можете скачать рекомендации</h2>
+
+            <div class="row">
+                {# PDF #}
+                <div class="col-md-4">
+                    <form action="{% url 'refactoring:download_pdf' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="results" value="{{ results }}">
+                        <input type="submit" class="button_green" value="PDF">
+                    </form>
+                </div>
+
+                {# JSON #}
+                <div class="col-md-4">
+                    <form action="{% url 'refactoring:download_json' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="results" value="{{ results }}">
+                        <input type="submit" class="button_green" value="JSON">
+                    </form>
+                </div>
+
+                {# XML #}
+                <div class="col-md-4">
+                    <form action="{% url 'refactoring:download_xml' %}" method="post">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="results" value="{{ results }}">
+                        <input type="submit" class="button_green" value="XML">
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function () {
             $('#refactoring_form').on('submit', function () {
                 $.ajax({
                     data: $(this).serialize(),
@@ -42,6 +88,17 @@
 
                 return false;
             });
-        });
+
+            $('#save_recommendations_form').on('submit', function () {
+                $.ajax({
+                    data: $(this).serialize(),
+                    url: "{% url 'refactoring:save_recommendation' %}",
+                    success: function (response) {
+                        $('#save_recommendations_form').hide();
+                    }
+                });
+
+                return false;
+            });
     </script>
 {% endblock content %}
