@@ -42,7 +42,8 @@
         - Вынести дублирование в layout-ы
         - Распределить шаблоны по папкам
         - account/
-            - login.html
+            - password_reset/ ✅
+            - login.html ✅
             - registration.html ✅
             - change_password.html ✅
             - password_changed.html ✅
@@ -54,7 +55,6 @@
             - form_errors.html ✅
         - layouts/
             - base.html ✅
-            - default_form.html
             - instruction_block.html ✅
             - success.html ✅
         - navbar/ ✅
