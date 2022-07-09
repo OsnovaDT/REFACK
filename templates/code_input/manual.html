@@ -24,8 +24,12 @@
 
         {# Recommendations #}
         <div class="col-md-4">
-            <h4>Рекомендации</h4>
-            <a id="save_recommendations_link">Сохранить</a>
+            <div style="text-align: left;">
+                <span class="text_middle">Рекомендации</span>
+
+                {# Saving #}
+                <a id="save_recommendations_link">Сохранить</a>
+            </div>
 
             <form method="post" id="save_recommendations_form">
                 {% csrf_token %}
@@ -77,28 +81,31 @@
     </div>
 
     <script>
-            $('#refactoring_form').on('submit', function () {
-                $.ajax({
-                    data: $(this).serialize(),
-                    url: "{% url 'refactoring:code_refactoring' %}",
-                    success: function (response) {
-                        updateRecommendationsBlock(response);
-                    },
-                });
+        $('#save_recommendations_link').hide();
 
-                return false;
+        $('#refactoring_form').on('submit', function () {
+            $.ajax({
+                data: $(this).serialize(),
+                url: "{% url 'refactoring:code_refactoring' %}",
+                success: function (response) {
+                    updateRecommendationsBlock(response);
+                    $('#save_recommendations_link').show();
+                },
             });
 
-            $('#save_recommendations_form').on('submit', function () {
-                $.ajax({
-                    data: $(this).serialize(),
-                    url: "{% url 'refactoring:save_recommendation' %}",
-                    success: function (response) {
-                        $('#save_recommendations_form').hide();
-                    }
-                });
+            return false;
+        });
 
-                return false;
+        $('#save_recommendations_form').on('submit', function () {
+            $.ajax({
+                data: $(this).serialize(),
+                url: "{% url 'refactoring:save_recommendation' %}",
+                success: function (response) {
+                    $('#save_recommendations_form').hide();
+                }
             });
+
+            return false;
+        });
     </script>
 {% endblock content %}

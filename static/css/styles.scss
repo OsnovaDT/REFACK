@@ -1,8 +1,18 @@
+// Values
+
+$bold: 700;
+
+$weak_color_opacity: .65;
+
 // Colors
 
 $green: #15c6b9;
 
+$green_weak: rgba(21, 198, 185, $weak_color_opacity);
+
 $blue: #01a8e5;
+
+$blue_weak: rgba(1, 168, 229, $weak_color_opacity);
 
 $red: #ee3030;
 
@@ -15,10 +25,6 @@ $black: #000;
 $dark: #414f57;
 
 $shadow: rgba(65,72,75,0.26);
-
-// Fonts
-
-$bold: 700;
 
 // Tags
 
@@ -192,11 +198,15 @@ textarea{
 
 #save_recommendations{
     &_link{
-        color: $green !important;
+        color: $white;
+        background-color: $green_weak;
+        padding: 4px 12px;
+        border-radius: 4px 16px;
+        margin-left: 10px;
 
         &:hover{
             cursor: pointer;
-            text-decoration: underline;
+            background-color: $blue_weak;
         }
     }
 
