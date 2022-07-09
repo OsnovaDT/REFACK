@@ -21,7 +21,7 @@ function updateRecommendationsBlock(response){
     $('#recommendations').empty();
 
     if (response.error){
-        let error = `Ошибка: <span class="error">${response.error}</span>`;
+        let error = `Ошибка: <span class="error_code">${response.error}</span>`;
 
         $('#recommendations').append(error);
     }

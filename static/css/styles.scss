@@ -130,7 +130,13 @@ textarea{
 }
 
 .error{
-    color: $red;
+    &_code{
+        color: $red;
+    }
+
+    &_form_field{
+        font-size: 16px;
+    }
 }
 
 .nav{

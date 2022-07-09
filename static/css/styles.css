@@ -91,8 +91,11 @@ textarea {
   width: 100%;
 }
 
-.error {
+.error_code {
   color: #ee3030;
+}
+.error_form_field {
+  font-size: 16px;
 }
 
 .nav-link, .navbar-brand {
