@@ -1,5 +1,11 @@
+# Django
 Django>=3.0,<4.0
-psycopg2>=2.8
-python-decouple==3.6
 
-dicttoxml==1.7.4
+# PostgreSQL
+psycopg2>=2.8
+
+# For environment variables
+python-decouple~=3.6
+
+# For converting recommendations to XML 
+dicttoxml~=1.7.4

@@ -1,42 +1,12 @@
-1) РЕФАКТОРИНГ
-    5. Отрефакторить шаблоны
-        - Вынести дублирование в layout-ы
-        - Распределить шаблоны по папкам
-        - account/
-            - password_reset/ ✅
-            - login.html ✅
-            - registration.html ✅
-            - change_password.html ✅
-            - password_changed.html ✅
-        - code_input/ ✅
-            - file.html ✅
-            - manual.html ✅
-        - includes/ ✅
-            - field_errors.html ✅
-            - form_errors.html ✅
-        - layouts/
-            - base.html ✅
-            - instruction_block.html ✅
-            - success.html ✅
-        - navbar/ ✅
-            - instruction.html ✅
-            - rules.html ✅
-        - index.html ✅
-        - refactoring_results.html
-        - saved_recommendations.html ✅
-    6. Отрефакторить прочие файлы
-        - .gitignore
-        - manage.py
-        - requirements.txt
-    7. Переименовать папку проекта ✅
-    8. Пронать на SOLID
-    9. Пофиксить сломанное
+1) ФИКС БАГОВ
+    1. Пофиксить сломанное
         - Сброс пароля
         - Рефакторинг кода в файле
         - Проверка почты при регистрации
-    10. Переделать README гифку
+    2. Переделать README гифку
+    3. Переписать README
 
-3) ТЕСТЫ
+2) ТЕСТЫ
     1. Написать тесты для приложения account
         - Проверка полей формы регистрации
     2. Написать тесты для приложения refactoring
@@ -110,7 +80,7 @@
     5. Пофиксить ворнинги при запуске тестов
     6. Добавить doctest
 
-4) ФУНКЦИОНАЛ
+3) ФУНКЦИОНАЛ
     0. Логи:
         - Добавить логирование
         - Добавить обработку ошибок
