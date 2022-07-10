@@ -113,7 +113,7 @@
                 data: $(this).serialize(),
                 url: "{% url 'refactoring:save_recommendation' %}",
                 success: function (response) {
-                    $('#save_recommendations_form').hide();
+                    $('#save_recommendations_link').hide();
                 }
             });
 
