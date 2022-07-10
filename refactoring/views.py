@@ -28,19 +28,13 @@ class CodeInputView(TemplateView):
     template_name = 'code_input.html'
 
 
-# Index, instruction and rules pages
+# Index, and rules
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
     """Index page"""
 
     template_name = 'index.html'
-
-
-class InstructionView(LoginRequiredMixin, TemplateView):
-    """Instruction page"""
-
-    template_name = 'navbar/instruction.html'
 
 
 class RulesView(LoginRequiredMixin, TemplateView):

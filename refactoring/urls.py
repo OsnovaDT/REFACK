@@ -3,7 +3,7 @@
 from django.urls import path
 
 from refactoring.views import (
-    CodeInputView, IndexView, InstructionView, RulesView, refactor_code,
+    CodeInputView, IndexView, RulesView, refactor_code,
     RefactoringRecommendationListView, download_recommendations_in_json,
     download_results_in_pdf, save_recommendation, download_results_in_xml,
 )
@@ -35,13 +35,7 @@ urlpatterns = [
         name='saved_recommendations',
     ),
 
-    # Instruction and rules
-
-    path(
-        'instruction/',
-        InstructionView.as_view(),
-        name='instruction',
-    ),
+    # Rules
 
     path(
         'rules/',

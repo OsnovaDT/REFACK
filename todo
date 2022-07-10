@@ -55,8 +55,6 @@
                 - get_queryset
             - IndexView
                 - Наличие LoginRequiredMixin
-            - InstructionView
-                - Наличие LoginRequiredMixin
             - RulesView
                 - Наличие LoginRequiredMixin
             - RefactoringResultsView

@@ -20,13 +20,6 @@ class PagesTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    def test_instruction(self) -> None:
-        """Test instruction page"""
-
-        response = self.client.get('/instruction/')
-
-        self.assertEqual(response.status_code, 200)
-
     def test_rules(self) -> None:
         """Test rules page"""
 
