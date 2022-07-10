@@ -1,5 +1,7 @@
 {% extends 'layouts/base.html' %}
 
+{% load static %}
+
 {% block title %}Рефакторинг кода{% endblock title %}
 
 {% block content %}
@@ -39,20 +41,16 @@
             </form>
 
             <div id="recommendations"></div>
-        </div>
 
-        {# Recommendations in files #}
-        <div class="col-md-12 block_with_button">
-            <h2 class="text_middle">Вы можете скачать рекомендации</h2>
-
-            <div class="row">
+            {# Recommendations in files #}
+            <div class="row" id="recommendations_in_files">
                 {# PDF #}
                 <div class="col-md-4">
                     <form action="{% url 'refactoring:download_pdf' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
-                        <input type="submit" class="button_green" value="PDF">
+                        <input type="image" src="{% static 'images/download_types/pdf.png' %}" alt="PDF" width="100px" title="Скачать в PDF">
                     </form>
                 </div>
 
@@ -62,7 +60,7 @@
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
-                        <input type="submit" class="button_green" value="JSON">
+                        <input type="image" src="{% static 'images/download_types/json.png' %}" alt="JSON" width="100px" title="Скачать в JSON">
                     </form>
                 </div>
 
@@ -72,7 +70,7 @@
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
-                        <input type="submit" class="button_green" value="XML">
+                        <input type="image" src="{% static 'images/download_types/xml.png' %}" alt="XML" width="100px" title="Скачать в XML">
                     </form>
                 </div>
             </div>
@@ -81,6 +79,7 @@
 
     <script>
         $('#save_recommendations_link').hide();
+        $('#recommendations_in_files').hide();
 
         $('#refactoring_form').on('submit', function () {
             $.ajax({
@@ -92,6 +91,7 @@
                     updateSaveRecommendationFormData(response)
 
                     $('#save_recommendations_link').show();
+                    $('#recommendations_in_files').show();
                 },
             });
 

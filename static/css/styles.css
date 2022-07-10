@@ -15,6 +15,10 @@ input[type=email] {
   outline: none;
 }
 
+input[type=image] {
+  outline: none;
+}
+
 nav {
   background-color: #414f57;
 }
