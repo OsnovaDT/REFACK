@@ -7,17 +7,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import FileResponse, JsonResponse
-from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 from dicttoxml import dicttoxml
 
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
-    get_code_recommendations, get_recommendations_or_error_response,
-    get_code_to_display_in_html, get_recommendation_to_display_in_html,
-    get_str_for_deserialization,
+    get_recommendations_or_error_response, get_code_to_display_in_html,
+    get_recommendation_to_display_in_html, get_str_for_deserialization,
 )
 from refactoring.constants import FILE_DEFAULT_DISPOSITION
 
@@ -25,16 +22,10 @@ from refactoring.constants import FILE_DEFAULT_DISPOSITION
 # Code input
 
 
-class ManualCodeInputView(TemplateView):
+class CodeInputView(TemplateView):
     """Manual code input"""
 
-    template_name = 'code_input/manual.html'
-
-
-class FileCodeInputView(TemplateView):
-    """File code input"""
-
-    template_name = 'code_input/file.html'
+    template_name = 'code_input.html'
 
 
 # Index, instruction and rules pages
@@ -59,22 +50,6 @@ class RulesView(LoginRequiredMixin, TemplateView):
 
 
 # Refactoring
-
-
-@login_required()
-def refactor_code_from_file(request: WSGIRequest) -> HttpResponse:
-    """Refactor code from file"""
-
-    code = request.FILES['file_upload'].read().decode('UTF-8')
-
-    return render(
-        request,
-        'refactoring_results.html',
-        {
-            'results': get_code_recommendations(code),
-            'code': code,
-        },
-    )
 
 
 @login_required()

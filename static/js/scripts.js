@@ -9,7 +9,7 @@ $('#dropdown_menu_link').on('click', function(){
     }
 });
 
-// Refactoring recommendations
+// Save recommendations link
 
 $('#save_recommendations_link').on('click', function(event){
     $('#save_recommendations_form').submit();
@@ -42,14 +42,25 @@ function updateRecommendationsBlock(response){
     };
 };
 
-// File upload
+// Refactoring
+
+function pasteCodeFromFileToTextarea(input){
+    let reader = new FileReader();
+    let codeFile = input.files[0];
+
+    reader.readAsText(codeFile);
+
+    reader.onload = function() {
+        $('#source_code').val(reader.result);
+    };
+
+    reader.onerror = function() {
+        $('#source_code').val(reader.error);
+    };
+}
 
 $('#file_upload').click(function(){
     $("#file_upload_input").trigger('click');
-});
-
-$("#file_upload_input").change(function(){
-    $('#uploaded_file').text(this.value.replace(/C:\\fakepath\\/i, ''));
 });
 
 // Login

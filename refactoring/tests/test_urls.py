@@ -13,10 +13,10 @@ class PagesTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-    def test_manual_input(self) -> None:
-        """Test manual input page"""
+    def test_code_input(self) -> None:
+        """Test code input page"""
 
-        response = self.client.get('/manual_input/')
+        response = self.client.get('/code_input/')
 
         self.assertEqual(response.status_code, 200)
 

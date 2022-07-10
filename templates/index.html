@@ -15,25 +15,11 @@
             <p class="text_small">Делает код на Python чище, читабильнее и лучше</p>
         </div>
 
-        {# Start right now #}
-        <div>
-            <h2 class="text_middle">Начните прямо сейчас</h2>
-
-            <div class="row">
-                {# File input button #}
-                <div class="offset-md-1 col-md-5">
-                    <a href="{% url 'refactoring:file_input' %}">
-                        <input type="button" class="button_green" value="Передать код в файле">
-                    </a>
-                </div>
-
-                {# Code input button #}
-                <div class="col-md-5">
-                    <a href="{% url 'refactoring:manual_input' %}">
-                        <input type="button" class="button_blue" value="Ввести код вручную">
-                    </a>
-                </div>
-            </div>
+        {# Code input button #}
+        <div class="col-md-6 offset-md-3">
+            <a href="{% url 'refactoring:code_input' %}">
+                <input type="button" class="button_green" value="Начать прямо сейчас">
+            </a>
         </div>
     </div>
 {% endblock content %}

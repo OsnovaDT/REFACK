@@ -15,11 +15,21 @@
                     {{ errors }}
                 {% endif %}
 
-                <textarea maxlength="10000" name="code" cols="100" rows="20"
+                <textarea maxlength="10000" name="code" cols="100" rows="20" id="source_code"
                     placeholder="Введите ваш код" autofocus></textarea>
 
-                <div class="block_with_button">
-                    <input type="submit" class="button_green" value="Отрефакторить">
+                <div class="row block_with_button">
+                    {# Paste code from file #}
+                    <div class="col-md-6">
+                        <input type="button" id='file_upload' class="button_blue" value="Вставить код из файла">
+                        <input type="file" onchange="pasteCodeFromFileToTextarea(this)" required
+                            id="file_upload_input" name="file_upload" accept=".py">
+                    </div>
+
+                    {# Refactoring #}
+                    <div class="col-md-6">
+                        <input type="submit" class="button_green" value="Отрефакторить">
+                    </div>
                 </div>
             </form>
         </div>
