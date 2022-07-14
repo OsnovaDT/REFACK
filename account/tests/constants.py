@@ -1,4 +1,12 @@
-"""Paths of account app"""
+"""Constants for tests of account app"""
+
+# Superuser credentials
+
+SUPERUSER_USERNAME = 'superuser'
+
+SUPERUSER_PASSWORD = 'superpassword'
+
+# Paths
 
 ACCOUNT = '/account/'
 
