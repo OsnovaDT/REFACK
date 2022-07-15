@@ -1,4 +1,4 @@
-"""Constants for tests of account app"""
+"""Constants for tests of project"""
 
 # Superuser credentials
 
@@ -19,3 +19,9 @@ PASSWORD_CHANGE = 'password_change/'
 PASSWORD_RESET = 'password_reset/'
 
 REGISTRATION = 'registration/'
+
+RULES = '/rules/'
+
+INDEX = '/'
+
+CODE_INPUT = '/code_input/'

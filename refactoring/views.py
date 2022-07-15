@@ -22,7 +22,7 @@ from refactoring.constants import FILE_DEFAULT_DISPOSITION
 # Code input
 
 
-class CodeInputView(TemplateView):
+class CodeInputView(LoginRequiredMixin, TemplateView):
     """Manual code input"""
 
     template_name = 'code_input.html'
@@ -40,7 +40,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
 class RulesView(LoginRequiredMixin, TemplateView):
     """Rules page"""
 
-    template_name = 'navbar/rules.html'
+    template_name = 'rules.html'
 
 
 # Refactoring

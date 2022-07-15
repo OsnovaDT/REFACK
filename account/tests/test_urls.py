@@ -1,19 +1,18 @@
-"""Tests for views of account app"""
+"""Test urls of account app"""
 
-from django.contrib.auth import get_user_model
 from django.test import TestCase, tag
 
-from account.tests.constants import (
+from config.constants.tests import (
     ACCOUNT, LOGIN, LOGOUT, PASSWORD_CHANGE, PASSWORD_RESET, REGISTRATION,
-    SUPERUSER_USERNAME, SUPERUSER_PASSWORD,
+)
+from config.tests.mixins import (
+    Test302IfNotAuthorizedMixin, Test200IfAuthorizedMixin,
 )
 
 
-User = get_user_model()
-
-
 @tag('account_urls')
-class PagesTests(TestCase):
+class PagesTests(
+        Test302IfNotAuthorizedMixin, Test200IfAuthorizedMixin, TestCase):
     """Test pages of account app"""
 
     def test_login(self) -> None:
@@ -41,29 +40,8 @@ class PagesTests(TestCase):
     def test_password_change(self) -> None:
         """Test password change page"""
 
-        response = self.client.get(ACCOUNT + PASSWORD_CHANGE)
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(
-            response.url,
-            ACCOUNT + LOGIN + '?next=' + ACCOUNT + PASSWORD_CHANGE,
-        )
-
-        User.objects.create_superuser(
-            username=SUPERUSER_USERNAME, password=SUPERUSER_PASSWORD,
-        )
-
-        self.client.post(
-            ACCOUNT + LOGIN,
-            {
-                'username': SUPERUSER_USERNAME,
-                'password': SUPERUSER_PASSWORD,
-            },
-        )
-
-        response = self.client.get(ACCOUNT + PASSWORD_CHANGE)
-
-        self.assertEqual(response.status_code, 200)
+        self._test_302_if_not_authorized(ACCOUNT + PASSWORD_CHANGE)
+        self._test_200_if_authorized(ACCOUNT + PASSWORD_CHANGE)
 
     def test_password_reset(self) -> None:
         """Test password reset page"""

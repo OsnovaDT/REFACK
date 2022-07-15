@@ -1,28 +1,31 @@
-"""Tests for views of refactoring app"""
+"""Tests urls of refactoring app"""
 
-from django.test import TestCase
+from django.test import tag
+
+from config.constants.tests import RULES, INDEX, CODE_INPUT
+from config.tests.mixins import (
+    Test200IfAuthorizedMixin, Test302IfNotAuthorizedMixin,
+)
 
 
-class PagesTests(TestCase):
-    """Tests for refactoring's pages"""
+@tag('refactoring_urls')
+class PagesTests(Test302IfNotAuthorizedMixin, Test200IfAuthorizedMixin):
+    """Test pages of refactoring app"""
 
     def test_index(self) -> None:
         """Test index page"""
 
-        response = self.client.get('')
-
-        self.assertEqual(response.status_code, 200)
+        self._test_302_if_not_authorized(INDEX)
+        self._test_200_if_authorized(INDEX)
 
     def test_code_input(self) -> None:
         """Test code input page"""
 
-        response = self.client.get('/code_input/')
-
-        self.assertEqual(response.status_code, 200)
+        self._test_302_if_not_authorized(CODE_INPUT)
+        self._test_200_if_authorized(CODE_INPUT)
 
     def test_rules(self) -> None:
         """Test rules page"""
 
-        response = self.client.get('/rules/')
-
-        self.assertEqual(response.status_code, 200)
+        self._test_302_if_not_authorized(RULES)
+        self._test_200_if_authorized(RULES)
