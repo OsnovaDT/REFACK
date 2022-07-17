@@ -2,7 +2,7 @@
 
 from django.test import TestCase, tag
 
-from config.constants.tests import (
+from config.tests.constants import (
     ACCOUNT, LOGIN, LOGOUT, PASSWORD_CHANGE, PASSWORD_RESET, REGISTRATION,
 )
 from config.tests.mixins import (

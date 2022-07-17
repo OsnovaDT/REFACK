@@ -3,7 +3,7 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from config.constants.tests import (
+from config.tests.constants import (
     ACCOUNT, LOGIN, SUPERUSER_USERNAME, SUPERUSER_PASSWORD,
 )
 
@@ -11,10 +11,13 @@ from config.constants.tests import (
 class Test302IfNotAuthorizedMixin(TestCase):
     """Mixin for testing status code is 302 if user is not authorized"""
 
-    def _test_302_if_not_authorized(self, path: str) -> None:
+    def _test_302_if_not_authorized(self, path: str, data=None) -> None:
         """Test status code is 302 if user is not authorized"""
 
-        response = self.client.get(path)
+        if data:
+            response = self.client.post(path, data)
+        else:
+            response = self.client.get(path)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(
@@ -26,12 +29,15 @@ class Test302IfNotAuthorizedMixin(TestCase):
 class Test200IfAuthorizedMixin(TestCase):
     """Mixin for testing status code is 200 if user authorized"""
 
-    def _test_200_if_authorized(self, path: str) -> None:
+    def _test_200_if_authorized(self, path: str, data=None) -> None:
         """Test status code is 200 if user is authorized"""
 
         self.__authorize()
 
-        response = self.client.get(path)
+        if data:
+            response = self.client.post(path, data)
+        else:
+            response = self.client.get(path)
 
         self.assertEqual(response.status_code, 200)
 
