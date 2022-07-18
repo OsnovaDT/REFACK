@@ -80,3 +80,10 @@ INCORRECT_GET_FUNCTIONS = DIFFERENT_VALUES + (
 
     'g', 'e', 't',
 )
+
+
+TEST_REFACTORING_RESULTS = {
+    'results': '{"Функции не начинаются с префикса «get»": "a",'
+               '"Для функций не указана документация": "a",'
+               '"Для функций не указан type hint": "a"}'
+}

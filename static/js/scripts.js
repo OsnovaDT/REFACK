@@ -25,6 +25,22 @@ function updateSaveRecommendationFormData(response){
     $("input[name='recommendation']").val(recommendations);
 };
 
+function updateResultsForFileDownload(response){
+    results = "{";
+
+    for (const [rule, code_item] of Object.entries(response.recommendations)){
+        results += `"${rule}": "${code_item}",`;
+    };
+
+    if (results.slice(-1) == ','){
+        results = results.substring(0, results.length - 1);
+    };
+
+    results += "}"
+
+    $("input[name='results']").val(results);
+};
+
 function updateRecommendationsBlock(response){
     $('#recommendations').empty();
 

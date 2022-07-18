@@ -14,7 +14,7 @@ from dicttoxml import dicttoxml
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
     get_recommendations_or_error_response, get_code_to_display_in_html,
-    get_recommendation_to_display_in_html, get_str_for_deserialization,
+    get_recommendation_to_display_in_html,
 )
 from refactoring.constants import FILE_DEFAULT_DISPOSITION
 
@@ -95,10 +95,8 @@ def save_recommendation(request: WSGIRequest) -> JsonResponse:
 def download_recommendations_in_json(request: WSGIRequest) -> JsonResponse:
     """Download JSON file with refactoring recommendations"""
 
-    recommendations = get_str_for_deserialization(request.POST['results'])
-
     response = JsonResponse(
-        loads(recommendations),
+        loads(request.POST['results']),
         json_dumps_params={'ensure_ascii': False},
     )
     response['Content-Disposition'] = FILE_DEFAULT_DISPOSITION + 'json;'
@@ -124,8 +122,7 @@ def download_results_in_pdf(request: WSGIRequest) -> FileResponse:
 def download_results_in_xml(request: WSGIRequest) -> FileResponse:
     """Download XML file with refactoring recommendations"""
 
-    recommendations = request.POST['results']
-    recommendations = loads(get_str_for_deserialization(recommendations))
+    recommendations = loads(request.POST['results'])
 
     response = FileResponse(
         str(dicttoxml(recommendations)),

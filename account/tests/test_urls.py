@@ -1,18 +1,15 @@
 """Test urls of account app"""
 
-from django.test import TestCase, tag
+from django.test import tag
 
 from config.tests.constants import (
     ACCOUNT, LOGIN, LOGOUT, PASSWORD_CHANGE, PASSWORD_RESET, REGISTRATION,
 )
-from config.tests.mixins import (
-    Test302IfNotAuthorizedMixin, Test200IfAuthorizedMixin,
-)
+from config.tests.mixins import TestURLMixin
 
 
 @tag('account_urls')
-class PagesTests(
-        Test302IfNotAuthorizedMixin, Test200IfAuthorizedMixin, TestCase):
+class PagesTests(TestURLMixin):
     """Test pages of account app"""
 
     def test_login(self) -> None:
@@ -40,8 +37,8 @@ class PagesTests(
     def test_password_change(self) -> None:
         """Test password change page"""
 
-        self._test_302_if_not_authorized(ACCOUNT + PASSWORD_CHANGE)
-        self._test_200_if_authorized(ACCOUNT + PASSWORD_CHANGE)
+        self._test_url(ACCOUNT + PASSWORD_CHANGE)
+        self._test_url(ACCOUNT + PASSWORD_CHANGE, 200, True)
 
     def test_password_reset(self) -> None:
         """Test password reset page"""

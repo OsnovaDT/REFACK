@@ -97,7 +97,7 @@
                 url: "{% url 'refactoring:code_refactoring' %}",
                 success: function (response) {
                     updateRecommendationsBlock(response);
-
+                    updateResultsForFileDownload(response);
                     updateSaveRecommendationFormData(response)
 
                     $('#save_recommendations_link').show();
