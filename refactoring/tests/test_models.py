@@ -11,7 +11,7 @@ from config.tests.utils import run_field_attribute_test
 User = get_user_model()
 
 
-@tag('refactoring_recommendation')
+@tag('refactoring_models')
 class RefactoringRecommendationTests(TestCase):
     """Tests for RefactoringRecommendation model"""
 
