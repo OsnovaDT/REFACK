@@ -51,4 +51,5 @@ Tags
 - **account_urls** - Test urls for account app;
 - **refactoring_urls** - Test urls for refactoring app;
 - **refactoring_recommendation** - Test RefactoringRecommendation model;
-- **account_config** - Test config of account app.
+- **account_config** - Test config of account app;
+- **account_forms** - Test forms of account app.
