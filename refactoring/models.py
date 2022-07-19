@@ -10,15 +10,20 @@ class RefactoringRecommendation(models.Model):
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
+        verbose_name='пользователь',
     )
 
     code = models.TextField(
+        'исходный код',
         max_length=10_000,
     )
 
-    recommendation = models.TextField()
+    recommendation = models.TextField(
+        'рекомендация по рефакторингу',
+    )
 
     date = models.DateTimeField(
+        'дата рефакторинга',
         auto_now_add=True,
     )
 

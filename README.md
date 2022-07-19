@@ -50,3 +50,4 @@ docker-compose exec web python manage.py test --tag=<tag>
 Tags
 - **account_urls** - Test urls for account app;
 - **refactoring_urls** - Test urls for refactoring app.
+- **refactoring_recommendation** - Test RefactoringRecommendation model
