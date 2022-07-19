@@ -3,61 +3,15 @@
     GET параметрами
 
 2) ТЕСТЫ
-    1. Написать тесты для приложения account
-        - Проверка полей формы регистрации
     2. Написать тесты для приложения refactoring
-        - code_inspector.py
-            - is_bool_function_correct
-            - is_get_function_correct
-            - CodeInspector
-            - NamingStyle
-            - RecommendationsGenerator
-                - _generate
-                - __functions
-                - __classes
-                - __get_naming_style
-                - __all_modules_have_documentation
-                - __all_functions_have_type_hint_for_arguments
-                - __all_functions_have_type_hint
-                - __functions_naming_style_is_snake_case
-                - __classes_naming_style_is_camel_case
-                - __not_bool_functions_start_with_get
-                - __bool_functions_start_with_is
-        - code_parser.py
-            - get_action_type
-            - get_function_type
-            - CodeParser
-                - visit_FunctionDef
-                - visit_ClassDef
-                - modules
-        - nodes.py
-            - DefaultItem
-                - _get_attr_from_info
-                - name
-                - docstring
-            - FunctionItem
-                - type
-                - type_hint
-                - args
-            - ClassItem
-        - utils.py
-            - get_code_recommendations
+        - services/
+            - __init__.py
+            - code_handler.py
+            - code_items.py
+            - code_parser.py
+            - rules_checker.py
+            - utils.py
         - views.py
-            - UserRecommendationsListView
-                - Наличие LoginRequiredMixin
-                - get_queryset
-            - IndexView
-                - Наличие LoginRequiredMixin
-            - RulesView
-                - Наличие LoginRequiredMixin
-            - RefactoringResultsView
-                - Наличие LoginRequiredMixin
-            - refactor_code_from_file
-            - refactor_code
-            - save_recommendation
-            - download_recommendations_in_json
-            - download_results_in_pdf
-            - download_results_in_xml
     3. Написать тесты для static/js/scripts.js
         - navbarDropdownMenuLink -> click
         - save_recommendations_link -> click
