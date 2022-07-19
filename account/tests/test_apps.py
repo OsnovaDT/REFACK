@@ -3,6 +3,7 @@
 from django.test import TestCase, tag
 
 from account.apps import AccountConfig
+from config.tests.constants import DEFAULT_AUTO_FIELD
 
 
 @tag('account_config')
@@ -13,8 +14,7 @@ class AccountConfigTests(TestCase):
         """Test default_auto_field attribute"""
 
         self.assertEqual(
-            AccountConfig.default_auto_field,
-            'django.db.models.BigAutoField',
+            AccountConfig.default_auto_field, DEFAULT_AUTO_FIELD,
         )
 
     def test_name(self) -> None:

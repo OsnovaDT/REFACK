@@ -54,5 +54,6 @@ Tags of account app:
 - **account_views**
 
 Tags of refactoring app:
+- **refactoring_config**
 - **refactoring_models**
 - **refactoring_urls**

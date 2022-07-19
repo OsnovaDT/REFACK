@@ -41,3 +41,7 @@ DOWNLOAD_PDF = '/download_pdf/'
 DOWNLOAD_XML = '/download_xml/'
 
 SAVE_RECOMMENDATION = '/save_recommendation/'
+
+# OTHER
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
