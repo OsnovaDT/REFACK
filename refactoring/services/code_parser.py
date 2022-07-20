@@ -20,6 +20,45 @@ from refactoring.services.constants import BOOL_TYPE, NOT_BOOL_TYPE
 class CodeParser(NodeVisitor):
     """Parse user's code, save and return it's items"""
 
+    def visit_FunctionDef(self, function: FunctionDef) -> None:
+        """Function parser.
+
+        1. Create FunctionItem object for the function;
+        2. Add it to all function items.
+
+        """
+
+        self.__code_items['functions'].append(
+            FunctionItem({
+                'name': function.name,
+                'type': self.__get_function_type(function.body),
+                'docstring': get_docstring(function),
+                'type_hint': function.returns,
+                'args': function.args.args,
+            }),
+        )
+
+    def visit_ClassDef(self, class_: ClassDef) -> None:
+        """Class parser.
+
+        1. Create ClassItem object for the class;
+        2. Add it to all class items.
+
+        """
+
+        self.__code_items['classes'].append(
+            ClassItem({
+                'name': class_.name,
+                'docstring': get_docstring(class_),
+            }),
+        )
+
+    @property
+    def code_items(self) -> dict:
+        """Return code items"""
+
+        return dict(self.__code_items)
+
     def __init__(self):
         self.__code_items = defaultdict(list)
 
@@ -64,42 +103,3 @@ class CodeParser(NodeVisitor):
                 function_type = 'pass'
 
         return function_type
-
-    def visit_FunctionDef(self, function: FunctionDef) -> None:
-        """Function parser.
-
-        1. Create FunctionItem object for the function;
-        2. Add it to all function items.
-
-        """
-
-        self.__code_items['functions'].append(
-            FunctionItem({
-                'name': function.name,
-                'type': self.__get_function_type(function.body),
-                'docstring': get_docstring(function),
-                'type_hint': function.returns,
-                'args': function.args.args,
-            }),
-        )
-
-    def visit_ClassDef(self, class_: ClassDef) -> None:
-        """Class parser.
-
-        1. Create ClassItem object for the class;
-        2. Add it to all class items.
-
-        """
-
-        self.__code_items['classes'].append(
-            ClassItem({
-                'name': class_.name,
-                'docstring': get_docstring(class_),
-            }),
-        )
-
-    @property
-    def code_items(self) -> dict:
-        """Return code items"""
-
-        return dict(self.__code_items)

@@ -43,14 +43,14 @@ def create_refactoring_recommendation(recommendation_data: dict) -> None:
 
 
 def get_file_response_with_refactoring_recommendations(
-        recommendations: str, file_format: str) -> FileResponse | JsonResponse:
+        recommendations: str, extension: str) -> FileResponse | JsonResponse:
     """Return file response with refactoring recommendations"""
 
-    if file_format == 'xml':
+    if extension == 'xml':
         recommendations = get_xml_file_content(recommendations)
 
     return get_response_with_file(
-        recommendations, 'refactoring_recommendations', file_format,
+        recommendations, 'refactoring_recommendations', extension,
     )
 
 

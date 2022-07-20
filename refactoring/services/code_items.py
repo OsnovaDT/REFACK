@@ -14,6 +14,18 @@ E.g. for function parser actions will be next:
 class DefaultItem:
     """Default code item that is parent for all items classes"""
 
+    @property
+    def name(self) -> str | None:
+        """Item name"""
+
+        return self._get_attr('name')
+
+    @property
+    def docstring(self) -> str | None:
+        """Item docstring"""
+
+        return self._get_attr('docstring')
+
     def __init__(self, attributes: dict):
         self.__attributes = attributes
 
@@ -35,18 +47,6 @@ class DefaultItem:
             attr = None
 
         return attr
-
-    @property
-    def name(self) -> str | None:
-        """Item name"""
-
-        return self._get_attr('name')
-
-    @property
-    def docstring(self) -> str | None:
-        """Item docstring"""
-
-        return self._get_attr('docstring')
 
 
 class FunctionItem(DefaultItem):

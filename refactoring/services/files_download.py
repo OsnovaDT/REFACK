@@ -14,17 +14,17 @@ def get_xml_file_content(file_content: str) -> str:
 
 def get_response_with_file(
         file_content: str, file_name: str,
-        file_format: str) -> FileResponse | JsonResponse:
+        extension: str) -> FileResponse | JsonResponse:
     """Return FileResponse or JsonResponse with file"""
 
-    if file_format == 'json':
+    if extension == 'json':
         response = _get_json_file_response(file_content)
     else:
         response = FileResponse(
-            file_content, content_type=f'application/{file_format}',
+            file_content, content_type=f'application/{extension}',
         )
 
-    _add_file_disposition_to_response(response, f'{file_name}.{file_format}')
+    _add_file_disposition_to_response(response, f'{file_name}.{extension}')
 
     return response
 
