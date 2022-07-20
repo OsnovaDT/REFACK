@@ -47,7 +47,7 @@ class RulesView(LoginRequiredMixin, TemplateView):
 
 
 @login_required()
-def refactor_code(request: WSGIRequest) -> JsonResponse:
+def refactor_code_view(request: WSGIRequest) -> JsonResponse:
     """Refactor code and return recommendations or error"""
 
     code = request.GET.get('code', '')
@@ -72,7 +72,7 @@ class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
 
 
 @login_required()
-def save_recommendation(request: WSGIRequest) -> JsonResponse:
+def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
     recommendation = request.GET.get('recommendation', None)
@@ -92,7 +92,7 @@ def save_recommendation(request: WSGIRequest) -> JsonResponse:
 
 
 @login_required()
-def download_recommendations_in_json(request: WSGIRequest) -> JsonResponse:
+def download_recommendations_json_view(request: WSGIRequest) -> JsonResponse:
     """Download JSON file with refactoring recommendations"""
 
     response = JsonResponse(
@@ -105,7 +105,7 @@ def download_recommendations_in_json(request: WSGIRequest) -> JsonResponse:
 
 
 @login_required()
-def download_results_in_pdf(request: WSGIRequest) -> FileResponse:
+def download_recommendations_pdf_view(request: WSGIRequest) -> FileResponse:
     """Download PDF file with refactoring recommendations"""
 
     response = FileResponse(
@@ -119,7 +119,7 @@ def download_results_in_pdf(request: WSGIRequest) -> FileResponse:
 
 
 @login_required()
-def download_results_in_xml(request: WSGIRequest) -> FileResponse:
+def download_recommendations_xml_view(request: WSGIRequest) -> FileResponse:
     """Download XML file with refactoring recommendations"""
 
     recommendations = loads(request.POST['results'])

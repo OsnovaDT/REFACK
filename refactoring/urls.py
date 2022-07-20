@@ -3,9 +3,10 @@
 from django.urls import path
 
 from refactoring.views import (
-    CodeInputView, IndexView, RulesView, refactor_code,
-    RefactoringRecommendationListView, download_recommendations_in_json,
-    download_results_in_pdf, save_recommendation, download_results_in_xml,
+    CodeInputView, IndexView, RulesView, refactor_code_view,
+    RefactoringRecommendationListView, download_recommendations_json_view,
+    download_recommendations_pdf_view, save_recommendation_view,
+    download_recommendations_xml_view,
 )
 
 
@@ -47,7 +48,7 @@ urlpatterns = [
 
     path(
         'code_refactoring/',
-        refactor_code,
+        refactor_code_view,
         name='code_refactoring',
     ),
 
@@ -55,19 +56,19 @@ urlpatterns = [
 
     path(
         'download_json/',
-        download_recommendations_in_json,
+        download_recommendations_json_view,
         name='download_json',
     ),
 
     path(
         'download_pdf/',
-        download_results_in_pdf,
+        download_recommendations_pdf_view,
         name='download_pdf',
     ),
 
     path(
         'download_xml/',
-        download_results_in_xml,
+        download_recommendations_xml_view,
         name='download_xml',
     ),
 
@@ -75,7 +76,7 @@ urlpatterns = [
 
     path(
         'save_recommendation/',
-        save_recommendation,
+        save_recommendation_view,
         name='save_recommendation',
     ),
 ]

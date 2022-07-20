@@ -6,7 +6,7 @@ from refactoring.services.code_handler import CodeHandler
 from refactoring.services.utils import get_error_if_code_invalid
 
 
-def get_code_recommendations(code: bytes | str) -> dict:
+def _get_code_recommendations(code: bytes | str) -> dict:
     """Return refactoring recommendations for user's code"""
 
     recommendations = CodeHandler(code).recommendations
@@ -25,7 +25,7 @@ def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
     if code_error:
         results = {'error': code_error}
     else:
-        results = {'recommendations': get_code_recommendations(code)}
+        results = {'recommendations': _get_code_recommendations(code)}
 
     return JsonResponse(results)
 
@@ -48,9 +48,3 @@ def get_recommendation_to_display_in_html(recommendation: str) -> str:
     ).replace(
         "'", ''
     )
-
-
-def get_str_for_deserialization(string: str) -> str:
-    """Change single quote to double quote and return"""
-
-    return string.replace('\'', '\"')
