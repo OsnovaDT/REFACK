@@ -29,3 +29,23 @@ def is_name_in_cap_words(name: str) -> bool:
         and not name.isupper() \
         and '_' not in name \
         and name[0].istitle()
+
+
+def get_code_to_display_in_html(code: str) -> str:
+    """Convert and return code to display in HTML"""
+
+    return code.replace('\n', '<br>').replace(' ', '&nbsp;')
+
+
+def get_recommendation_to_display_in_html(recommendation: str) -> str:
+    """Convert and return recommendation to display in HTML"""
+
+    return recommendation.replace(
+        ', ', '<br><br>'
+    ).replace(
+        '{', ''
+    ).replace(
+        '}', ''
+    ).replace(
+        "'", ''
+    )

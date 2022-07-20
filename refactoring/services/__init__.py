@@ -1,20 +1,20 @@
 """Business logic used in views"""
 
-from django.http import JsonResponse
+from django.contrib.auth import get_user_model
+from django.http import JsonResponse, FileResponse
 
+from refactoring.models import RefactoringRecommendation
 from refactoring.services.code_handler import CodeHandler
-from refactoring.services.utils import get_error_if_code_invalid
+from refactoring.services.utils import (
+    get_error_if_code_invalid, get_code_to_display_in_html,
+    get_recommendation_to_display_in_html,
+)
+from refactoring.services.files_download import (
+    get_response_with_file, get_xml_file_content,
+)
 
 
-def _get_code_recommendations(code: bytes | str) -> dict:
-    """Return refactoring recommendations for user's code"""
-
-    recommendations = CodeHandler(code).recommendations
-
-    return {
-        rule: ", ".join(wrong_code_items)
-        for rule, wrong_code_items in recommendations.items()
-    }
+User = get_user_model()
 
 
 def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
@@ -30,21 +30,36 @@ def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
     return JsonResponse(results)
 
 
-def get_code_to_display_in_html(code: str) -> str:
-    """Convert and return code to display in HTML"""
+def create_refactoring_recommendation(recommendation_data: dict) -> None:
+    """Create refactoring recommendation"""
 
-    return code.replace('\n', '<br>').replace(' ', '&nbsp;')
-
-
-def get_recommendation_to_display_in_html(recommendation: str) -> str:
-    """Convert and return recommendation to display in HTML"""
-
-    return recommendation.replace(
-        ', ', '<br><br>'
-    ).replace(
-        '{', ''
-    ).replace(
-        '}', ''
-    ).replace(
-        "'", ''
+    RefactoringRecommendation.objects.create(
+        user=User.objects.get(username=recommendation_data['username']),
+        code=get_code_to_display_in_html(recommendation_data['code']),
+        recommendation=get_recommendation_to_display_in_html(
+            recommendation_data['recommendation'],
+        ),
     )
+
+
+def get_file_response_with_refactoring_recommendations(
+        recommendations: str, file_format: str) -> FileResponse | JsonResponse:
+    """Return file response with refactoring recommendations"""
+
+    if file_format == 'xml':
+        recommendations = get_xml_file_content(recommendations)
+
+    return get_response_with_file(
+        recommendations, 'refactoring_recommendations', file_format,
+    )
+
+
+def _get_code_recommendations(code: bytes | str) -> dict:
+    """Return refactoring recommendations for user's code"""
+
+    recommendations = CodeHandler(code).recommendations
+
+    return {
+        rule: ", ".join(wrong_code_items)
+        for rule, wrong_code_items in recommendations.items()
+    }

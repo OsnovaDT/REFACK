@@ -14,14 +14,14 @@ from refactoring.services.rules_checker import CleanCodeRulesChecker
 class CodeHandler:
     """Parse code and return refactoring recommendations"""
 
-    def __init__(self, code: str):
-        parser = CodeParser()
-        parser.visit(parse(code))
-
-        self.__rules_checker = CleanCodeRulesChecker(parser.code_items)
-
     @property
     def recommendations(self) -> dict:
         """Recommendations for refactoring user's code"""
 
         return self.__rules_checker.recommendations
+
+    def __init__(self, code: str):
+        parser = CodeParser()
+        parser.visit(parse(code))
+
+        self.__rules_checker = CleanCodeRulesChecker(parser.code_items)
