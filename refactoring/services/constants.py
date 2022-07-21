@@ -1,5 +1,8 @@
 """Constants of services app"""
 
+from keyword import kwlist
+
+
 # REFACTORING RULES
 
 # Naming
@@ -32,3 +35,12 @@ ARGUMENT_TYPE_HINT = "Для аргументов функций не указа
 BOOL_TYPE = 'bool'
 
 NOT_BOOL_TYPE = 'not bool'
+
+# OTHER
+
+KEYWORDS = (
+    'class', 'list', 'tuple', 'set', 'dict', 'arrow', 'str', 'int',
+    'type', 'float',
+) + tuple([str(kw) for kw in kwlist])
+
+SNAKE_CASE_REGEXP = r"(_){,2}([a-z])([a-z0-9]{2,})(_[a-z0-9]{2,})*(_?)"

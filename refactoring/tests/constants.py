@@ -1,5 +1,10 @@
 """Constants for testing refactoring app"""
 
+from keyword import kwlist
+
+
+# Common constants
+
 
 class TestClass:
     """Empty class for testing"""
@@ -9,13 +14,12 @@ def test_function():
     """Empty function for testing"""
 
 
-DIFFERENT_VALUES = (
-    # str and bytes
-    'test', 'aaaaaaaaaaa', 'check_function',
-    'value', 'value_value', 'value     value', '', '!@@#Q@$Q', 'test'.encode(),
-    'a', 'b', 'A', 'B', '', '  ',
-    'a' * 100, 'a' * 10_000, '\n', '\t', 'class', 'def', 'int',
+KEYWORDS = (
+    'class', 'list', 'tuple', 'set', 'dict', 'arrow', 'str', 'int',
+    'type', 'float',
+) + tuple([str(keyword) for keyword in kwlist])
 
+NOT_STRING_VALUES = (
     # int, float and bool
     0, 100_000, -100, 122.12323, True, False,
 
@@ -30,6 +34,31 @@ DIFFERENT_VALUES = (
 
     # Others
     None, complex(1, 2), bin(20), hex(100), range(100),
+)
+
+DIFFERENT_STRINGS = (
+    'test', 'aaaaaaaaaaa', 'check_function', 'value', 'value_value',
+    'value     value', '', '!@@#Q@$Q', 'test'.encode(), 'a', 'b', 'A', 'B',
+    '', '  ', 'a' * 100, 'a' * 10_000, '\n', '\t', 'class', 'def', 'int',
+)
+
+DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
+
+# For testing is_in_snake_case function
+
+INCORRECT_SNAKE_CASE_STRINGS = (
+    'TEST', 'testTest', 'functionFunctionFunction', 'TEST_TEST',
+    'TEST_TEST_TEST', 'testTEST', 'tEsT', 'Test', 'tesT', 'A', 'B', ' ', '   ',
+    'tesT1', 'test__test', 'test__', 'test___', 'test____test___test',
+    '_test_', 'class', 'list', 'tuple', 'value     value', '', '!@@#Q@$Q',
+    'test'.encode(), 'a', 'b', 'A', 'B', '', '  ', '\n', '\t', 'def',
+) + KEYWORDS + NOT_STRING_VALUES
+
+CORRECT_SNAKE_CASE_STRINGS = (
+    'name', 'name123', 'super_long_name_12', 'super_long_name', 'car_color',
+    'name_of_abuse', '_name', '__name', 'super_super_puper_long_name',
+    'class_', 'list_', 'tuple_', 'set_', 'dict_', 'type_', 'get_value',
+    'set_value', 'check_info', 'check',
 )
 
 # For testing function is_bool_function_correct

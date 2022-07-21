@@ -1,6 +1,9 @@
 """Utils for business logic"""
 
+from re import fullmatch
 from ast import NodeVisitor, parse
+
+from refactoring.services.constants import KEYWORDS, SNAKE_CASE_REGEXP
 
 
 def get_error_if_code_invalid(code: bytes | str) -> str | None:
@@ -16,10 +19,17 @@ def get_error_if_code_invalid(code: bytes | str) -> str | None:
     return error
 
 
-def is_name_in_snake_case(name: str) -> bool:
-    """True if the name has snake_case naming style"""
+def is_in_snake_case(string: str) -> bool:
+    """True if the string has snake_case naming style"""
 
-    return name.islower() and '_' in name
+    is_in_snake_case_ = False
+
+    if isinstance(string, str) \
+            and string not in KEYWORDS \
+            and not _is_starts_and_ends_with(string, '_'):
+        is_in_snake_case_ = fullmatch(SNAKE_CASE_REGEXP, string) is not None
+
+    return is_in_snake_case_
 
 
 def is_name_in_cap_words(name: str) -> bool:
@@ -49,3 +59,15 @@ def get_recommendation_to_display_in_html(recommendation: str) -> str:
     ).replace(
         "'", ''
     )
+
+
+def _is_starts_and_ends_with(string: str, symbol: str) -> bool:
+    """Check is string starts and ends with underscore"""
+
+    is_starts_and_ends_with_ = False
+
+    if isinstance(string, str) and isinstance(symbol, str):
+        is_starts_and_ends_with_ = \
+            string.startswith(symbol) and string.endswith(symbol)
+
+    return is_starts_and_ends_with_
