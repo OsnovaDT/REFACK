@@ -37,9 +37,8 @@ NOT_STRING_VALUES = (
 )
 
 DIFFERENT_STRINGS = (
-    'test', 'aaaaaaaaaaa', 'check_function', 'value', 'value_value',
     'value     value', '', '!@@#Q@$Q', 'test'.encode(), 'a', 'b', 'A', 'B',
-    '', '  ', 'a' * 100, 'a' * 10_000, '\n', '\t', 'class', 'def', 'int',
+    '', '  ', '\n', '\t', 'def'
 )
 
 DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
@@ -47,18 +46,29 @@ DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
 # For testing is_in_snake_case function
 
 INCORRECT_SNAKE_CASE_STRINGS = (
-    'TEST', 'testTest', 'functionFunctionFunction', 'TEST_TEST',
+    'TEST', 'testTest', 'functionFunctionFunction', 'TEST_TEST', 'TestTest',
     'TEST_TEST_TEST', 'testTEST', 'tEsT', 'Test', 'tesT', 'A', 'B', ' ', '   ',
     'tesT1', 'test__test', 'test__', 'test___', 'test____test___test',
-    '_test_', 'class', 'list', 'tuple', 'value     value', '', '!@@#Q@$Q',
-    'test'.encode(), 'a', 'b', 'A', 'B', '', '  ', '\n', '\t', 'def',
-) + KEYWORDS + NOT_STRING_VALUES
+    '_test_',
+) + KEYWORDS + NOT_STRING_VALUES + DIFFERENT_STRINGS
 
 CORRECT_SNAKE_CASE_STRINGS = (
     'name', 'name123', 'super_long_name_12', 'super_long_name', 'car_color',
     'name_of_abuse', '_name', '__name', 'super_super_puper_long_name',
     'class_', 'list_', 'tuple_', 'set_', 'dict_', 'type_', 'get_value',
     'set_value', 'check_info', 'check',
+)
+
+# For testing is_in_cap_words function
+
+INCORRECT_CAP_WORDS_STRINGS = (
+    'carEngine', 'car_Engine', 'superLongCarEngingeName',
+    'superlongcarengingename',
+) + CORRECT_SNAKE_CASE_STRINGS + KEYWORDS + NOT_STRING_VALUES \
+  + DIFFERENT_STRINGS
+
+CORRECT_CAP_WORDS_STRINGS = (
+    'CarEngine', 'Car', 'SuperCar', 'SuperLongCarEngingeName',
 )
 
 # For testing function is_bool_function_correct

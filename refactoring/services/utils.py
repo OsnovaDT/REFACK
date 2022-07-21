@@ -3,7 +3,9 @@
 from re import fullmatch
 from ast import NodeVisitor, parse
 
-from refactoring.services.constants import KEYWORDS, SNAKE_CASE_REGEXP
+from refactoring.services.constants import (
+    KEYWORDS, SNAKE_CASE_REGEXP, CAP_WORDS_REGEXP,
+)
 
 
 def get_error_if_code_invalid(code: bytes | str) -> str | None:
@@ -32,13 +34,15 @@ def is_in_snake_case(string: str) -> bool:
     return is_in_snake_case_
 
 
-def is_name_in_cap_words(name: str) -> bool:
+def is_in_cap_words(string: str) -> bool:
     """True if the name has CapWords naming style"""
 
-    return not name.islower() \
-        and not name.isupper() \
-        and '_' not in name \
-        and name[0].istitle()
+    is_in_cap_words_ = False
+
+    if isinstance(string, str) and string not in KEYWORDS:
+        is_in_cap_words_ = fullmatch(CAP_WORDS_REGEXP, string) is not None
+
+    return is_in_cap_words_
 
 
 def get_code_to_display_in_html(code: str) -> str:

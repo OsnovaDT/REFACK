@@ -24,7 +24,7 @@ from refactoring.services.constants import (
     FUNCTION_DOCSTRING, CLASS_DOCSTRING, FUNCTION_TYPE_HINT,
     ARGUMENT_TYPE_HINT, BOOL_TYPE,
 )
-from refactoring.services.utils import is_name_in_cap_words, is_in_snake_case
+from refactoring.services.utils import is_in_cap_words, is_in_snake_case
 
 
 class TypeHintCheckerMixin:
@@ -97,7 +97,7 @@ class NamingStyleCheckerMixin:
         """
 
         for class_ in self._classes:
-            if not is_name_in_cap_words(class_.name):
+            if not is_in_cap_words(class_.name):
                 self._recommendations[CAP_WORDS_STYLE].append(class_.name)
 
 

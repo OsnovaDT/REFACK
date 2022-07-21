@@ -44,3 +44,9 @@ KEYWORDS = (
 ) + tuple([str(kw) for kw in kwlist])
 
 SNAKE_CASE_REGEXP = r"(_){,2}([a-z])([a-z0-9]{2,})(_[a-z0-9]{2,})*(_?)"
+
+# CapWords regexp
+
+ONE_CAP_WORD_REGEXP = r'([A-Z])([a-z0-9])+'
+
+CAP_WORDS_REGEXP = ONE_CAP_WORD_REGEXP + '(' + ONE_CAP_WORD_REGEXP + r')*'
