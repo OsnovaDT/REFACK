@@ -59,6 +59,8 @@ CORRECT_SNAKE_CASE_STRINGS = (
     'set_value', 'check_info', 'check',
 )
 
+# FOR TESTING services/utils.py
+
 # For testing is_in_cap_words function
 
 INCORRECT_CAP_WORDS_STRINGS = (
@@ -90,6 +92,73 @@ INCORRECT_BOOL_FUNCTIONS = DIFFERENT_VALUES + (
     'is', 'IS', 'iS', 'Is', 'is_', 'IS_', 'iS_', 'Is_',
 
     'i', 's',
+)
+
+# For testing get_error_if_code_invalid
+
+EXPECTED_INDENT_CLASS = \
+    "expected an indented block after class definition on line 1"
+
+EXPECTED_INDENT_FUNC = \
+    "expected an indented block after function definition on line 1"
+
+EXPECTED_COLON = "expected ':'"
+
+UNEXPECTED_INDENT = "unexpected indent"
+
+INVALID_SYNTAX = "invalid syntax"
+
+CURLY_BRACE_WAS_NEVER_CLOSED = "'{' was never closed"
+
+UNKNOWN_LINE = " (<unknown>, line "
+
+UNKNOWN_LINE_1 = UNKNOWN_LINE + "1)"
+
+UNKNOWN_LINE_2 = UNKNOWN_LINE + "2)"
+
+# TODO Расширить
+INVALID_CODE_AND_ERROR = {
+    # Func
+    "def": INVALID_SYNTAX + UNKNOWN_LINE_1,
+    "def test()": EXPECTED_COLON + UNKNOWN_LINE_1,
+    "def test():": EXPECTED_INDENT_FUNC + UNKNOWN_LINE_1,
+    "def test():\nreturn 1": EXPECTED_INDENT_FUNC + UNKNOWN_LINE_2,
+    "def test():\nreturn ": EXPECTED_INDENT_FUNC + UNKNOWN_LINE_2,
+    "def test(:\n\treturn ": INVALID_SYNTAX + UNKNOWN_LINE_1,
+
+    # Variable
+    "a = ": INVALID_SYNTAX + UNKNOWN_LINE_1,
+    " a = 1": UNEXPECTED_INDENT + UNKNOWN_LINE_1,
+    "d = {": CURLY_BRACE_WAS_NEVER_CLOSED + UNKNOWN_LINE_1,
+
+    # Class
+    "class": INVALID_SYNTAX + UNKNOWN_LINE_1,
+    "class: pass": INVALID_SYNTAX + UNKNOWN_LINE_1,
+    "class A": EXPECTED_COLON + UNKNOWN_LINE_1,
+    "class A:": EXPECTED_INDENT_CLASS + UNKNOWN_LINE_1,
+    "class A:\npass": EXPECTED_INDENT_CLASS + UNKNOWN_LINE_2,
+}
+
+VALID_CODE = (
+    "def test(): return 1", "def test(): return 'abc'", "class A: pass",
+    "a = 10", "dict = {'a': 1, 'b': 2}",
+
+    """
+def test():
+    return 1
+    """,
+
+    """
+class A:
+    def __init__(self):
+        pass
+    """,
+
+    """
+class Car:
+    def __init__(self, color: str):
+        self.color = color
+    """,
 )
 
 # For testing function is_get_function_correct

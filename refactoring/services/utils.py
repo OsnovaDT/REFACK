@@ -8,13 +8,15 @@ from refactoring.services.constants import (
 )
 
 
-def get_error_if_code_invalid(code: bytes | str) -> str | None:
-    """Return error if code is invalid else None"""
+# TODO улучшить
+def get_error_if_code_invalid(code: str) -> str:
+    """Return error if code is invalid or empty string"""
 
-    error = None
+    error = ''
 
     try:
-        NodeVisitor().visit(parse(code))
+        if isinstance(code, str):
+            NodeVisitor().visit(parse(code))
     except Exception as exception_error:
         error = str(exception_error)
 
