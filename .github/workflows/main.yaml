@@ -15,7 +15,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  health-check-job: # health check job for testing and code formatting check
+  build:
     runs-on: ubuntu-latest # os for running the job
     services:
       postgres: # we need a postgres docker image to be booted a side car service to run the tests that needs a db
@@ -45,11 +45,22 @@ jobs:
           python-version: '3.x' # if you want multiple python version run just use matrix strategy in job config. See the documentation of GitHub Actions
       - name: Check Python version # checking the python version to see if 3.x is installed.
         run: python --version
-      - name: Install requirements # install application requirements
+
+      # Installation
+      - name: Install requirements
         run: pip install -r requirements.txt
-      # - name: Check Syntax # check code formatting
-        # run: pycodestyle --statistics .
-      - name: Run Migrations # run migrations to create table in side car db container
+      - name: Install flake8
+        run: pip install flake8
+      - name: Install pycodestyle
+        run: pip install pycodestyle
+
+      # Code style checking
+      - name: Check pycodestyle
+        run: pycodestyle --statistics .
+      - name: Check flake8
+        run: flake8 .
+
+      - name: Run Migrations
         run: python manage.py migrate
-      - name: Run Test # running tests
+      - name: Run Tests
         run: python manage.py test

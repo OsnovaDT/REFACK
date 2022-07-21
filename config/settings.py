@@ -3,7 +3,7 @@
 from os import path
 from pathlib import Path
 
-from decouple import config
+# from decouple import config
 
 
 # MAIN

@@ -20,7 +20,7 @@ class RegistrationViewTests(TestCase):
         )
 
         self.assertEqual(
-            RegistrationView.template_name, 'account/registrat11212ion.html',
+            RegistrationView.template_name, 'account/registration.html',
         )
 
         self.assertEqual(
