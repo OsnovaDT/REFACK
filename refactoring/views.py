@@ -2,6 +2,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import FileResponse, JsonResponse
 from django.views.generic.base import TemplateView
@@ -18,10 +19,10 @@ from refactoring.services import (
 
 logger.add(
     f"logs/{__name__}.log",
-    format="{level} {time} {message}",
     level="ERROR",
-    rotation="10 KB",
-    compression="zip",
+    format=settings.LOG_FORMAT,
+    rotation=settings.LOG_ROTATION,
+    compression=settings.LOG_COMPRESSION,
 )
 
 

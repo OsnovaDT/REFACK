@@ -1,6 +1,7 @@
 """Decorators of the project"""
 
 from functools import wraps
+from traceback import format_exc
 
 from django.http import JsonResponse
 from loguru import logger
@@ -14,7 +15,7 @@ def catch_json_response_exception(func):
         try:
             response = func(*args, **kwargs)
         except Exception as exception:
-            logger.error(exception)
+            logger.error(f"«{exception}»\n{format_exc()}")
 
             response = JsonResponse({
                 'error': 'Произошла внутренняя ошибка сервера',
