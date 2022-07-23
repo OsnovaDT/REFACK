@@ -79,6 +79,7 @@ class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
 
 
 @login_required
+@catch_json_response_exception
 def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
