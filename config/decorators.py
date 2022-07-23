@@ -18,6 +18,7 @@ def catch_json_response_exception(func):
 
             response = JsonResponse({
                 'error': 'Произошла внутренняя ошибка сервера',
+                'recommendations': '',
             })
 
         return response
