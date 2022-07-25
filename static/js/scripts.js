@@ -1,12 +1,7 @@
 // Dropdown menu
 
 $('#dropdown_menu_link').on('click', function(){
-    if ($('#dropdown_menu').hasClass('dropped')){
-        $('#dropdown_menu').removeClass('dropped');
-    }
-    else{
-        $('#dropdown_menu').addClass('dropped');
-    }
+    $('#dropdown_menu').toggle();
 });
 
 // Save recommendations link

@@ -41,12 +41,7 @@ class DefaultItem:
     def _get_attr(self, attr_name: str) -> str | list | None:
         """Return attr from item's attributes or None"""
 
-        if attr_name in self.__attributes.keys():
-            attr = self.__attributes[attr_name]
-        else:
-            attr = None
-
-        return attr
+        return self.__attributes.get(attr_name, None)
 
 
 class FunctionItem(DefaultItem):

@@ -151,12 +151,9 @@ class CleanCodeRulesChecker(
     def _functions(self) -> set:
         """Return functions from the code"""
 
-        if 'functions' in self.__code_items.keys():
-            code_functions = self.__code_items['functions']
-        else:
-            code_functions = []
+        code_functions = self.__code_items.get('functions', [])
 
-        return set(code_functions[::-1])
+        return set(reversed(code_functions))
 
     @property
     def _not_bool_functions(self) -> set:
