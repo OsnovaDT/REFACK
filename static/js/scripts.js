@@ -36,11 +36,15 @@ function updateResultsForFileDownload(response){
     $("input[name='results']").val(results);
 };
 
+function getErrorForHtmlDisplay(error){
+    return `Ошибка: <span class="error_code">${error}</span>`;
+}
+
 function updateRecommendationsBlock(response){
     $('#recommendations').empty();
 
     if (response.error){
-        let error = `Ошибка: <span class="error_code">${response.error}</span>`;
+        let error = getErrorForHtmlDisplay(response.error);
 
         $('#recommendations').append(error);
     }
@@ -52,6 +56,16 @@ function updateRecommendationsBlock(response){
         };
     };
 };
+
+function saveRecommendation(response){
+    if (response.error){
+        $('#recommendations').empty();
+        $('#recommendations').prepend(getErrorForHtmlDisplay(response.error));
+    }
+    else{
+        $('#save_recommendations_link').hide();
+    }
+}
 
 // Refactoring
 

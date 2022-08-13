@@ -3,7 +3,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import FileResponse, JsonResponse
+from django.http import JsonResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
@@ -41,10 +41,9 @@ class RulesView(LoginRequiredMixin, TemplateView):
 # Refactoring
 
 
-@login_required()
+@login_required
 def refactor_code_view(request: WSGIRequest) -> JsonResponse:
     """Refactor code and return recommendations or error"""
-
     code = request.GET.get('code', '')
 
     return get_recommendations_or_error_response(code)
@@ -66,7 +65,7 @@ class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
         )
 
 
-@login_required()
+@login_required
 def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
@@ -84,28 +83,11 @@ def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
     return JsonResponse({})
 
 
-@login_required()
-def download_recommendations_json_view(request: WSGIRequest) -> JsonResponse:
+@login_required
+def download_recommendations_view(
+        request: WSGIRequest, extention: str) -> JsonResponse:
     """Download JSON file with refactoring recommendations"""
 
     return get_file_response_with_refactoring_recommendations(
-        request.POST['results'], 'json',
-    )
-
-
-@login_required()
-def download_recommendations_pdf_view(request: WSGIRequest) -> FileResponse:
-    """Download PDF file with refactoring recommendations"""
-
-    return get_file_response_with_refactoring_recommendations(
-        request.POST['results'], 'pdf',
-    )
-
-
-@login_required()
-def download_recommendations_xml_view(request: WSGIRequest) -> FileResponse:
-    """Download XML file with refactoring recommendations"""
-
-    return get_file_response_with_refactoring_recommendations(
-        request.POST['results'], 'xml',
+        request.POST['results'], extention,
     )

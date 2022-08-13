@@ -34,11 +34,11 @@ SAVED_RECOMMENDATIONS = '/saved_recommendations/'
 
 CODE_REFACTORING = '/code_refactoring/'
 
-DOWNLOAD_JSON = '/download_json/'
+DOWNLOAD_JSON = '/download/json/'
 
-DOWNLOAD_PDF = '/download_pdf/'
+DOWNLOAD_PDF = '/download/pdf/'
 
-DOWNLOAD_XML = '/download_xml/'
+DOWNLOAD_XML = '/download/xml/'
 
 SAVE_RECOMMENDATION = '/save_recommendation/'
 

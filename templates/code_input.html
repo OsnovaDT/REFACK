@@ -56,7 +56,7 @@
             <div class="row" id="recommendations_in_files">
                 {# PDF #}
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:download_pdf' %}" method="post">
+                    <form action="{% url 'refactoring:download' 'pdf' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -66,7 +66,7 @@
 
                 {# JSON #}
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:download_json' %}" method="post">
+                    <form action="{% url 'refactoring:download' 'json' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -76,7 +76,7 @@
 
                 {# XML #}
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:download_xml' %}" method="post">
+                    <form action="{% url 'refactoring:download' 'xml' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -113,7 +113,7 @@
                 data: $(this).serialize(),
                 url: "{% url 'refactoring:save_recommendation' %}",
                 success: function (response) {
-                    $('#save_recommendations_link').hide();
+                    saveRecommendation(response);
                 }
             });
 

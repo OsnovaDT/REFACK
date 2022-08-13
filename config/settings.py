@@ -39,6 +39,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'config.middleware.ExceptionHandlerMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -70,7 +72,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -97,6 +99,14 @@ LOGIN_REDIRECT_URL = 'refactoring:index'
 LOGOUT_REDIRECT_URL = 'account:login'
 
 LOGIN_URL = 'account:login'
+
+# LOGGING
+
+LOG_FORMAT = "{level.icon} {level} {time:DD.MM.YYYY HH:mm:ss (Z)} {message}"
+
+LOG_ROTATION = '1 MB'
+
+LOG_COMPRESSION = 'zip'
 
 # OTHER
 
