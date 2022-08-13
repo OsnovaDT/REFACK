@@ -1,16 +1,16 @@
 """Settings of project"""
 
-from os import path, getenv
+from os import path
 from pathlib import Path
 
-# from decouple import config
+from decouple import config
 
 
 # MAIN
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = getenv('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 

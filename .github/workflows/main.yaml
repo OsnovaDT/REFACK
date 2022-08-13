@@ -1,6 +1,9 @@
 # Github CI/CD action
 name: Django CI/CD Workflow
 
+env:
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
 on:
   push:
     branches: [ "master" ]
