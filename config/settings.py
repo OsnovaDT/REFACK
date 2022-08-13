@@ -10,10 +10,7 @@ from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-if config('IS_GITHUB_WORKFLOW'):
-    SECRET_KEY = 'test'
-else:
-    SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
