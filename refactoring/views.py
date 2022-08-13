@@ -2,27 +2,15 @@
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from loguru import logger
 
-from config.decorators import catch_json_response_exception
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
     get_recommendations_or_error_response, create_refactoring_recommendation,
     get_file_response_with_refactoring_recommendations,
-)
-
-
-logger.add(
-    f"logs/{__name__}.log",
-    level="ERROR",
-    format=settings.LOG_FORMAT,
-    rotation=settings.LOG_ROTATION,
-    compression=settings.LOG_COMPRESSION,
 )
 
 
@@ -54,10 +42,8 @@ class RulesView(LoginRequiredMixin, TemplateView):
 
 
 @login_required
-@catch_json_response_exception
 def refactor_code_view(request: WSGIRequest) -> JsonResponse:
     """Refactor code and return recommendations or error"""
-
     code = request.GET.get('code', '')
 
     return get_recommendations_or_error_response(code)
@@ -80,7 +66,6 @@ class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
 
 
 @login_required
-@catch_json_response_exception
 def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
