@@ -3,16 +3,17 @@
 from os import path
 from pathlib import Path
 
-# from decouple import config
+from decouple import config
 
 
 # MAIN
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECRET_KEY = config('SECRET_KEY')
-
-SECRET_KEY = 'tesrttasdasdasdasdasda'
+if config('IS_GITHUB_WORKFLOW'):
+    SECRET_KEY = 'test'
+else:
+    SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
@@ -40,6 +41,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+    # Custom middlewares
     'config.middleware.ExceptionHandlerMiddleware',
 ]
 
