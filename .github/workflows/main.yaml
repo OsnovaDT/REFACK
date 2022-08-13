@@ -1,49 +1,45 @@
-# This is a basic workflow to help you get started with Actions
-
+# Github CI/CD action
 name: Django CI/CD Workflow
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    runs-on: ubuntu-latest # os for running the job
+    # Operation system
+    runs-on: ubuntu-latest
     services:
-      postgres: # we need a postgres docker image to be booted a side car service to run the tests that needs a db
+      # Postgres service
+      postgres:
         image: postgres
-        env: # the environment variable must match with app/settings.py if block of DATBASES variable otherwise test will fail due to connectivity issue.
+        env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: github-actions
-          SECRET_KEY: test
         ports:
-          - 5432:5432 # exposing 5432 port for application to use
-        # needed because the postgres container does not provide a healthcheck
+          - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
-      - name: Checkout code # checking our the code at current commit that triggers the workflow
+      # Initial steps
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: Cache dependency # caching dependency will make our build faster.
-        uses: actions/cache@v2 # for more info checkout pip section documentation at https://github.com/actions/cache
+      - name: Cache dependency
+        uses: actions/cache@v2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      - name: Setup python environment # setting python environment to 3.x
+      - name: Setup python environment
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x' # if you want multiple python version run just use matrix strategy in job config. See the documentation of GitHub Actions
-      - name: Check Python version # checking the python version to see if 3.x is installed.
+          python-version: '3.x'
+      - name: Check Python version
         run: python --version
 
       # Installation
@@ -51,16 +47,15 @@ jobs:
         run: pip install -r requirements.txt
       - name: Install flake8
         run: pip install flake8
-      - name: Install pycodestyle
-        run: pip install pycodestyle
 
-      # Code style checking
-      - name: Check pycodestyle
-        run: pycodestyle --statistics .
+      # Code style checking with Flake8
       - name: Check flake8
         run: flake8 .
 
+      # Migrations
       - name: Run Migrations
         run: python manage.py migrate
+
+      # Tests
       - name: Run Tests
         run: python manage.py test
