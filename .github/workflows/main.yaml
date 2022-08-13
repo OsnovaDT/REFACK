@@ -2,7 +2,7 @@
 name: Django CI/CD Workflow
 
 env:
-  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  SECRET_KEY: 'test'
 
 on:
   push:
