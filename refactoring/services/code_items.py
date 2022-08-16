@@ -14,11 +14,14 @@ E.g. for function parser actions will be next:
 class DefaultItem:
     """Default code item that is parent for all items classes"""
 
+    def __init__(self, attributes: dict):
+        self.__attributes = attributes if isinstance(attributes, dict) else {}
+
     @property
-    def name(self) -> str | None:
+    def name(self) -> str:
         """Item name"""
 
-        return self._get_attr('name')
+        return self._get_attr('name') or ''
 
     @property
     def docstring(self) -> str | None:
@@ -26,22 +29,29 @@ class DefaultItem:
 
         return self._get_attr('docstring')
 
-    def __init__(self, attributes: dict):
-        self.__attributes = attributes
-
-    def __repr__(self) -> str | None:
-        return self.name
-
-    def __eq__(self, item_2) -> bool:
-        return self.name == item_2.name
-
-    def __hash__(self) -> int:
-        return hash(str(self.name))
-
     def _get_attr(self, attr_name: str) -> str | list | None:
         """Return attr from item's attributes or None"""
 
-        return self.__attributes.get(attr_name, None)
+        if isinstance(attr_name, str):
+            attr = self.__attributes.get(attr_name, None)
+        else:
+            attr = None
+
+        return attr
+
+    def __repr__(self) -> str:
+        return str(self.name)
+
+    def __eq__(self, item_2) -> bool:
+        if isinstance(item_2, DefaultItem):
+            is_equal = self.name == item_2.name
+        else:
+            is_equal = False
+
+        return is_equal
+
+    def __hash__(self) -> int:
+        return hash(str(self.name))
 
 
 class FunctionItem(DefaultItem):

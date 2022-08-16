@@ -1,4 +1,4 @@
-"""Tests services of refactoring app"""
+"""Test services.utils module"""
 
 from django.test import TestCase, tag
 
@@ -10,8 +10,8 @@ from refactoring.services.utils import is_in_snake_case, is_in_cap_words
 
 
 @tag('refactoring_services', 'refactoring_services_utils')
-class ServicesUtilsTests(TestCase):
-    """Test utils from services"""
+class UtilsTests(TestCase):
+    """Test services.utils module"""
 
     def test_is_in_snake_case(self) -> None:
         """Test is_in_snake_case function"""

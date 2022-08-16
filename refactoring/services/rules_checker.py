@@ -139,6 +139,10 @@ class CleanCodeRulesChecker(
         TypeHintCheckerMixin, DocstringCheckerMixin, NamingCheckerMixin):
     """Check code on clean code rules and generate recommendations"""
 
+    def __init__(self, code_items: dict):
+        self.__code_items = code_items
+        self._recommendations = defaultdict(list)
+
     @property
     def recommendations(self) -> dict:
         """Recommendations for refactoring user's code"""
@@ -177,10 +181,6 @@ class CleanCodeRulesChecker(
             code_classes = []
 
         return set(code_classes[::-1])
-
-    def __init__(self, code_items: dict):
-        self.__code_items = code_items
-        self._recommendations = defaultdict(list)
 
     def __check_all_rules(self) -> None:
         """Check code on all clean code rules"""
