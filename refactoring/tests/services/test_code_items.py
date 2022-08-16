@@ -2,11 +2,13 @@
 
 from django.test import TestCase, tag
 
-from refactoring.services.code_items import DefaultItem
-from refactoring.tests.constants import DIFFERENT_VALUES
+from refactoring.services.code_items import (
+    DefaultItem, FunctionItem, ClassItem,
+)
+from refactoring.tests.constants import DIFFERENT_VALUES, NOT_STRING_VALUES
 
 
-@tag('refactoring_services', 'code_items_default_item')
+@tag('refactoring_services', 'refactoring_services_code_items')
 class DefaultItemTests(TestCase):
     """Test DefaultItem class"""
 
@@ -93,3 +95,105 @@ class DefaultItemTests(TestCase):
 
         for value in DIFFERENT_VALUES:
             self.assertEqual(self.default_item_1._get_attr(value), None)
+
+
+@tag('refactoring_services', 'refactoring_services_code_items')
+class FunctionItemTests(TestCase):
+    """Test FunctionItem class"""
+
+    def setUp(self) -> None:
+        self.test_data_1 = {
+            'name': 'is_correct',
+            'docstring': 'test docstring 1',
+        }
+
+        self.test_data_2 = {
+            'name': 'get_value',
+            'type': 'not bool',
+            'docstring': 'test docstring 2',
+            'type_hint': 'str',
+        }
+
+        self.test_data_3 = {
+            'name': 'get_value',
+            'type': 'pass',
+            'docstring': 'test docstring 2',
+            'type_hint': 'str',
+            'args': ['arg1', 'arg2'],
+        }
+
+        self.function_item_1 = FunctionItem(self.test_data_1)
+        self.function_item_2 = FunctionItem(self.test_data_2)
+        self.function_item_3 = FunctionItem(self.test_data_3)
+
+    def test_inherits_from_default_item(self) -> None:
+        """Test that class inherit from DefaultItem"""
+
+        self.assertIn(DefaultItem, FunctionItem.mro())
+
+    def test_type(self) -> None:
+        """Test type property"""
+
+        self.assertEqual(self.function_item_1.type, None)
+        self.assertEqual(self.function_item_2.type, self.test_data_2['type'])
+        self.assertEqual(self.function_item_3.type, self.test_data_3['type'])
+
+    def test_type_hint(self) -> None:
+        """Test type_hint property"""
+
+        self.assertEqual(self.function_item_1.type_hint, None)
+
+        self.assertEqual(
+            self.function_item_2.type_hint,
+            self.test_data_2['type_hint'],
+        )
+
+        self.assertEqual(
+            self.function_item_3.type_hint,
+            self.test_data_3['type_hint'],
+        )
+
+    def test_args(self) -> None:
+        """Test args property"""
+
+        self.assertEqual(self.function_item_1.args, None)
+        self.assertEqual(self.function_item_2.args, None)
+        self.assertEqual(self.function_item_3.args, self.test_data_3['args'])
+
+    def test_is_starts_with_prefix(self):
+        """Test is_starts_with_prefix function"""
+
+        self.assertFalse(
+            FunctionItem({'name': 'get'}).is_starts_with_prefix('get')
+        )
+        self.assertFalse(
+            FunctionItem({'name': 'set'}).is_starts_with_prefix('set')
+        )
+        self.assertFalse(
+            FunctionItem({'name': 'get_'}).is_starts_with_prefix('get')
+        )
+        self.assertFalse(
+            FunctionItem({'name': 'set_'}).is_starts_with_prefix('set')
+        )
+
+        self.assertTrue(
+            FunctionItem({'name': 'get_value'}).is_starts_with_prefix('get')
+        )
+        self.assertTrue(
+            FunctionItem({'name': 'set_value'}).is_starts_with_prefix('set')
+        )
+
+        for value in NOT_STRING_VALUES:
+            self.assertFalse(
+                FunctionItem({'name': 'set_name'}).is_starts_with_prefix(value)
+            )
+
+
+@tag('refactoring_services', 'refactoring_services_code_items')
+class ClassItemTests(TestCase):
+    """Test ClassItem class"""
+
+    def test_inherits_from_default_item(self) -> None:
+        """Test that class inherit from DefaultItem"""
+
+        self.assertIn(DefaultItem, ClassItem.mro())
