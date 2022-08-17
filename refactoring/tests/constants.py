@@ -126,3 +126,82 @@ TEST_REFACTORING_RESULTS = {
                '"Для функций не указана документация": "a",'
                '"Для функций не указан type hint": "a"}'
 }
+
+# For testing function get_code_error
+
+VALID_CODES = (
+    """
+def test1():
+    pass
+    """,
+
+    """
+class TestClass:
+    pass
+    """,
+
+    """
+class TestClass:
+    def __init__(self, value):
+        self.value = value
+    """,
+
+    """
+from django.test import TestCase, tag
+    """,
+
+    """
+def get_value(value):
+    return value
+
+def is_correct():
+    return True
+    """,
+
+    """
+var1 = 10
+var2 = 1
+print(var1 + var2)
+    """,
+)
+
+INVALID_CODES_AND_ERROR = {
+    """
+def test1()
+    pass
+    """: "expected ':' (<unknown>, line 2)",
+
+    """
+def test1(
+    pass
+    """: "'(' was never closed (<unknown>, line 2)",
+
+    """
+def test1
+    pass
+    """: "invalid syntax (<unknown>, line 2)",
+
+    """def test1():""": "expected an indented block after function "
+                        "definition on line 1 (<unknown>, line 1)",
+    """def""": "invalid syntax (<unknown>, line 1)",
+
+    """class""": "invalid syntax (<unknown>, line 1)",
+    """class A""": "expected ':' (<unknown>, line 1)",
+    """class A:""": "expected an indented block after class definition "
+                    "on line 1 (<unknown>, line 1)",
+
+    """from""": "invalid syntax (<unknown>, line 1)",
+    """import""": "invalid syntax (<unknown>, line 1)",
+    """from re import""": "invalid syntax (<unknown>, line 1)",
+
+    """a =""": "invalid syntax (<unknown>, line 1)",
+    """a = [""": "'[' was never closed (<unknown>, line 1)",
+    """a = (""": "'(' was never closed (<unknown>, line 1)",
+    """a = {""": "'{' was never closed (<unknown>, line 1)",
+    """a = {'""": "unterminated string literal (detected at line 1) "
+                  "(<unknown>, line 1)",
+    """a = {'a'""": "'{' was never closed (<unknown>, line 1)",
+    """a = {'a':""": "'{' was never closed (<unknown>, line 1)",
+    """a = {'a': 10""": "'{' was never closed (<unknown>, line 1)",
+    """print('test'""": "'(' was never closed (<unknown>, line 1)",
+}
