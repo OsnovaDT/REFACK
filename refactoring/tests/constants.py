@@ -205,3 +205,14 @@ def test1
     """a = {'a': 10""": "'{' was never closed (<unknown>, line 1)",
     """print('test'""": "'(' was never closed (<unknown>, line 1)",
 }
+
+# For testing function get_code_to_display_in_html
+
+CODE_AND_HTML_CODE = {
+    'def test():\n\tpass': 'def&nbsp;test():<br>\tpass',
+
+    'class A:\ndef __init__(self):\npass':
+        'class&nbsp;A:<br>def&nbsp;__init__(self):<br>pass',
+
+    'from os import getcwd': 'from&nbsp;os&nbsp;import&nbsp;getcwd',
+}

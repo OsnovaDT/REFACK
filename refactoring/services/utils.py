@@ -49,7 +49,10 @@ def is_in_cap_words(string: str) -> bool:
 def get_code_to_display_in_html(code: str) -> str:
     """Convert and return code to display in HTML"""
 
-    return code.replace('\n', '<br>').replace(' ', '&nbsp;')
+    if isinstance(code, str):
+        code = code.replace('\n', '<br>').replace(' ', '&nbsp;')
+
+    return code
 
 
 def get_recommendation_to_display_in_html(recommendation: str) -> str:
