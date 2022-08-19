@@ -35,7 +35,7 @@ class TypeHintCheckerMixin:
 
     """
 
-    def _check_functions_arguments_have_type_hint(self) -> None:
+    def _check_functions_args_have_type_hints(self) -> None:
         """Check type hints for functions arguments"""
 
         for func in self._functions:
@@ -198,4 +198,4 @@ class CleanCodeRulesChecker(
 
         # Type hint
         self._check_functions_have_type_hint()
-        self._check_functions_arguments_have_type_hint()
+        self._check_functions_args_have_type_hints()

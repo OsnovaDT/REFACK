@@ -1,6 +1,15 @@
 """Constants for testing refactoring app"""
 
 from keyword import kwlist
+from ast import Name, arg
+
+from refactoring.services.code_items import FunctionItem
+
+
+def get_arg_type_hint_error(argument: str, func_name: str) -> str:
+    """Return argument type hint error with replaced values"""
+
+    return f'аргумент «{argument}» (функция «{func_name}»)'
 
 
 # Common constants
@@ -216,3 +225,264 @@ CODE_AND_HTML_CODE = {
 
     'from os import getcwd': 'from&nbsp;os&nbsp;import&nbsp;getcwd',
 }
+
+# services.rules_checker.py
+
+STR_TYPE_HINT = Name(id='str')
+
+INT_TYPE_HINT = Name(id='int')
+
+BOOL_TYPE_HINT = Name(id='bool')
+
+# For testing TypeHintCheckerMixin mixin
+
+FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
+    FunctionItem({
+        'name': 'get_value',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'type_hint': 'str',
+        'args': [
+            arg(arg='value', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_2',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'args': [
+            arg(arg='value1', annotation=INT_TYPE_HINT),
+            arg(arg='value2', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_3',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+            arg(arg='value3', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'is_correct_data',
+        'type': 'bool',
+        'docstring': 'Check is data correct',
+        'type_hint': 'bool',
+        'args': [],
+    }),
+
+    FunctionItem({
+        'name': 'check_data',
+        'type': 'pass',
+        'docstring': 'Check data',
+        'type_hint': 'bool',
+        'args': [],
+    }),
+)
+
+FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT_ERRORS = sorted([
+    # When there is no any arguments
+
+    # 1 function
+    get_arg_type_hint_error("value", "get_value"),
+    # 'аргумент «value» (функция «get_value»)',
+
+    # 2 function
+    get_arg_type_hint_error("value1", "get_value_2"),
+    get_arg_type_hint_error("value2", "get_value_2"),
+
+    # 2 function
+    get_arg_type_hint_error("value1", "get_value_3"),
+    get_arg_type_hint_error("value2", "get_value_3"),
+    get_arg_type_hint_error("value3", "get_value_3"),
+
+    # When 1-st there is
+
+    # 1 function
+    get_arg_type_hint_error("value2", "check_data_1"),
+    get_arg_type_hint_error("value3", "check_data_1"),
+
+    # 2 function
+
+    get_arg_type_hint_error("value2", "check_data_2"),
+
+    # 3 function
+
+    get_arg_type_hint_error("value3", "check_data_3"),
+
+    # When 2-nd there is
+
+    # 1 function
+    get_arg_type_hint_error("value1", "is_correct_1"),
+    get_arg_type_hint_error("value3", "is_correct_1"),
+
+    # 2 function
+    get_arg_type_hint_error("value3", "is_correct_2"),
+
+    # 3 function
+    get_arg_type_hint_error("value1", "is_correct_3"),
+
+    # When 3-rd there is
+
+    # 1 function
+    get_arg_type_hint_error("value1", "is_correct_4"),
+    get_arg_type_hint_error("value2", "is_correct_4"),
+
+    # 2 function
+    get_arg_type_hint_error("value1", "check_data_4"),
+
+    # 3 function
+    get_arg_type_hint_error("value2", "get_value_4"),
+])
+
+FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
+    # When there is no any arguments
+
+    FunctionItem({
+        'name': 'get_value',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'type_hint': 'str',
+        'args': [
+            arg(arg='value'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_2',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_3',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2'),
+            arg(arg='value3'),
+        ],
+    }),
+
+    # When 1-st there is
+
+    FunctionItem({
+        'name': 'check_data_1',
+        'type': 'pass',
+        'docstring': 'Check data',
+        'type_hint': 'bool',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+            arg(arg='value3'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'check_data_2',
+        'type': 'pass',
+        'docstring': 'Check data',
+        'type_hint': 'bool',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+            arg(arg='value3', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'check_data_3',
+        'type': 'pass',
+        'docstring': 'Check data',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+            arg(arg='value3'),
+        ],
+    }),
+
+    # When 2-nd there is
+
+    FunctionItem({
+        'name': 'is_correct_1',
+        'type': 'bool',
+        'docstring': 'Check is value correct',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+            arg(arg='value3'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'is_correct_2',
+        'type': 'bool',
+        'docstring': 'Check is value correct',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+            arg(arg='value3'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'is_correct_3',
+        'type': 'bool',
+        'docstring': 'Check is value correct',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+            arg(arg='value3', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    # When 3-rd there is
+
+    FunctionItem({
+        'name': 'is_correct_4',
+        'type': 'bool',
+        'docstring': 'Check is value correct',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2'),
+            arg(arg='value3', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'check_data_4',
+        'type': 'pass',
+        'docstring': 'Check data',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+            arg(arg='value3', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_4',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+            arg(arg='value3', annotation=STR_TYPE_HINT),
+        ],
+    }),
+)
+
+ARGUMENT_TYPE_HINT = "Для аргументов функций не указан type hint"
+
+FUNCTIONS_WITH_ARG_TYPE_HINT = FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT + \
+    FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT
