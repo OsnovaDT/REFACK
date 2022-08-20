@@ -234,13 +234,16 @@ INT_TYPE_HINT = Name(id='int')
 
 BOOL_TYPE_HINT = Name(id='bool')
 
+CALLABLE_TYPE_HINT = Name(id='Callable')
+
 # For testing TypeHintCheckerMixin mixin
+
+# For testing _check_functions_args_have_type_hints method
 
 FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value',
         'type': 'not bool',
-        'docstring': 'Return value',
         'type_hint': 'str',
         'args': [
             arg(arg='value', annotation=STR_TYPE_HINT),
@@ -260,7 +263,6 @@ FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value_3',
         'type': 'not bool',
-        'docstring': 'Return value',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -271,7 +273,6 @@ FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'is_correct_data',
         'type': 'bool',
-        'docstring': 'Check is data correct',
         'type_hint': 'bool',
         'args': [],
     }),
@@ -346,8 +347,8 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value',
         'type': 'not bool',
-        'docstring': 'Return value',
         'type_hint': 'str',
+        'docstring': 'Return value',
         'args': [
             arg(arg='value'),
         ],
@@ -356,7 +357,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value_2',
         'type': 'not bool',
-        'docstring': 'Return value',
         'args': [
             arg(arg='value1'),
             arg(arg='value2'),
@@ -366,7 +366,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value_3',
         'type': 'not bool',
-        'docstring': 'Return value',
         'args': [
             arg(arg='value1'),
             arg(arg='value2'),
@@ -379,7 +378,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'check_data_1',
         'type': 'pass',
-        'docstring': 'Check data',
         'type_hint': 'bool',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -391,7 +389,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'check_data_2',
         'type': 'pass',
-        'docstring': 'Check data',
         'type_hint': 'bool',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -403,7 +400,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'check_data_3',
         'type': 'pass',
-        'docstring': 'Check data',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -416,7 +412,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'is_correct_1',
         'type': 'bool',
-        'docstring': 'Check is value correct',
+        'docstring': 'Docstring',
         'args': [
             arg(arg='value1'),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -427,7 +423,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'is_correct_2',
         'type': 'bool',
-        'docstring': 'Check is value correct',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -438,7 +433,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'is_correct_3',
         'type': 'bool',
-        'docstring': 'Check is value correct',
         'args': [
             arg(arg='value1'),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -451,7 +445,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'is_correct_4',
         'type': 'bool',
-        'docstring': 'Check is value correct',
         'args': [
             arg(arg='value1'),
             arg(arg='value2'),
@@ -462,7 +455,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'check_data_4',
         'type': 'pass',
-        'docstring': 'Check data',
         'args': [
             arg(arg='value1'),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -473,7 +465,6 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value_4',
         'type': 'not bool',
-        'docstring': 'Return value',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2'),
@@ -484,5 +475,90 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
 ARGUMENT_TYPE_HINT = "Для аргументов функций не указан type hint"
 
-FUNCTIONS_WITH_ARG_TYPE_HINT = FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT + \
+FUNCTIONS_WITH_ARGS = FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT + \
     FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT
+
+# For testing _check_functions_have_type_hint method
+
+FUNCTIONS_WITH_TYPE_HINT = (
+    FunctionItem({
+        'name': 'get_value',
+        'type': 'not bool',
+        'type_hint': STR_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'get_value_2',
+        'type': 'not bool',
+        'type_hint': INT_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'is_correct',
+        'type': 'bool',
+        'type_hint': BOOL_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'get_func',
+        'type': 'not bool',
+        'type_hint': CALLABLE_TYPE_HINT,
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_func_2',
+        'type': 'not bool',
+        'type_hint': CALLABLE_TYPE_HINT,
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+)
+
+FUNCTIONS_WITHOUT_TYPE_HINT = (
+    FunctionItem({
+        'name': 'get_value_without_type_hint',
+        'type': 'not bool'
+    }),
+
+    FunctionItem({
+        'name': 'check_value_without_type_hint',
+        'type': 'pass'
+    }),
+
+    FunctionItem({
+        'name': 'is_correct_without_type_hint',
+        'type': 'bool'
+    }),
+
+    FunctionItem({
+        'name': 'is_correct_without_type_hint_2',
+        'docstring': 'Docstring',
+        'type': 'bool'
+    }),
+
+    FunctionItem({
+        'name': 'get_func_without_type_hint',
+        'type': 'not bool',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2', annotation=STR_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_func_without_type_hint_2',
+        'type': 'not bool',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+)
+
+FUNCTION_TYPE_HINT = "Для функций не указан type hint"
