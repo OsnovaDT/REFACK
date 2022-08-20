@@ -57,24 +57,29 @@ class DefaultItem:
 class FunctionItem(DefaultItem):
     """Function item"""
 
-    def is_starts_with_prefix(self, prefix: str) -> bool:
-        """Check is the function starts with the prefix.
+    def is_start_with_prefix_get_(self) -> bool:
+        """Check is the function starts with prefix «get_».
 
-        Return True if:
-        1. The function name starts with the prefix;
-        2. The function name is not equal to prefix;
-        3. The function name is not equal to prefix + underscore.
+        Examples
+        1. getValue -> False
+        2. get_ -> False
+        3. get_value -> True
 
         """
 
-        if isinstance(prefix, str):
-            is_starts_with_prefix_ = self.name.startswith(prefix) \
-                and self.name != prefix \
-                and self.name != prefix + '_'
-        else:
-            is_starts_with_prefix_ = False
+        return self.__is_start_with_prefix('get_')
 
-        return is_starts_with_prefix_
+    def is_start_with_prefix_is_(self) -> bool:
+        """Check is the function starts with prefix «is_».
+
+        Examples
+        1. isCorrect -> False
+        2. is_ -> False
+        3. is_correct -> True
+
+        """
+
+        return self.__is_start_with_prefix('is_')
 
     @property
     def type(self) -> str | None:
@@ -98,6 +103,24 @@ class FunctionItem(DefaultItem):
         """Function arguments"""
 
         return self._get_attr('args')
+
+    def __is_start_with_prefix(self, prefix: str) -> bool:
+        """Check is the function starts with the prefix.
+
+        Return True if:
+        1. The function name starts with the prefix;
+        2. The function name is not equal to prefix;
+        3. The function name is not equal to prefix + underscore.
+
+        """
+
+        if isinstance(prefix, str):
+            is_start_with_prefix = self.name.startswith(prefix) \
+                and self.name != prefix
+        else:
+            is_start_with_prefix = False
+
+        return is_start_with_prefix
 
 
 class ClassItem(DefaultItem):

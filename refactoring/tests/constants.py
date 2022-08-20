@@ -92,50 +92,8 @@ CORRECT_CAP_WORDS_STRINGS = (
 
 BOOL_FUNCTION_TYPE = 'bool'
 
-CORRECT_BOOL_FUNCTIONS = (
-    'is_correct', 'is_not_correct', 'is_value_set', 'is_value_not_set',
-    'is_this_function_so_super_long',
-)
-
-INCORRECT_BOOL_FUNCTIONS = DIFFERENT_VALUES + (
-    'Is_correct', 'IS_CORRECT', 'IsCorrect', 'isCorrect', 'isNotCorrect',
-    'iS_value_correct', 'iSValueCorrect', 'isValueSet', 'isValueNotSet',
-    'isThisFunctionSoSuperLong', 'isserverstart',
-
-    'get_value', 'getValue',
-
-    'is', 'IS', 'iS', 'Is', 'is_', 'IS_', 'iS_', 'Is_',
-
-    'i', 's',
-)
-
-# For testing function is_get_function_correct
 
 NOT_BOOL_FUNCTION_TYPE = 'not bool'
-
-CORRECT_GET_FUNCTIONS = (
-    'get_value', 'get_value_from_object', 'get_very_super_long_user_login',
-    'get_correct_value', 'get_incorrect_value',
-)
-
-INCORRECT_GET_FUNCTIONS = DIFFERENT_VALUES + (
-    'GETValue', 'GEtvalue', 'GEtValue',
-    'GetValue', 'GeTvalue', 'Getvalue', 'GeTValue',
-
-    'gETvalue', 'gEtvalue', 'geTvalue', 'gEtValue', 'geTValue', 'gETValue',
-    'getValue', 'getValueFromObject', 'getCorrectValue', 'getIncorrectValue',
-    'getVerySuperLongUserLogin', 'getvalue',
-
-    'GET_value', 'GET_VALUE', 'Get_value', 'gEt_value', 'geT_value',
-    'GEt_value', 'GeT_value', 'gET_value', 'gEt_correct_value',
-
-    'is_correct', 'isCorrect', 'isValueCorrect',
-
-    'get', 'GET', 'Get', 'gEt', 'geT', 'GeT', 'gET', 'get_', 'GET_', 'Get_',
-    'gEt_', 'geT_', 'GeT_', 'gET_',
-
-    'g', 'e', 't',
-)
 
 
 TEST_REFACTORING_RESULTS = {
@@ -755,3 +713,74 @@ INCORRECT_CAP_WORDS_CLASSES = [
 ]
 
 CAP_WORDS_STYLE = "Классы не имеют стиль именования CapWords"
+
+# For testing NamingCheckerMixin mixin
+
+# For testing _check_not_bool_functions_start_with_get method
+
+CORRECT_GET_NAMES = (
+    'get_value', 'get_value_from_object', 'get_very_super_long_user_login',
+    'get_correct_value', 'get_incorrect_value',
+)
+
+INCORRECT_GET_NAMES = (
+    'GETValue', 'GEtvalue', 'GEtValue',
+    'GetValue', 'GeTvalue', 'Getvalue', 'GeTValue',
+
+    'gETvalue', 'gEtvalue', 'geTvalue', 'gEtValue', 'geTValue', 'gETValue',
+    'getValue', 'getValueFromObject', 'getCorrectValue', 'getIncorrectValue',
+    'getVerySuperLongUserLogin', 'getvalue',
+
+    'GET_value', 'GET_VALUE', 'Get_value', 'gEt_value', 'geT_value',
+    'GEt_value', 'GeT_value', 'gET_value', 'gEt_correct_value',
+
+    'is_correct', 'isCorrect', 'isValueCorrect',
+
+    'get', 'GET', 'Get', 'gEt', 'geT', 'GeT', 'gET', 'get_', 'GET_', 'Get_',
+    'gEt_', 'geT_', 'GeT_', 'gET_',
+
+    'g', 'e', 't',
+)
+
+CORRECT_GET_FUNCTIONS = [
+    FunctionItem({'name': name, 'type': 'not bool'})
+    for name in CORRECT_GET_NAMES
+]
+
+INCORRECT_GET_FUNCTIONS = [
+    FunctionItem({'name': name, 'type': 'not bool'})
+    for name in INCORRECT_GET_NAMES
+]
+
+PREFIX_GET = "Функции не начинаются с префикса «get»"
+
+# For testing _check_bool_functions_start_with_is method
+
+CORRECT_BOOL_NAMES = (
+    'is_correct', 'is_not_correct', 'is_value_set', 'is_value_not_set',
+    'is_this_function_so_super_long',
+)
+
+INCORRECT_BOOL_NAMES = (
+    'Is_correct', 'IS_CORRECT', 'IsCorrect', 'isCorrect', 'isNotCorrect',
+    'iS_value_correct', 'iSValueCorrect', 'isValueSet', 'isValueNotSet',
+    'isThisFunctionSoSuperLong', 'isserverstart',
+
+    'get_value', 'getValue',
+
+    'is', 'IS', 'iS', 'Is', 'is_', 'IS_', 'iS_', 'Is_',
+
+    'i', 's',
+)
+
+CORRECT_BOOL_FUNCTIONS = [
+    FunctionItem({'name': name, 'type': 'bool'})
+    for name in CORRECT_BOOL_NAMES
+]
+
+INCORRECT_BOOL_FUNCTIONS = [
+    FunctionItem({'name': name, 'type': 'bool'})
+    for name in INCORRECT_BOOL_NAMES
+]
+
+PREFIX_IS = "Функции не начинаются с префикса «is»"

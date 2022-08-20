@@ -116,7 +116,7 @@ class NamingCheckerMixin(NamingStyleCheckerMixin):
         """
 
         for func in self._not_bool_functions:
-            if not func.is_starts_with_prefix('get'):
+            if not func.is_start_with_prefix_get_():
                 self._recommendations[PREFIX_GET].append(func.name)
 
     def _check_bool_functions_start_with_is(self) -> None:
@@ -131,7 +131,7 @@ class NamingCheckerMixin(NamingStyleCheckerMixin):
         """
 
         for func in self._bool_functions:
-            if not func.is_starts_with_prefix('is'):
+            if not func.is_start_with_prefix_is_():
                 self._recommendations[PREFIX_IS].append(func.name)
 
 

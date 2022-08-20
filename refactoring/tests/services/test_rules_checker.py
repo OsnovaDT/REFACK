@@ -11,7 +11,9 @@ from refactoring.tests.constants import (
     FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT_ERRORS, FUNCTIONS_WITH_TYPE_HINT,
     FUNCTIONS_WITHOUT_TYPE_HINT, FUNCTIONS_WITH_DOCSTRING, FUNCTION_DOCSTRING,
     SNAKE_CASE_STYLE, CAP_WORDS_STYLE, CORRECT_CAP_WORDS_CLASSES,
-    INCORRECT_CAP_WORDS_CLASSES,
+    INCORRECT_CAP_WORDS_CLASSES, CORRECT_GET_FUNCTIONS,
+    INCORRECT_GET_FUNCTIONS, CORRECT_BOOL_FUNCTIONS, INCORRECT_BOOL_FUNCTIONS,
+    PREFIX_GET, PREFIX_IS,
 )
 
 
@@ -108,4 +110,37 @@ class NamingStyleCheckerMixinTests(TestCase):
         self.assertEqual(
             sorted(rules_checker._recommendations[CAP_WORDS_STYLE]),
             sorted([str(func) for func in INCORRECT_CAP_WORDS_CLASSES]),
+        )
+
+
+@tag('refactoring_services', 'refactoring_services_rules_checker')
+class NamingCheckerMixinTests(TestCase):
+    """Test NamingCheckerMixin mixin"""
+
+    def test_check_not_bool_functions_start_with_get(self) -> None:
+        """Test _check_not_bool_functions_start_with_get method"""
+
+        rules_checker = CleanCodeRulesChecker({
+            'functions': CORRECT_GET_FUNCTIONS + INCORRECT_GET_FUNCTIONS,
+        })
+
+        rules_checker._check_not_bool_functions_start_with_get()
+
+        self.assertEqual(
+            sorted(rules_checker._recommendations[PREFIX_GET]),
+            sorted([str(func) for func in INCORRECT_GET_FUNCTIONS]),
+        )
+
+    def test_check_bool_functions_start_with_is(self) -> None:
+        """Test _check_bool_functions_start_with_is method"""
+
+        rules_checker = CleanCodeRulesChecker({
+            'functions': CORRECT_BOOL_FUNCTIONS + INCORRECT_BOOL_FUNCTIONS,
+        })
+
+        rules_checker._check_bool_functions_start_with_is()
+
+        self.assertEqual(
+            sorted(rules_checker._recommendations[PREFIX_IS]),
+            sorted([str(func) for func in INCORRECT_BOOL_FUNCTIONS]),
         )

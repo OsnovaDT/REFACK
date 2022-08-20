@@ -5,7 +5,10 @@ from django.test import TestCase, tag
 from refactoring.services.code_items import (
     DefaultItem, FunctionItem, ClassItem,
 )
-from refactoring.tests.constants import DIFFERENT_VALUES, NOT_STRING_VALUES
+from refactoring.tests.constants import (
+    DIFFERENT_VALUES, NOT_STRING_VALUES, INCORRECT_GET_NAMES,
+    CORRECT_GET_NAMES, INCORRECT_BOOL_NAMES, CORRECT_BOOL_NAMES,
+)
 
 
 @tag('refactoring_services', 'refactoring_services_code_items')
@@ -160,32 +163,80 @@ class FunctionItemTests(TestCase):
         self.assertEqual(self.function_item_2.args, None)
         self.assertEqual(self.function_item_3.args, self.test_data_3['args'])
 
-    def test_is_starts_with_prefix(self):
-        """Test is_starts_with_prefix function"""
+    def test_is_start_with_prefix_get_(self) -> None:
+        """Test is_start_with_prefix_get_ function"""
+
+        for name in INCORRECT_GET_NAMES:
+            with self.subTest(f'{name=}'):
+                self.assertFalse(
+                    FunctionItem({'name': name}).is_start_with_prefix_get_()
+                )
+
+        for name in CORRECT_GET_NAMES:
+            with self.subTest(f'{name=}'):
+                self.assertTrue(
+                    FunctionItem({'name': name}).is_start_with_prefix_get_()
+                )
+
+    def test_is_start_with_prefix_is_(self) -> None:
+        """Test is_start_with_prefix_is_ function"""
+
+        for name in INCORRECT_BOOL_NAMES:
+            with self.subTest(f'{name=}'):
+                self.assertFalse(
+                    FunctionItem({'name': name}).is_start_with_prefix_is_()
+                )
+
+        for name in CORRECT_BOOL_NAMES:
+            with self.subTest(f'{name=}'):
+                self.assertTrue(
+                    FunctionItem({'name': name}).is_start_with_prefix_is_()
+                )
+
+    def test_is_start_with_prefix(self):
+        """Test __is_start_with_prefix function"""
 
         self.assertFalse(
-            FunctionItem({'name': 'get'}).is_starts_with_prefix('get')
+            FunctionItem({
+                'name': 'is_'
+            })._FunctionItem__is_start_with_prefix('is_')
         )
+
         self.assertFalse(
-            FunctionItem({'name': 'set'}).is_starts_with_prefix('set')
+            FunctionItem({
+                'name': 'get_'
+            })._FunctionItem__is_start_with_prefix('get_')
         )
+
         self.assertFalse(
-            FunctionItem({'name': 'get_'}).is_starts_with_prefix('get')
+            FunctionItem({
+                'name': 'setValue'
+            })._FunctionItem__is_start_with_prefix('is_')
         )
+
         self.assertFalse(
-            FunctionItem({'name': 'set_'}).is_starts_with_prefix('set')
+            FunctionItem({
+                'name': 'getValue'
+            })._FunctionItem__is_start_with_prefix('get_')
         )
 
         self.assertTrue(
-            FunctionItem({'name': 'get_value'}).is_starts_with_prefix('get')
+            FunctionItem({
+                'name': 'get_value'
+            })._FunctionItem__is_start_with_prefix('get_')
         )
+
         self.assertTrue(
-            FunctionItem({'name': 'set_value'}).is_starts_with_prefix('set')
+            FunctionItem({
+                'name': 'is_correct'
+            })._FunctionItem__is_start_with_prefix('is_')
         )
 
         for value in NOT_STRING_VALUES:
             self.assertFalse(
-                FunctionItem({'name': 'set_name'}).is_starts_with_prefix(value)
+                FunctionItem({
+                    'name': 'set_name'
+                })._FunctionItem__is_start_with_prefix(value)
             )
 
 
