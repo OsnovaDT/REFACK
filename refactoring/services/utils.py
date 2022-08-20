@@ -79,3 +79,13 @@ def _is_starts_and_ends_with(string: str, symbol: str) -> bool:
             string.startswith(symbol) and string.endswith(symbol)
 
     return is_starts_and_ends_with_
+
+
+def get_code_items_without_duplicates(code_items: list) -> set:
+    """Delete duplicates from code items.
+
+    Of the duplicates, the ones announced below remain
+
+    """
+
+    return set(reversed(code_items))

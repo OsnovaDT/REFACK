@@ -14,6 +14,12 @@ def get_arg_type_hint_error(argument: str, func_name: str) -> str:
 
 # Common constants
 
+BOOL_TYPE = 'bool'
+
+NOT_BOOL_TYPE = 'not bool'
+
+PASS_TYPE = 'pass'
+
 
 class TestClass:
     """Empty class for testing"""
@@ -76,7 +82,7 @@ CORRECT_SNAKE_CASE_STRINGS = (
     'name', 'name123', 'super_long_name_12', 'super_long_name', 'car_color',
     'name_of_abuse', '_name', '__name', 'super_super_puper_long_name',
     'class_', 'list_', 'tuple_', 'set_', 'dict_', 'type_', 'get_value',
-    'set_value', 'check_info', 'check',
+    'set_value', 'check_info', 'check', 'is_correct'
 )
 
 # For testing is_in_cap_words function
@@ -205,7 +211,7 @@ NONE_TYPE_HINT = Name(id='None')
 FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': 'str',
         'args': [
             arg(arg='value', annotation=STR_TYPE_HINT),
@@ -214,7 +220,7 @@ FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_value_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value',
         'args': [
             arg(arg='value1', annotation=INT_TYPE_HINT),
@@ -224,7 +230,7 @@ FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_value_3',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -234,16 +240,16 @@ FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'is_correct_data',
-        'type': 'bool',
-        'type_hint': 'bool',
+        'type': BOOL_TYPE,
+        'type_hint': BOOL_TYPE,
         'args': [],
     }),
 
     FunctionItem({
         'name': 'check_data',
-        'type': 'pass',
+        'type': PASS_TYPE,
         'docstring': 'Check data',
-        'type_hint': 'bool',
+        'type_hint': BOOL_TYPE,
         'args': [],
     }),
 )
@@ -308,7 +314,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_value',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': 'str',
         'docstring': 'Return value',
         'args': [
@@ -318,7 +324,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_value_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1'),
             arg(arg='value2'),
@@ -327,7 +333,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_value_3',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1'),
             arg(arg='value2'),
@@ -339,8 +345,8 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'check_data_1',
-        'type': 'pass',
-        'type_hint': 'bool',
+        'type': PASS_TYPE,
+        'type_hint': BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2'),
@@ -350,8 +356,8 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'check_data_2',
-        'type': 'pass',
-        'type_hint': 'bool',
+        'type': PASS_TYPE,
+        'type_hint': BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2'),
@@ -361,7 +367,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'check_data_3',
-        'type': 'pass',
+        'type': PASS_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -373,7 +379,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'is_correct_1',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'docstring': 'Docstring',
         'args': [
             arg(arg='value1'),
@@ -384,7 +390,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'is_correct_2',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -394,7 +400,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'is_correct_3',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'args': [
             arg(arg='value1'),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -406,7 +412,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'is_correct_4',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'args': [
             arg(arg='value1'),
             arg(arg='value2'),
@@ -416,7 +422,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'check_data_4',
-        'type': 'pass',
+        'type': PASS_TYPE,
         'args': [
             arg(arg='value1'),
             arg(arg='value2', annotation=INT_TYPE_HINT),
@@ -426,7 +432,7 @@ FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_value_4',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2'),
@@ -445,25 +451,25 @@ FUNCTIONS_WITH_ARGS = FUNCTIONS_WITH_CORRECT_ARG_TYPE_HINT + \
 FUNCTIONS_WITH_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': STR_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'get_value_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': INT_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'is_correct',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'type_hint': BOOL_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'get_func',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': CALLABLE_TYPE_HINT,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -473,7 +479,7 @@ FUNCTIONS_WITH_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_func_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': CALLABLE_TYPE_HINT,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -485,28 +491,28 @@ FUNCTIONS_WITH_TYPE_HINT = (
 FUNCTIONS_WITHOUT_TYPE_HINT = (
     FunctionItem({
         'name': 'get_value_without_type_hint',
-        'type': 'not bool'
+        'type': NOT_BOOL_TYPE
     }),
 
     FunctionItem({
         'name': 'check_value_without_type_hint',
-        'type': 'pass'
+        'type': PASS_TYPE
     }),
 
     FunctionItem({
         'name': 'is_correct_without_type_hint',
-        'type': 'bool'
+        'type': BOOL_TYPE
     }),
 
     FunctionItem({
         'name': 'is_correct_without_type_hint_2',
         'docstring': 'Docstring',
-        'type': 'bool'
+        'type': BOOL_TYPE
     }),
 
     FunctionItem({
         'name': 'get_func_without_type_hint',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2', annotation=STR_TYPE_HINT),
@@ -515,7 +521,7 @@ FUNCTIONS_WITHOUT_TYPE_HINT = (
 
     FunctionItem({
         'name': 'get_func_without_type_hint_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2'),
@@ -534,13 +540,13 @@ FUNCTION_TYPE_HINT = "Для функций не указан type hint"
 FUNCTIONS_WITH_DOCSTRING = (
     FunctionItem({
         'name': 'get_value_1',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value 1',
     }),
 
     FunctionItem({
         'name': 'get_value_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value 2',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -549,7 +555,7 @@ FUNCTIONS_WITH_DOCSTRING = (
 
     FunctionItem({
         'name': 'get_value_3',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value 3',
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -559,21 +565,21 @@ FUNCTIONS_WITH_DOCSTRING = (
 
     FunctionItem({
         'name': 'get_value_4',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value 4',
         'type_hint': STR_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'get_value_5',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value 5',
         'type_hint': INT_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'is_value_correct',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'docstring': 'Check is value correct',
         'type_hint': BOOL_TYPE_HINT,
         'args': [
@@ -584,14 +590,14 @@ FUNCTIONS_WITH_DOCSTRING = (
 
     FunctionItem({
         'name': 'check_value',
-        'type': 'pass',
+        'type': PASS_TYPE,
         'docstring': 'Check value',
         'type_hint': NONE_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'get_func',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'docstring': 'Return value',
         'type_hint': CALLABLE_TYPE_HINT,
     }),
@@ -600,12 +606,12 @@ FUNCTIONS_WITH_DOCSTRING = (
 FUNCTIONS_WITHOUT_DOCSTRING = (
     FunctionItem({
         'name': 'get_value_1',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
     }),
 
     FunctionItem({
         'name': 'get_value_2',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
         ],
@@ -613,7 +619,7 @@ FUNCTIONS_WITHOUT_DOCSTRING = (
 
     FunctionItem({
         'name': 'get_value_3',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
             arg(arg='value2'),
@@ -622,19 +628,19 @@ FUNCTIONS_WITHOUT_DOCSTRING = (
 
     FunctionItem({
         'name': 'get_value_4',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': STR_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'get_value_5',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': INT_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'is_value_correct',
-        'type': 'bool',
+        'type': BOOL_TYPE,
         'type_hint': BOOL_TYPE_HINT,
         'args': [
             arg(arg='value1', annotation=BOOL_TYPE_HINT),
@@ -644,13 +650,13 @@ FUNCTIONS_WITHOUT_DOCSTRING = (
 
     FunctionItem({
         'name': 'check_value',
-        'type': 'pass',
+        'type': PASS_TYPE,
         'type_hint': NONE_TYPE_HINT,
     }),
 
     FunctionItem({
         'name': 'get_func',
-        'type': 'not bool',
+        'type': NOT_BOOL_TYPE,
         'type_hint': CALLABLE_TYPE_HINT,
     }),
 )
@@ -683,12 +689,12 @@ CLASS_DOCSTRING = "Для классов не указана документа�
 # For testing _check_functions_naming_style_is_snake_case method
 
 CORRECT_SNAKE_CASE_FUNCTIONS = [
-    FunctionItem({'name': name, 'type': 'not bool'})
+    FunctionItem({'name': name, 'type': NOT_BOOL_TYPE})
     for name in CORRECT_SNAKE_CASE_STRINGS
 ]
 
 INCORRECT_SNAKE_CASE_FUNCTIONS = [
-    FunctionItem({'name': name, 'type': 'not bool'})
+    FunctionItem({'name': name, 'type': NOT_BOOL_TYPE})
     for name in CORRECT_CAP_WORDS_STRINGS
 ]
 
@@ -697,12 +703,12 @@ SNAKE_CASE_STYLE = "Функции или методы не имеют стил�
 # For testing _check_classes_naming_style_is_cap_words method
 
 CORRECT_CAP_WORDS_CLASSES = [
-    ClassItem({'name': name, 'type': 'not bool'})
+    ClassItem({'name': name, 'type': NOT_BOOL_TYPE})
     for name in CORRECT_CAP_WORDS_STRINGS
 ]
 
 INCORRECT_CAP_WORDS_CLASSES = [
-    ClassItem({'name': name, 'type': 'not bool'})
+    ClassItem({'name': name, 'type': NOT_BOOL_TYPE})
     for name in INCORRECT_CAP_WORDS_NAMES
 ]
 
@@ -737,12 +743,12 @@ INCORRECT_GET_NAMES = (
 )
 
 CORRECT_GET_FUNCTIONS = [
-    FunctionItem({'name': name, 'type': 'not bool'})
+    FunctionItem({'name': name, 'type': NOT_BOOL_TYPE})
     for name in CORRECT_GET_NAMES
 ]
 
 INCORRECT_GET_FUNCTIONS = [
-    FunctionItem({'name': name, 'type': 'not bool'})
+    FunctionItem({'name': name, 'type': NOT_BOOL_TYPE})
     for name in INCORRECT_GET_NAMES
 ]
 
@@ -768,13 +774,83 @@ INCORRECT_BOOL_NAMES = (
 )
 
 CORRECT_BOOL_FUNCTIONS = [
-    FunctionItem({'name': name, 'type': 'bool'})
+    FunctionItem({'name': name, 'type': BOOL_TYPE})
     for name in CORRECT_BOOL_NAMES
 ]
 
 INCORRECT_BOOL_FUNCTIONS = [
-    FunctionItem({'name': name, 'type': 'bool'})
+    FunctionItem({'name': name, 'type': BOOL_TYPE})
     for name in INCORRECT_BOOL_NAMES
 ]
 
 PREFIX_IS = "Функции не начинаются с префикса «is»"
+
+# For testing CleanCodeRulesChecker class
+
+ALL_FUNCTIONS = CORRECT_BOOL_FUNCTIONS + INCORRECT_BOOL_FUNCTIONS + \
+    CORRECT_GET_FUNCTIONS + INCORRECT_GET_FUNCTIONS
+
+ALL_CLASSES = CORRECT_CAP_WORDS_CLASSES + INCORRECT_CAP_WORDS_CLASSES
+
+# For testing __check_all_rules method
+
+ALL_RULES_FUNCTIONS = [
+    FunctionItem({
+        'name': 'get_value',
+        'type': NOT_BOOL_TYPE,
+        'type_hint': INT_TYPE_HINT,
+        'docstring': 'Docs',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'checkValue',
+        'type': NOT_BOOL_TYPE,
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'is_correct',
+        'type': BOOL_TYPE,
+        'type_hint': BOOL_TYPE_HINT,
+        'docstring': 'Docs',
+        'args': [
+            arg(arg='value1'),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'checkIsValueCorrect',
+        'type': BOOL_TYPE,
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2', annotation=INT_TYPE_HINT),
+        ],
+    }),
+]
+
+ALL_RULES_CLASSES = (
+    ClassItem({
+        'name': 'test_class',
+        'docstring': 'Docs',
+    }),
+
+    ClassItem({
+        'name': 'testClass',
+    }),
+
+    ClassItem({
+        'name': 'testclass',
+    }),
+
+    ClassItem({
+        'name': 'TestClass',
+        'docstring': 'Docs',
+    }),
+)

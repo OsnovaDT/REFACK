@@ -24,7 +24,9 @@ from refactoring.services.constants import (
     FUNCTION_DOCSTRING, CLASS_DOCSTRING, FUNCTION_TYPE_HINT,
     ARGUMENT_TYPE_HINT, BOOL_TYPE,
 )
-from refactoring.services.utils import is_in_cap_words, is_in_snake_case
+from refactoring.services.utils import (
+    is_in_cap_words, is_in_snake_case, get_code_items_without_duplicates,
+)
 
 
 class TypeHintCheckerMixin:
@@ -157,7 +159,15 @@ class CleanCodeRulesChecker(
 
         code_functions = self.__code_items.get('functions', [])
 
-        return set(reversed(code_functions))
+        return get_code_items_without_duplicates(code_functions)
+
+    @property
+    def _classes(self) -> set:
+        """Return classes from the code"""
+
+        code_classes = self.__code_items.get('classes', [])
+
+        return get_code_items_without_duplicates(code_classes)
 
     @property
     def _not_bool_functions(self) -> set:
@@ -170,17 +180,6 @@ class CleanCodeRulesChecker(
         """Return boolean functions from the code"""
 
         return {func for func in self._functions if func.type == BOOL_TYPE}
-
-    @property
-    def _classes(self) -> set:
-        """Return classes from the code"""
-
-        if 'classes' in self.__code_items.keys():
-            code_classes = self.__code_items['classes']
-        else:
-            code_classes = []
-
-        return set(code_classes[::-1])
 
     def __check_all_rules(self) -> None:
         """Check code on all clean code rules"""
