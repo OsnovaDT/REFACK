@@ -14,11 +14,14 @@ E.g. for function parser actions will be next:
 class DefaultItem:
     """Default code item that is parent for all items classes"""
 
+    def __init__(self, attributes: dict):
+        self.__attributes = attributes if isinstance(attributes, dict) else {}
+
     @property
-    def name(self) -> str | None:
+    def name(self) -> str:
         """Item name"""
 
-        return self._get_attr('name')
+        return self._get_attr('name') or ''
 
     @property
     def docstring(self) -> str | None:
@@ -26,45 +29,57 @@ class DefaultItem:
 
         return self._get_attr('docstring')
 
-    def __init__(self, attributes: dict):
-        self.__attributes = attributes
-
-    def __repr__(self) -> str | None:
-        return self.name
-
-    def __eq__(self, item_2) -> bool:
-        return self.name == item_2.name
-
-    def __hash__(self) -> int:
-        return hash(str(self.name))
-
     def _get_attr(self, attr_name: str) -> str | list | None:
         """Return attr from item's attributes or None"""
 
-        return self.__attributes.get(attr_name, None)
+        if isinstance(attr_name, str):
+            attr = self.__attributes.get(attr_name, None)
+        else:
+            attr = None
+
+        return attr
+
+    def __repr__(self) -> str:
+        return str(self.name)
+
+    def __eq__(self, item_2) -> bool:
+        if isinstance(item_2, DefaultItem):
+            is_equal = self.name == item_2.name
+        else:
+            is_equal = False
+
+        return is_equal
+
+    def __hash__(self) -> int:
+        return hash(str(self.name))
 
 
 class FunctionItem(DefaultItem):
     """Function item"""
 
-    def is_starts_with_prefix(self, prefix: str) -> bool:
-        """Check is the function starts with the prefix.
+    def is_start_with_prefix_get_(self) -> bool:
+        """Check is the function starts with prefix «get_».
 
-        Return True if:
-        1. The function name starts with the prefix;
-        2. The function name is not equal to prefix;
-        3. The function name is not equal to prefix + underscore.
+        Examples
+        1. getValue -> False
+        2. get_ -> False
+        3. get_value -> True
 
         """
 
-        if isinstance(prefix, str):
-            is_starts_with_prefix_ = self.name.startswith(prefix) \
-                and self.name != prefix \
-                and self.name != prefix + '_'
-        else:
-            is_starts_with_prefix_ = False
+        return self.__is_start_with_prefix('get_')
 
-        return is_starts_with_prefix_
+    def is_start_with_prefix_is_(self) -> bool:
+        """Check is the function starts with prefix «is_».
+
+        Examples
+        1. isCorrect -> False
+        2. is_ -> False
+        3. is_correct -> True
+
+        """
+
+        return self.__is_start_with_prefix('is_')
 
     @property
     def type(self) -> str | None:
@@ -88,6 +103,24 @@ class FunctionItem(DefaultItem):
         """Function arguments"""
 
         return self._get_attr('args')
+
+    def __is_start_with_prefix(self, prefix: str) -> bool:
+        """Check is the function starts with the prefix.
+
+        Return True if:
+        1. The function name starts with the prefix;
+        2. The function name is not equal to prefix;
+        3. The function name is not equal to prefix + underscore.
+
+        """
+
+        if isinstance(prefix, str):
+            is_start_with_prefix = self.name.startswith(prefix) \
+                and self.name != prefix
+        else:
+            is_start_with_prefix = False
+
+        return is_start_with_prefix
 
 
 class ClassItem(DefaultItem):

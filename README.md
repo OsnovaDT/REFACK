@@ -60,3 +60,5 @@ Tags of refactoring app:
 - **refactoring_urls**
 - **refactoring_services**
     - **refactoring_services_utils**
+    - **refactoring_services_code_items**
+    - **refactoring_services_rules_checker**

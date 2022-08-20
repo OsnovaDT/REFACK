@@ -6,7 +6,7 @@ from django.http import JsonResponse, FileResponse
 from refactoring.models import RefactoringRecommendation
 from refactoring.services.code_handler import CodeHandler
 from refactoring.services.utils import (
-    get_error_if_code_invalid, get_code_to_display_in_html,
+    get_code_error, get_code_to_display_in_html,
     get_recommendation_to_display_in_html,
 )
 from refactoring.services.files_download import (
@@ -20,9 +20,9 @@ User = get_user_model()
 def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
     """Return response with recommendations or with error"""
 
-    code_error = get_error_if_code_invalid(code)
+    code_error = get_code_error(code)
 
-    if code_error:
+    if code_error != '':
         results = {'error': code_error}
     else:
         results = {'recommendations': _get_code_recommendations(code)}

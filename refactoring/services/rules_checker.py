@@ -24,7 +24,9 @@ from refactoring.services.constants import (
     FUNCTION_DOCSTRING, CLASS_DOCSTRING, FUNCTION_TYPE_HINT,
     ARGUMENT_TYPE_HINT, BOOL_TYPE,
 )
-from refactoring.services.utils import is_in_cap_words, is_in_snake_case
+from refactoring.services.utils import (
+    is_in_cap_words, is_in_snake_case, get_code_items_without_duplicates,
+)
 
 
 class TypeHintCheckerMixin:
@@ -35,7 +37,7 @@ class TypeHintCheckerMixin:
 
     """
 
-    def _check_functions_arguments_have_type_hint(self) -> None:
+    def _check_functions_args_have_type_hints(self) -> None:
         """Check type hints for functions arguments"""
 
         for func in self._functions:
@@ -116,7 +118,7 @@ class NamingCheckerMixin(NamingStyleCheckerMixin):
         """
 
         for func in self._not_bool_functions:
-            if not func.is_starts_with_prefix('get'):
+            if not func.is_start_with_prefix_get_():
                 self._recommendations[PREFIX_GET].append(func.name)
 
     def _check_bool_functions_start_with_is(self) -> None:
@@ -131,13 +133,17 @@ class NamingCheckerMixin(NamingStyleCheckerMixin):
         """
 
         for func in self._bool_functions:
-            if not func.is_starts_with_prefix('is'):
+            if not func.is_start_with_prefix_is_():
                 self._recommendations[PREFIX_IS].append(func.name)
 
 
 class CleanCodeRulesChecker(
         TypeHintCheckerMixin, DocstringCheckerMixin, NamingCheckerMixin):
     """Check code on clean code rules and generate recommendations"""
+
+    def __init__(self, code_items: dict):
+        self.__code_items = code_items
+        self._recommendations = defaultdict(list)
 
     @property
     def recommendations(self) -> dict:
@@ -153,7 +159,15 @@ class CleanCodeRulesChecker(
 
         code_functions = self.__code_items.get('functions', [])
 
-        return set(reversed(code_functions))
+        return get_code_items_without_duplicates(code_functions)
+
+    @property
+    def _classes(self) -> set:
+        """Return classes from the code"""
+
+        code_classes = self.__code_items.get('classes', [])
+
+        return get_code_items_without_duplicates(code_classes)
 
     @property
     def _not_bool_functions(self) -> set:
@@ -166,21 +180,6 @@ class CleanCodeRulesChecker(
         """Return boolean functions from the code"""
 
         return {func for func in self._functions if func.type == BOOL_TYPE}
-
-    @property
-    def _classes(self) -> set:
-        """Return classes from the code"""
-
-        if 'classes' in self.__code_items.keys():
-            code_classes = self.__code_items['classes']
-        else:
-            code_classes = []
-
-        return set(code_classes[::-1])
-
-    def __init__(self, code_items: dict):
-        self.__code_items = code_items
-        self._recommendations = defaultdict(list)
 
     def __check_all_rules(self) -> None:
         """Check code on all clean code rules"""
@@ -198,4 +197,4 @@ class CleanCodeRulesChecker(
 
         # Type hint
         self._check_functions_have_type_hint()
-        self._check_functions_arguments_have_type_hint()
+        self._check_functions_args_have_type_hints()

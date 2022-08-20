@@ -44,6 +44,7 @@ class RulesView(LoginRequiredMixin, TemplateView):
 @login_required
 def refactor_code_view(request: WSGIRequest) -> JsonResponse:
     """Refactor code and return recommendations or error"""
+
     code = request.GET.get('code', '')
 
     return get_recommendations_or_error_response(code)

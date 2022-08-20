@@ -20,7 +20,7 @@ from refactoring.services.constants import BOOL_TYPE, NOT_BOOL_TYPE
 class CodeParser(NodeVisitor):
     """Parse user's code, save and return it's items"""
 
-    def visit_FunctionDef(self, function: FunctionDef) -> None:
+    def visit_FunctionDef(self, function_: FunctionDef) -> None:
         """Function parser.
 
         1. Create FunctionItem object for the function;
@@ -30,11 +30,11 @@ class CodeParser(NodeVisitor):
 
         self.__code_items['functions'].append(
             FunctionItem({
-                'name': function.name,
-                'type': self.__get_function_type(function.body),
-                'docstring': get_docstring(function),
-                'type_hint': function.returns,
-                'args': function.args.args,
+                'name': function_.name,
+                'type': self.__get_function_type(function_.body),
+                'docstring': get_docstring(function_),
+                'type_hint': function_.returns,
+                'args': function_.args.args,
             }),
         )
 

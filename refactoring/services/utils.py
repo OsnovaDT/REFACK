@@ -8,15 +8,16 @@ from refactoring.services.constants import (
 )
 
 
-def get_error_if_code_invalid(code: bytes | str) -> str | None:
-    """Return error if code is invalid else None"""
+def get_code_error(code: str) -> str:
+    """Return error if code is invalid else empty string"""
 
-    error = None
+    error = ''
 
-    try:
-        NodeVisitor().visit(parse(code))
-    except Exception as exception_error:
-        error = str(exception_error)
+    if isinstance(code, str):
+        try:
+            NodeVisitor().visit(parse(code))
+        except Exception as exception_error:
+            error = str(exception_error)
 
     return error
 
@@ -48,7 +49,10 @@ def is_in_cap_words(string: str) -> bool:
 def get_code_to_display_in_html(code: str) -> str:
     """Convert and return code to display in HTML"""
 
-    return code.replace('\n', '<br>').replace(' ', '&nbsp;')
+    if isinstance(code, str):
+        code = code.replace('\n', '<br>').replace(' ', '&nbsp;')
+
+    return code
 
 
 def get_recommendation_to_display_in_html(recommendation: str) -> str:
@@ -75,3 +79,13 @@ def _is_starts_and_ends_with(string: str, symbol: str) -> bool:
             string.startswith(symbol) and string.endswith(symbol)
 
     return is_starts_and_ends_with_
+
+
+def get_code_items_without_duplicates(code_items: list) -> set:
+    """Delete duplicates from code items.
+
+    Of the duplicates, the ones announced below remain
+
+    """
+
+    return set(reversed(code_items))
