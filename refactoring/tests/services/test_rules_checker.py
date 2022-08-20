@@ -5,10 +5,13 @@ from django.test import TestCase, tag
 from refactoring.services.rules_checker import CleanCodeRulesChecker
 from refactoring.tests.constants import (
     ARGUMENT_TYPE_HINT, CLASSES_WITHOUT_DOCSTRING, CLASS_DOCSTRING,
-    CLASSES_WITH_DOCSTRING, FUNCTIONS_WITH_ARGS, FUNCTION_TYPE_HINT,
+    CLASSES_WITH_DOCSTRING, CORRECT_SNAKE_CASE_FUNCTIONS,
+    INCORRECT_SNAKE_CASE_FUNCTIONS, FUNCTIONS_WITH_ARGS,
+    FUNCTION_TYPE_HINT, FUNCTIONS_WITHOUT_DOCSTRING,
     FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT_ERRORS, FUNCTIONS_WITH_TYPE_HINT,
     FUNCTIONS_WITHOUT_TYPE_HINT, FUNCTIONS_WITH_DOCSTRING, FUNCTION_DOCSTRING,
-    FUNCTIONS_WITHOUT_DOCSTRING,
+    SNAKE_CASE_STYLE, CAP_WORDS_STYLE, CORRECT_CAP_WORDS_CLASSES,
+    INCORRECT_CAP_WORDS_CLASSES,
 )
 
 
@@ -70,4 +73,39 @@ class DocstringCheckerMixinTests(TestCase):
         self.assertEqual(
             sorted(rules_checker._recommendations[CLASS_DOCSTRING]),
             sorted([str(class_) for class_ in CLASSES_WITHOUT_DOCSTRING]),
+        )
+
+
+@tag('refactoring_services', 'refactoring_services_rules_checker')
+class NamingStyleCheckerMixinTests(TestCase):
+    """Test NamingStyleCheckerMixin mixin"""
+
+    def test_check_functions_naming_style_is_snake_case(self) -> None:
+        """Test _check_functions_naming_style_is_snake_case method"""
+
+        rules_checker = CleanCodeRulesChecker({
+            'functions':
+                CORRECT_SNAKE_CASE_FUNCTIONS + INCORRECT_SNAKE_CASE_FUNCTIONS,
+        })
+
+        rules_checker._check_functions_naming_style_is_snake_case()
+
+        self.assertEqual(
+            sorted(rules_checker._recommendations[SNAKE_CASE_STYLE]),
+            sorted([str(func) for func in INCORRECT_SNAKE_CASE_FUNCTIONS]),
+        )
+
+    def test_check_classes_naming_style_is_cap_words(self) -> None:
+        """Test _check_classes_naming_style_is_cap_words method"""
+
+        rules_checker = CleanCodeRulesChecker({
+            'classes':
+                CORRECT_CAP_WORDS_CLASSES + INCORRECT_CAP_WORDS_CLASSES,
+        })
+
+        rules_checker._check_classes_naming_style_is_cap_words()
+
+        self.assertEqual(
+            sorted(rules_checker._recommendations[CAP_WORDS_STYLE]),
+            sorted([str(func) for func in INCORRECT_CAP_WORDS_CLASSES]),
         )

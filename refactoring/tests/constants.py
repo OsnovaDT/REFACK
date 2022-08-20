@@ -54,12 +54,15 @@ DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
 
 # For testing is_in_snake_case function
 
-INCORRECT_SNAKE_CASE_STRINGS = (
+INCORRECT_SNAKE_CASE_NAMES = (
     'TEST', 'testTest', 'functionFunctionFunction', 'TEST_TEST', 'TestTest',
     'TEST_TEST_TEST', 'testTEST', 'tEsT', 'Test', 'tesT', 'A', 'B', ' ', '   ',
     'tesT1', 'test__test', 'test__', 'test___', 'test____test___test',
     '_test_',
-) + KEYWORDS + NOT_STRING_VALUES + DIFFERENT_STRINGS
+)
+
+INCORRECT_SNAKE_CASE_STRINGS = INCORRECT_SNAKE_CASE_NAMES \
+    + KEYWORDS + NOT_STRING_VALUES + DIFFERENT_STRINGS
 
 CORRECT_SNAKE_CASE_STRINGS = (
     'name', 'name123', 'super_long_name_12', 'super_long_name', 'car_color',
@@ -70,11 +73,16 @@ CORRECT_SNAKE_CASE_STRINGS = (
 
 # For testing is_in_cap_words function
 
-INCORRECT_CAP_WORDS_STRINGS = (
+INCORRECT_CAP_WORDS_NAMES = (
     'carEngine', 'car_Engine', 'superLongCarEngingeName',
     'superlongcarengingename',
-) + CORRECT_SNAKE_CASE_STRINGS + KEYWORDS + NOT_STRING_VALUES \
-  + DIFFERENT_STRINGS
+)
+
+INCORRECT_CAP_WORDS_STRINGS = INCORRECT_CAP_WORDS_NAMES \
+    + CORRECT_SNAKE_CASE_STRINGS \
+    + KEYWORDS \
+    + NOT_STRING_VALUES \
+    + DIFFERENT_STRINGS
 
 CORRECT_CAP_WORDS_STRINGS = (
     'CarEngine', 'Car', 'SuperCar', 'SuperLongCarEngingeName',
@@ -717,3 +725,33 @@ CLASSES_WITHOUT_DOCSTRING = (
 )
 
 CLASS_DOCSTRING = "Для классов не указана документация"
+
+# For testing NamingStyleCheckerMixin mixin
+
+# For testing _check_functions_naming_style_is_snake_case method
+
+CORRECT_SNAKE_CASE_FUNCTIONS = [
+    FunctionItem({'name': name, 'type': 'not bool'})
+    for name in CORRECT_SNAKE_CASE_STRINGS
+]
+
+INCORRECT_SNAKE_CASE_FUNCTIONS = [
+    FunctionItem({'name': name, 'type': 'not bool'})
+    for name in CORRECT_CAP_WORDS_STRINGS
+]
+
+SNAKE_CASE_STYLE = "Функции или методы не имеют стиль именования snake_case"
+
+# For testing _check_classes_naming_style_is_cap_words method
+
+CORRECT_CAP_WORDS_CLASSES = [
+    ClassItem({'name': name, 'type': 'not bool'})
+    for name in CORRECT_CAP_WORDS_STRINGS
+]
+
+INCORRECT_CAP_WORDS_CLASSES = [
+    ClassItem({'name': name, 'type': 'not bool'})
+    for name in INCORRECT_CAP_WORDS_NAMES
+]
+
+CAP_WORDS_STYLE = "Классы не имеют стиль именования CapWords"
