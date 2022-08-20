@@ -14,10 +14,15 @@ $('#save_recommendations_link').on('click', function(event){
 
 function updateSaveRecommendationFormData(response){
     let code = $("textarea[name='code']").val();
-    let recommendations = Object.entries(response.recommendations);
+
+    let recommendationsForDisplayInHtml = "";
+
+    for (const [rule, code_item] of Object.entries(response.recommendations)){
+        recommendationsForDisplayInHtml += `${rule}: <span class="code_item">${code_item}</span><br><br>`;
+    }
 
     $("input[name='code']").val(code);
-    $("input[name='recommendation']").val(recommendations);
+    $("input[name='recommendation']").val(recommendationsForDisplayInHtml);
 };
 
 function updateResultsForFileDownload(response){

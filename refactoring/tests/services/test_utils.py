@@ -9,7 +9,7 @@ from refactoring.tests.constants import (
 )
 from refactoring.services.utils import (
     is_in_snake_case, is_in_cap_words, get_code_error,
-    get_code_to_display_in_html,
+    get_code_to_display_in_html, get_code_items_without_duplicates,
 )
 
 
@@ -63,3 +63,18 @@ class UtilsTests(TestCase):
         for value in NOT_STRING_VALUES:
             with self.subTest(f'{value=}'):
                 self.assertEqual(get_code_to_display_in_html(value), value)
+
+    def test_get_code_items_without_duplicates(self) -> None:
+        """Test get_code_items_without_duplicates function"""
+
+        not_list_or_tuple_value = 10_000
+
+        self.assertEqual(
+            get_code_items_without_duplicates(not_list_or_tuple_value),
+            set(),
+        )
+
+        self.assertEqual(
+            sorted(get_code_items_without_duplicates([10, 10.0, 12.0, 12])),
+            sorted([12, 10.0]),
+        )
