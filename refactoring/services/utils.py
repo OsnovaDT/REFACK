@@ -54,20 +54,6 @@ def get_code_to_display_in_html(code: str) -> str:
     return code
 
 
-def get_recommendation_to_display_in_html(recommendation: str) -> str:
-    """Convert and return recommendation to display in HTML"""
-
-    return recommendation.replace(
-        ', ', '<br><br>'
-    ).replace(
-        '{', ''
-    ).replace(
-        '}', ''
-    ).replace(
-        "'", ''
-    )
-
-
 def get_code_items_without_duplicates(code_items: list | tuple) -> set:
     """Delete duplicates from code items.
 

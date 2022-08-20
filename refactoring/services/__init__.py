@@ -10,7 +10,6 @@ from refactoring.services.rules_checker import CleanCodeRulesChecker
 from refactoring.models import RefactoringRecommendation
 from refactoring.services.utils import (
     get_code_error, get_code_to_display_in_html,
-    get_recommendation_to_display_in_html,
 )
 from refactoring.services.files_download import (
     get_response_with_file, get_xml_file_content,
@@ -39,9 +38,7 @@ def create_refactoring_recommendation(recommendation_data: dict) -> None:
     RefactoringRecommendation.objects.create(
         user=User.objects.get(username=recommendation_data['username']),
         code=get_code_to_display_in_html(recommendation_data['code']),
-        recommendation=get_recommendation_to_display_in_html(
-            recommendation_data['recommendation'],
-        ),
+        recommendation=recommendation_data['recommendation'],
     )
 
 
