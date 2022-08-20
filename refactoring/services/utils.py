@@ -27,9 +27,8 @@ def is_in_snake_case(string: str) -> bool:
 
     is_in_snake_case_ = False
 
-    if isinstance(string, str) \
-            and string not in KEYWORDS \
-            and not _is_starts_and_ends_with(string, '_'):
+    if isinstance(string, str) and string not in KEYWORDS \
+            and not (string.startswith('_') and string.endswith('_')):
         is_in_snake_case_ = fullmatch(SNAKE_CASE_REGEXP, string) is not None
 
     return is_in_snake_case_
@@ -67,18 +66,6 @@ def get_recommendation_to_display_in_html(recommendation: str) -> str:
     ).replace(
         "'", ''
     )
-
-
-def _is_starts_and_ends_with(string: str, symbol: str) -> bool:
-    """Check is string starts and ends with underscore"""
-
-    is_starts_and_ends_with_ = False
-
-    if isinstance(string, str) and isinstance(symbol, str):
-        is_starts_and_ends_with_ = \
-            string.startswith(symbol) and string.endswith(symbol)
-
-    return is_starts_and_ends_with_
 
 
 def get_code_items_without_duplicates(code_items: list | tuple) -> set:
