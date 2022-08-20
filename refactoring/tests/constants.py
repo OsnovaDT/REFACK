@@ -52,6 +52,14 @@ DIFFERENT_STRINGS = (
 
 DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
 
+# For testing refactoring app urls
+
+TEST_REFACTORING_RESULTS = {
+    'results': '{"Функции не начинаются с префикса «get»": "a",'
+               '"Для функций не указана документация": "a",'
+               '"Для функций не указан type hint": "a"}'
+}
+
 # For testing is_in_snake_case function
 
 INCORRECT_SNAKE_CASE_NAMES = (
@@ -87,20 +95,6 @@ INCORRECT_CAP_WORDS_STRINGS = INCORRECT_CAP_WORDS_NAMES \
 CORRECT_CAP_WORDS_STRINGS = (
     'CarEngine', 'Car', 'SuperCar', 'SuperLongCarEngingeName',
 )
-
-# For testing function is_bool_function_correct
-
-BOOL_FUNCTION_TYPE = 'bool'
-
-
-NOT_BOOL_FUNCTION_TYPE = 'not bool'
-
-
-TEST_REFACTORING_RESULTS = {
-    'results': '{"Функции не начинаются с префикса «get»": "a",'
-               '"Для функций не указана документация": "a",'
-               '"Для функций не указан type hint": "a"}'
-}
 
 # For testing function get_code_error
 
