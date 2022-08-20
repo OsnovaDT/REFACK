@@ -3,7 +3,7 @@
 from keyword import kwlist
 from ast import Name, arg
 
-from refactoring.services.code_items import FunctionItem
+from refactoring.services.code_items import FunctionItem, ClassItem
 
 
 def get_arg_type_hint_error(argument: str, func_name: str) -> str:
@@ -235,6 +235,8 @@ INT_TYPE_HINT = Name(id='int')
 BOOL_TYPE_HINT = Name(id='bool')
 
 CALLABLE_TYPE_HINT = Name(id='Callable')
+
+NONE_TYPE_HINT = Name(id='None')
 
 # For testing TypeHintCheckerMixin mixin
 
@@ -562,3 +564,156 @@ FUNCTIONS_WITHOUT_TYPE_HINT = (
 )
 
 FUNCTION_TYPE_HINT = "Для функций не указан type hint"
+
+# For testing DocstringCheckerMixin mixin
+
+# For testing _check_functions_and_classes_have_docstring method
+
+# Functions
+
+FUNCTIONS_WITH_DOCSTRING = (
+    FunctionItem({
+        'name': 'get_value_1',
+        'type': 'not bool',
+        'docstring': 'Return value 1',
+    }),
+
+    FunctionItem({
+        'name': 'get_value_2',
+        'type': 'not bool',
+        'docstring': 'Return value 2',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_3',
+        'type': 'not bool',
+        'docstring': 'Return value 3',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_4',
+        'type': 'not bool',
+        'docstring': 'Return value 4',
+        'type_hint': STR_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'get_value_5',
+        'type': 'not bool',
+        'docstring': 'Return value 5',
+        'type_hint': INT_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'is_value_correct',
+        'type': 'bool',
+        'docstring': 'Check is value correct',
+        'type_hint': BOOL_TYPE_HINT,
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'check_value',
+        'type': 'pass',
+        'docstring': 'Check value',
+        'type_hint': NONE_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'get_func',
+        'type': 'not bool',
+        'docstring': 'Return value',
+        'type_hint': CALLABLE_TYPE_HINT,
+    }),
+)
+
+FUNCTIONS_WITHOUT_DOCSTRING = (
+    FunctionItem({
+        'name': 'get_value_1',
+        'type': 'not bool',
+    }),
+
+    FunctionItem({
+        'name': 'get_value_2',
+        'type': 'not bool',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_3',
+        'type': 'not bool',
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'get_value_4',
+        'type': 'not bool',
+        'type_hint': STR_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'get_value_5',
+        'type': 'not bool',
+        'type_hint': INT_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'is_value_correct',
+        'type': 'bool',
+        'type_hint': BOOL_TYPE_HINT,
+        'args': [
+            arg(arg='value1', annotation=BOOL_TYPE_HINT),
+            arg(arg='value2'),
+        ],
+    }),
+
+    FunctionItem({
+        'name': 'check_value',
+        'type': 'pass',
+        'type_hint': NONE_TYPE_HINT,
+    }),
+
+    FunctionItem({
+        'name': 'get_func',
+        'type': 'not bool',
+        'type_hint': CALLABLE_TYPE_HINT,
+    }),
+)
+
+FUNCTION_DOCSTRING = "Для функций не указана документация"
+
+# Classes
+
+CLASSES_WITH_DOCSTRING = (
+    ClassItem({
+        'name': 'CarEngine',
+        'docstring': 'Class for car engine',
+    }),
+
+    ClassItem({
+        'name': 'SuperCarEngine',
+        'docstring': 'Class for super car engine',
+    }),
+)
+
+CLASSES_WITHOUT_DOCSTRING = (
+    ClassItem({'name': 'CarEngine'}),
+    ClassItem({'name': 'SuperCarEngine'}),
+)
+
+CLASS_DOCSTRING = "Для классов не указана документация"
