@@ -6,10 +6,8 @@
     2. Написать тесты для приложения refactoring
         - services/
             - __init__.py
-            - code_handler.py
-            - code_items.py
             - code_parser.py
-            - rules_checker.py
+            - files_download.py
             - utils.py
         - views.py
     3. Написать тесты для static/js/scripts.js

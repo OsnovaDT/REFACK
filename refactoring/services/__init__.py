@@ -1,10 +1,13 @@
 """Business logic used in views"""
 
+from ast import parse
+
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse, FileResponse
 
+from refactoring.services.code_parser import CodeParser
+from refactoring.services.rules_checker import CleanCodeRulesChecker
 from refactoring.models import RefactoringRecommendation
-from refactoring.services.code_handler import CodeHandler
 from refactoring.services.utils import (
     get_code_error, get_code_to_display_in_html,
     get_recommendation_to_display_in_html,
@@ -57,7 +60,10 @@ def get_file_response_with_refactoring_recommendations(
 def _get_code_recommendations(code: bytes | str) -> dict:
     """Return refactoring recommendations for user's code"""
 
-    recommendations = CodeHandler(code).recommendations
+    parser = CodeParser()
+    parser.visit(parse(code))
+
+    recommendations = CleanCodeRulesChecker(parser.code_items).recommendations
 
     return {
         rule: ", ".join(wrong_code_items)
