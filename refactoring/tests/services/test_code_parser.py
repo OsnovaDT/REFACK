@@ -61,3 +61,17 @@ class CodeParserTests(TestCase):
                 dict(self.code_parser_items)['classes'][index].__dict__,
                 CLASS_ITEMS[index].__dict__,
             )
+
+    def test_code_items_property(self) -> None:
+        """Test code_items property"""
+
+        self.assertEqual(self.code_parser.code_items, {})
+
+        for func in parse(CODE_WITH_FUNCTIONS).__dict__['body']:
+            self.code_parser.visit_FunctionDef(func)
+
+        for class_ in parse(CODE_WITH_CLASSES).__dict__['body']:
+            self.code_parser.visit_ClassDef(class_)
+
+        self.assertNotEqual(len(self.code_parser.code_items), 0)
+        self.assertEqual(self.code_parser.code_items, self.code_parser_items)
