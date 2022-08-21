@@ -20,6 +20,9 @@ from refactoring.services.constants import BOOL_TYPE, NOT_BOOL_TYPE
 class CodeParser(NodeVisitor):
     """Parse user's code, save and return it's items"""
 
+    def __init__(self):
+        self.__code_items = defaultdict(list)
+
     def visit_FunctionDef(self, function_: FunctionDef) -> None:
         """Function parser.
 
@@ -28,15 +31,16 @@ class CodeParser(NodeVisitor):
 
         """
 
-        self.__code_items['functions'].append(
-            FunctionItem({
-                'name': function_.name,
-                'type': self.__get_function_type(function_.body),
-                'docstring': get_docstring(function_),
-                'type_hint': function_.returns,
-                'args': function_.args.args,
-            }),
-        )
+        if isinstance(function_, FunctionDef):
+            self.__code_items['functions'].append(
+                FunctionItem({
+                    'name': function_.name,
+                    'type': self.__get_function_type(function_.body),
+                    'docstring': get_docstring(function_),
+                    'type_hint': function_.returns,
+                    'args': function_.args.args,
+                }),
+            )
 
     def visit_ClassDef(self, class_: ClassDef) -> None:
         """Class parser.
@@ -46,21 +50,19 @@ class CodeParser(NodeVisitor):
 
         """
 
-        self.__code_items['classes'].append(
-            ClassItem({
-                'name': class_.name,
-                'docstring': get_docstring(class_),
-            }),
-        )
+        if isinstance(class_, ClassDef):
+            self.__code_items['classes'].append(
+                ClassItem({
+                    'name': class_.name,
+                    'docstring': get_docstring(class_),
+                }),
+            )
 
     @property
     def code_items(self) -> dict:
         """Return code items"""
 
         return dict(self.__code_items)
-
-    def __init__(self):
-        self.__code_items = defaultdict(list)
 
     @staticmethod
     def __get_type_of_return(return_: Return) -> str:
@@ -72,16 +74,15 @@ class CodeParser(NodeVisitor):
 
         """
 
-        value_of_return = return_.value.value
-
-        if isinstance(value_of_return, bool):
+        if isinstance(return_, Return) \
+                and isinstance(return_.value.value, bool):
             type_of_return = BOOL_TYPE
         else:
             type_of_return = NOT_BOOL_TYPE
 
         return type_of_return
 
-    def __get_function_type(self, function_body: list) -> str:
+    def __get_function_type(self, function_body: list | tuple) -> str:
         """Return type of the function.
 
         Types:
@@ -93,13 +94,14 @@ class CodeParser(NodeVisitor):
 
         function_type = ''
 
-        for action in function_body:
-            if isinstance(action, Return):
-                function_type = self.__get_type_of_return(action)
+        if isinstance(function_body, (list, tuple)):
+            for action in function_body:
+                if isinstance(action, Return):
+                    function_type = self.__get_type_of_return(action)
 
-                break
+                    break
 
-            if isinstance(action, Pass):
-                function_type = 'pass'
+                if isinstance(action, Pass):
+                    function_type = 'pass'
 
         return function_type

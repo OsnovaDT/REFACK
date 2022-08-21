@@ -1,7 +1,7 @@
 """Constants for testing refactoring app"""
 
 from keyword import kwlist
-from ast import Name, arg
+from ast import Name, arg, Return, Constant, Pass
 
 from refactoring.services.code_items import FunctionItem, ClassItem
 
@@ -854,3 +854,140 @@ ALL_RULES_CLASSES = (
         'docstring': 'Docs',
     }),
 )
+
+# For testing code_parser.py
+
+# For testing visit_FunctionDef method
+
+CODE_WITH_FUNCTIONS = """
+def test1():
+    return 1
+
+def check_value():
+    pass
+
+def get_value() -> str:
+    '''Return the value'''
+
+    return 'test string'
+
+def is_value_correct(value: str):
+    '''Check is value correct'''
+
+    return True
+
+def get_sum(val1, val2: int):
+    return 10
+
+def calculate_value(val1: str, val2: int) -> int:
+    '''Calculate the value'''
+
+    return 10
+"""
+
+FUNCTION_ITEMS = (
+    {
+        'name': 'test1',
+        'type': 'not bool',
+        'docstring': None,
+        'type_hint': None,
+        'args': [],
+    },
+
+    {
+        'name': 'check_value',
+        'type': PASS_TYPE,
+        'docstring': None,
+        'type_hint': None,
+        'args': [],
+    },
+
+    {
+        'name': 'get_value',
+        'type': 'not bool',
+        'docstring': "Return the value",
+        'type_hint': 'str',
+        'args': [],
+    },
+
+    {
+        'name': 'is_value_correct',
+        'type': 'bool',
+        'docstring': "Check is value correct",
+        'type_hint': None,
+        'args': ['value: str'],
+    },
+
+    {
+        'name': 'get_sum',
+        'type': 'not bool',
+        'docstring': None,
+        'type_hint': None,
+        'args': ['val1: ', 'val2: int'],
+    },
+
+    {
+        'name': 'calculate_value',
+        'type': 'not bool',
+        'docstring': 'Calculate the value',
+        'type_hint': 'int',
+        'args': ['val1: str', 'val2: int'],
+    },
+)
+
+# For testing visit_ClassDef method
+
+CODE_WITH_CLASSES = """
+class TestClass:
+    pass
+
+class ClassWithDocstring:
+    '''Docstring for class'''
+
+    pass
+
+class ClassWithDocstring2:
+    '''Docstring for class 2'''
+"""
+
+CLASS_ITEMS = (
+    ClassItem({
+        'name': 'TestClass',
+        'docstring': None,
+    }),
+
+    ClassItem({
+        'name': 'ClassWithDocstring',
+        'docstring': 'Docstring for class',
+    }),
+
+    ClassItem({
+        'name': 'ClassWithDocstring2',
+        'docstring': 'Docstring for class 2',
+    }),
+)
+
+# For testing __get_function_type method
+
+FUNCTION_TYPE_AND_BODY = {
+    (
+        Return(value=Constant(value=False)),
+    ): BOOL_TYPE,
+    (
+        Return(value=Constant(value=True)),
+        Return(value=Constant(value='string')),
+    ): BOOL_TYPE,
+
+    (
+        Return(value=Constant(value=10.11)),
+    ): NOT_BOOL_TYPE,
+    (
+        Return(value=Constant(value=10)), Pass(),
+    ): NOT_BOOL_TYPE,
+    (
+        Pass(), Return(value=Constant(value='string')),
+    ): NOT_BOOL_TYPE,
+
+    (Pass(),): PASS_TYPE,
+    (Pass(), Pass()): PASS_TYPE,
+}
