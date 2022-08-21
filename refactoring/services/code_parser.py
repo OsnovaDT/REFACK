@@ -74,19 +74,15 @@ class CodeParser(NodeVisitor):
 
         """
 
-        if not isinstance(return_, Return):
-            return NOT_BOOL_TYPE
-
-        value_of_return = return_.value.value
-
-        if isinstance(value_of_return, bool):
+        if isinstance(return_, Return) \
+                and isinstance(return_.value.value, bool):
             type_of_return = BOOL_TYPE
         else:
             type_of_return = NOT_BOOL_TYPE
 
         return type_of_return
 
-    def __get_function_type(self, function_body: list) -> str:
+    def __get_function_type(self, function_body: list | tuple) -> str:
         """Return type of the function.
 
         Types:
@@ -98,13 +94,14 @@ class CodeParser(NodeVisitor):
 
         function_type = ''
 
-        for action in function_body:
-            if isinstance(action, Return):
-                function_type = self.__get_type_of_return(action)
+        if isinstance(function_body, (list, tuple)):
+            for action in function_body:
+                if isinstance(action, Return):
+                    function_type = self.__get_type_of_return(action)
 
-                break
+                    break
 
-            if isinstance(action, Pass):
-                function_type = 'pass'
+                if isinstance(action, Pass):
+                    function_type = 'pass'
 
         return function_type

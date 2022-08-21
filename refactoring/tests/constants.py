@@ -1,7 +1,7 @@
 """Constants for testing refactoring app"""
 
 from keyword import kwlist
-from ast import Name, arg
+from ast import Name, arg, Return, Constant, Pass
 
 from refactoring.services.code_items import FunctionItem, ClassItem
 
@@ -896,7 +896,7 @@ FUNCTION_ITEMS = (
 
     {
         'name': 'check_value',
-        'type': 'pass',
+        'type': PASS_TYPE,
         'docstring': None,
         'type_hint': None,
         'args': [],
@@ -966,3 +966,28 @@ CLASS_ITEMS = (
         'docstring': 'Docstring for class 2',
     }),
 )
+
+# For testing __get_function_type method
+
+FUNCTION_TYPE_AND_BODY = {
+    (
+        Return(value=Constant(value=False)),
+    ): BOOL_TYPE,
+    (
+        Return(value=Constant(value=True)),
+        Return(value=Constant(value='string')),
+    ): BOOL_TYPE,
+
+    (
+        Return(value=Constant(value=10.11)),
+    ): NOT_BOOL_TYPE,
+    (
+        Return(value=Constant(value=10)), Pass(),
+    ): NOT_BOOL_TYPE,
+    (
+        Pass(), Return(value=Constant(value='string')),
+    ): NOT_BOOL_TYPE,
+
+    (Pass(),): PASS_TYPE,
+    (Pass(), Pass()): PASS_TYPE,
+}

@@ -7,7 +7,7 @@ from django.test import TestCase, tag
 from refactoring.services.code_parser import CodeParser
 from refactoring.tests.constants import (
     CODE_WITH_FUNCTIONS, FUNCTION_ITEMS, CODE_WITH_CLASSES, CLASS_ITEMS,
-    BOOL_TYPE, NOT_BOOL_TYPE, DIFFERENT_VALUES,
+    BOOL_TYPE, NOT_BOOL_TYPE, DIFFERENT_VALUES, FUNCTION_TYPE_AND_BODY,
 )
 
 
@@ -111,3 +111,19 @@ class CodeParserTests(TestCase):
                 self.code_parser._CodeParser__get_type_of_return(value),
                 NOT_BOOL_TYPE,
             )
+
+    def test_get_function_type(self) -> None:
+        """Test __get_function_type method"""
+
+        for body, type_ in FUNCTION_TYPE_AND_BODY.items():
+            self.assertEqual(
+                self.code_parser._CodeParser__get_function_type(body),
+                type_
+            )
+
+        wrong_body = 111
+
+        self.assertEqual(
+            self.code_parser._CodeParser__get_function_type(wrong_body),
+            ''
+        )
