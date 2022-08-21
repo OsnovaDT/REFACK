@@ -1,6 +1,5 @@
 [![Django CI/CD Workflow](https://github.com/OsnovaDT/REFACK/actions/workflows/main.yaml/badge.svg)](https://github.com/OsnovaDT/REFACK/actions/workflows/main.yaml)
 [![codecov](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graph/badge.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
-
 # REFACK
 ![REFACK](./static_readme/app_work.gif)
 
@@ -42,6 +41,10 @@ docker-compose exec web python manage.py migrate
 ```
 
 ## Tests
+### Coverage
+[![codecov](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graphs/tree.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
+
+### Running
 ```bash
 # Run all tests
 docker-compose exec web python manage.py test
@@ -50,6 +53,7 @@ docker-compose exec web python manage.py test
 docker-compose exec web python manage.py test --tag=<tag>
 ```
 
+### Tags
 Tags of account app:
 - **account_config**
 - **account_forms**
