@@ -20,6 +20,9 @@ from refactoring.services.constants import BOOL_TYPE, NOT_BOOL_TYPE
 class CodeParser(NodeVisitor):
     """Parse user's code, save and return it's items"""
 
+    def __init__(self):
+        self.__code_items = defaultdict(list)
+
     def visit_FunctionDef(self, function_: FunctionDef) -> None:
         """Function parser.
 
@@ -58,9 +61,6 @@ class CodeParser(NodeVisitor):
         """Return code items"""
 
         return dict(self.__code_items)
-
-    def __init__(self):
-        self.__code_items = defaultdict(list)
 
     @staticmethod
     def __get_type_of_return(return_: Return) -> str:

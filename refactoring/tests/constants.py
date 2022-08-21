@@ -854,3 +854,115 @@ ALL_RULES_CLASSES = (
         'docstring': 'Docs',
     }),
 )
+
+# For testing code_parser.py
+
+# For testing visit_FunctionDef method
+
+CODE_WITH_FUNCTIONS = """
+def test1():
+    return 1
+
+def check_value():
+    pass
+
+def get_value() -> str:
+    '''Return the value'''
+
+    return 'test string'
+
+def is_value_correct(value: str):
+    '''Check is value correct'''
+
+    return True
+
+def get_sum(val1, val2: int):
+    return 10
+
+def calculate_value(val1: str, val2: int) -> int:
+    '''Calculate the value'''
+
+    return 10
+"""
+
+FUNCTION_ITEMS = (
+    {
+        'name': 'test1',
+        'type': 'not bool',
+        'docstring': None,
+        'type_hint': None,
+        'args': [],
+    },
+
+    {
+        'name': 'check_value',
+        'type': 'pass',
+        'docstring': None,
+        'type_hint': None,
+        'args': [],
+    },
+
+    {
+        'name': 'get_value',
+        'type': 'not bool',
+        'docstring': "Return the value",
+        'type_hint': 'str',
+        'args': [],
+    },
+
+    {
+        'name': 'is_value_correct',
+        'type': 'bool',
+        'docstring': "Check is value correct",
+        'type_hint': None,
+        'args': ['value: str'],
+    },
+
+    {
+        'name': 'get_sum',
+        'type': 'not bool',
+        'docstring': None,
+        'type_hint': None,
+        'args': ['val1: ', 'val2: int'],
+    },
+
+    {
+        'name': 'calculate_value',
+        'type': 'not bool',
+        'docstring': 'Calculate the value',
+        'type_hint': 'int',
+        'args': ['val1: str', 'val2: int'],
+    },
+)
+
+# For testing visit_ClassDef method
+
+CODE_WITH_CLASSES = """
+class TestClass:
+    pass
+
+class ClassWithDocstring:
+    '''Docstring for class'''
+
+    pass
+
+class ClassWithDocstring2:
+    '''Docstring for class 2'''
+"""
+
+CLASS_ITEMS = (
+    ClassItem({
+        'name': 'TestClass',
+        'docstring': None,
+    }),
+
+    ClassItem({
+        'name': 'ClassWithDocstring',
+        'docstring': 'Docstring for class',
+    }),
+
+    ClassItem({
+        'name': 'ClassWithDocstring2',
+        'docstring': 'Docstring for class 2',
+    }),
+)
