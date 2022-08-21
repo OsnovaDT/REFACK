@@ -9,7 +9,12 @@ from django.http import FileResponse, JsonResponse
 def get_xml_file_content(file_content: str) -> str:
     """Return file content converted for XML"""
 
-    return str(dicttoxml(loads(file_content)))
+    if isinstance(file_content, str):
+        xml_file_content = str(dicttoxml(loads(file_content)))
+    else:
+        xml_file_content = ''
+
+    return xml_file_content
 
 
 def get_response_with_file(

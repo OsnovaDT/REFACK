@@ -2,11 +2,13 @@
 
 from json import loads
 
+from dicttoxml import dicttoxml
 from django.test import TestCase, tag
 from django.http import JsonResponse, FileResponse
 
 from refactoring.services.files_download import (
     _get_json_response, _add_file_disposition_to_response,
+    get_xml_file_content,
 )
 from refactoring.tests.constants import (
     FILE_CONTENT, EXTENSTION_AND_RESPONSE, NOT_STRING_VALUES,
@@ -62,3 +64,14 @@ class FilesDownloadTests(TestCase):
 
         for value in NOT_STRING_VALUES:
             _add_file_disposition_to_response(value, 'test.pdf')
+
+    def test_get_xml_file_content(self) -> None:
+        """Test get_xml_file_content function"""
+
+        self.assertEqual(
+            get_xml_file_content(FILE_CONTENT),
+            str(dicttoxml(loads(FILE_CONTENT)))
+        )
+
+        for value in NOT_STRING_VALUES:
+            self.assertEqual(get_xml_file_content(value), '')
