@@ -6,9 +6,6 @@
     2. Написать тесты для приложения refactoring
         - services/
             - __init__.py
-            - code_parser.py
-            - files_download.py
-            - utils.py
         - views.py
     3. Написать тесты для static/js/scripts.js
         - navbarDropdownMenuLink -> click

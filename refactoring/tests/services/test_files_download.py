@@ -8,10 +8,10 @@ from django.http import JsonResponse, FileResponse
 
 from refactoring.services.files_download import (
     _get_json_response, _add_file_disposition_to_response,
-    get_xml_file_content,
+    get_xml_file_content, get_response_with_file,
 )
 from refactoring.tests.constants import (
-    FILE_CONTENT, EXTENSTION_AND_RESPONSE, NOT_STRING_VALUES,
+    FILE_CONTENT, EXTENSION_AND_RESPONSE, NOT_STRING_VALUES,
 )
 
 
@@ -44,12 +44,12 @@ class FilesDownloadTests(TestCase):
     def test_add_file_disposition_to_response(self) -> None:
         """Test _add_file_disposition_to_response function"""
 
-        for extenstion, response in EXTENSTION_AND_RESPONSE.items():
-            _add_file_disposition_to_response(response, f'test.{extenstion}')
+        for extension, response in EXTENSION_AND_RESPONSE.items():
+            _add_file_disposition_to_response(response, f'test.{extension}')
 
             self.assertEqual(
                 response['Content-Disposition'],
-                f'attachment; filename=test.{extenstion};',
+                f'attachment; filename=test.{extension};',
             )
 
         for value in NOT_STRING_VALUES:
@@ -75,3 +75,66 @@ class FilesDownloadTests(TestCase):
 
         for value in NOT_STRING_VALUES:
             self.assertEqual(get_xml_file_content(value), '')
+
+    def test_get_response_with_file(self) -> None:
+        """Test get_response_with_file function"""
+
+        # PDF and XML
+
+        test_name = 'test'
+
+        for extension in ('pdf', 'xml'):
+            file_response = get_response_with_file(
+                FILE_CONTENT, f'{test_name}.{extension}'
+            )
+
+            self.assertTrue(isinstance(file_response, FileResponse))
+
+            # Headers
+
+            self.assertEqual(
+                file_response['Content-Type'],
+                f'application/{extension}',
+            )
+
+            self.assertEqual(
+                file_response['Content-Disposition'],
+                f'attachment; filename={test_name}.{extension};',
+            )
+
+        # JSON
+
+        real_json_response = get_response_with_file(
+            FILE_CONTENT, f'{test_name}.json',
+        )
+
+        expected_json_response = JsonResponse(
+            loads(FILE_CONTENT), json_dumps_params={'ensure_ascii': False},
+        )
+
+        self.assertTrue(isinstance(real_json_response, JsonResponse))
+
+        self.assertEqual(
+            real_json_response.__dict__['_container'],
+            expected_json_response.__dict__['_container'],
+        )
+
+        # Headers
+
+        self.assertEqual(
+            real_json_response['Content-Type'], 'application/json'
+        )
+
+        self.assertEqual(
+            real_json_response['Content-Disposition'],
+            f'attachment; filename={test_name}.json;',
+        )
+
+        for value in NOT_STRING_VALUES:
+            wrong_response = get_response_with_file(value, value)
+
+            self.assertEqual(
+                wrong_response['Content-Type'], 'application/json'
+            )
+
+            self.assertTrue(isinstance(wrong_response, FileResponse))

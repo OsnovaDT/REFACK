@@ -1011,7 +1011,7 @@ FILE_CONTENT = """
 
 # For testing _add_file_disposition_to_response function
 
-EXTENSTION_AND_RESPONSE = {
+EXTENSION_AND_RESPONSE = {
     'pdf': FileResponse(),
     'json': JsonResponse(loads(FILE_CONTENT)),
 }

@@ -18,18 +18,22 @@ def get_xml_file_content(file_content: str) -> str:
 
 
 def get_response_with_file(
-        file_content: str, file_name: str,
-        extension: str) -> FileResponse | JsonResponse:
+        file_content: str, file_name: str) -> FileResponse | JsonResponse:
     """Return FileResponse or JsonResponse with file"""
 
-    if extension == 'json':
-        response = _get_json_response(file_content)
-    else:
-        response = FileResponse(
-            file_content, content_type=f'application/{extension}',
-        )
+    if isinstance(file_content, str) and isinstance(file_name, str):
+        _, extension = file_name.split('.')
 
-    _add_file_disposition_to_response(response, f'{file_name}.{extension}')
+        if extension == 'json':
+            response = _get_json_response(file_content)
+        else:
+            response = FileResponse(
+                file_content, content_type=f'application/{extension}',
+            )
+
+        _add_file_disposition_to_response(response, file_name)
+    else:
+        response = FileResponse('', content_type='application/json')
 
     return response
 
