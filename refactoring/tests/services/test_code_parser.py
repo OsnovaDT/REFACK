@@ -1,12 +1,13 @@
 """Test services.code_parser module"""
 
-from ast import parse
+from ast import parse, Return, Constant
 
 from django.test import TestCase, tag
 
 from refactoring.services.code_parser import CodeParser
 from refactoring.tests.constants import (
     CODE_WITH_FUNCTIONS, FUNCTION_ITEMS, CODE_WITH_CLASSES, CLASS_ITEMS,
+    BOOL_TYPE, NOT_BOOL_TYPE, DIFFERENT_VALUES,
 )
 
 
@@ -27,6 +28,9 @@ class CodeParserTests(TestCase):
 
         for func in parsed_functions:
             self.code_parser.visit_FunctionDef(func)
+
+        for value in DIFFERENT_VALUES:
+            self.code_parser.visit_FunctionDef(value)
 
         for index in range(len(parsed_functions)):
             real_code_item = list(dict(self.code_parser_items)[
@@ -56,6 +60,9 @@ class CodeParserTests(TestCase):
         for class_ in parsed_classes:
             self.code_parser.visit_ClassDef(class_)
 
+        for value in DIFFERENT_VALUES:
+            self.code_parser.visit_ClassDef(value)
+
         for index in range(len(parsed_classes)):
             self.assertEqual(
                 dict(self.code_parser_items)['classes'][index].__dict__,
@@ -75,3 +82,32 @@ class CodeParserTests(TestCase):
 
         self.assertNotEqual(len(self.code_parser.code_items), 0)
         self.assertEqual(self.code_parser.code_items, self.code_parser_items)
+
+    def test_get_type_of_return(self) -> None:
+        """Test __get_type_of_return method"""
+
+        true_return = Return(value=Constant(value=True))
+        false_return = Return(value=Constant(value=False))
+
+        for bool_return in [true_return, false_return]:
+            self.assertEqual(
+                self.code_parser._CodeParser__get_type_of_return(bool_return),
+                BOOL_TYPE,
+            )
+
+        int_return = Return(value=Constant(value=100))
+        str_return = Return(value=Constant(value='test string'))
+        bytes_return = Return(value=Constant(value=b'test string'))
+        float_return = Return(value=Constant(value=10.11))
+
+        for return_ in [int_return, str_return, bytes_return, float_return]:
+            self.assertEqual(
+                self.code_parser._CodeParser__get_type_of_return(return_),
+                NOT_BOOL_TYPE,
+            )
+
+        for value in DIFFERENT_VALUES:
+            self.assertEqual(
+                self.code_parser._CodeParser__get_type_of_return(value),
+                NOT_BOOL_TYPE,
+            )

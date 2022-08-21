@@ -31,15 +31,16 @@ class CodeParser(NodeVisitor):
 
         """
 
-        self.__code_items['functions'].append(
-            FunctionItem({
-                'name': function_.name,
-                'type': self.__get_function_type(function_.body),
-                'docstring': get_docstring(function_),
-                'type_hint': function_.returns,
-                'args': function_.args.args,
-            }),
-        )
+        if isinstance(function_, FunctionDef):
+            self.__code_items['functions'].append(
+                FunctionItem({
+                    'name': function_.name,
+                    'type': self.__get_function_type(function_.body),
+                    'docstring': get_docstring(function_),
+                    'type_hint': function_.returns,
+                    'args': function_.args.args,
+                }),
+            )
 
     def visit_ClassDef(self, class_: ClassDef) -> None:
         """Class parser.
@@ -49,12 +50,13 @@ class CodeParser(NodeVisitor):
 
         """
 
-        self.__code_items['classes'].append(
-            ClassItem({
-                'name': class_.name,
-                'docstring': get_docstring(class_),
-            }),
-        )
+        if isinstance(class_, ClassDef):
+            self.__code_items['classes'].append(
+                ClassItem({
+                    'name': class_.name,
+                    'docstring': get_docstring(class_),
+                }),
+            )
 
     @property
     def code_items(self) -> dict:
@@ -71,6 +73,9 @@ class CodeParser(NodeVisitor):
         2. not bool (e.g. return 1, return 1.23, return "string").
 
         """
+
+        if not isinstance(return_, Return):
+            return NOT_BOOL_TYPE
 
         value_of_return = return_.value.value
 
