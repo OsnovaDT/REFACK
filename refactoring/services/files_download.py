@@ -18,7 +18,7 @@ def get_response_with_file(
     """Return FileResponse or JsonResponse with file"""
 
     if extension == 'json':
-        response = _get_json_file_response(file_content)
+        response = _get_json_response(file_content)
     else:
         response = FileResponse(
             file_content, content_type=f'application/{extension}',
@@ -33,12 +33,21 @@ def _add_file_disposition_to_response(
         response: FileResponse | JsonResponse, file_name: str) -> None:
     """Add file Content-Disposition to the response"""
 
-    response['Content-Disposition'] = f'attachment; filename={file_name};'
+    if not isinstance(file_name, str):
+        file_name = ''
+
+    if isinstance(response, (FileResponse, JsonResponse)):
+        response['Content-Disposition'] = f'attachment; filename={file_name};'
 
 
-def _get_json_file_response(file_content: str) -> JsonResponse:
+def _get_json_response(file_content: str) -> JsonResponse:
     """Return JsonResponse with file"""
 
-    return JsonResponse(
-        loads(file_content), json_dumps_params={'ensure_ascii': False},
-    )
+    if isinstance(file_content, str):
+        json_response = JsonResponse(
+            loads(file_content), json_dumps_params={'ensure_ascii': False},
+        )
+    else:
+        json_response = JsonResponse({})
+
+    return json_response

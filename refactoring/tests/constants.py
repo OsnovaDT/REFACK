@@ -1,7 +1,10 @@
 """Constants for testing refactoring app"""
 
-from keyword import kwlist
 from ast import Name, arg, Return, Constant, Pass
+from keyword import kwlist
+from json import loads
+
+from django.http import JsonResponse, FileResponse
 
 from refactoring.services.code_items import FunctionItem, ClassItem
 
@@ -48,12 +51,12 @@ NOT_STRING_VALUES = (
     TestClass, test_function, lambda x: x,
 
     # Others
-    None, complex(1, 2), bin(20), hex(100), range(100),
+    None, complex(1, 2), range(100),
 )
 
 DIFFERENT_STRINGS = (
     'value     value', '', '!@@#Q@$Q', 'test'.encode(), 'a', 'b', 'A', 'B',
-    '', '  ', '\n', '\t', 'def'
+    '', '  ', '\n', '\t', 'def', bin(20), hex(100),
 )
 
 DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
@@ -994,7 +997,7 @@ FUNCTION_TYPE_AND_BODY = {
 
 # For testing files_download.py
 
-# For testing _get_json_file_response function
+# For testing _get_json_response function
 
 FILE_CONTENT = """
 {"Функции не начинаются с префикса «get»": "a",
@@ -1005,3 +1008,10 @@ FILE_CONTENT = """
 "Для классов не указана документация": "a_b, a_b_c",
 "Для функций не указан type hint": "a, test1"}
 """
+
+# For testing _add_file_disposition_to_response function
+
+EXTENSTION_AND_RESPONSE = {
+    'pdf': FileResponse(),
+    'json': JsonResponse(loads(FILE_CONTENT)),
+}
