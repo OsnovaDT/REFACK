@@ -1,3 +1,6 @@
+[![Django CI/CD Workflow](https://github.com/OsnovaDT/REFACK/actions/workflows/main.yaml/badge.svg)](https://github.com/OsnovaDT/REFACK/actions/workflows/main.yaml)
+[![codecov](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graph/badge.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
+
 # REFACK
 ![REFACK](./static_readme/app_work.gif)
 
