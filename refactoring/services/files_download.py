@@ -9,22 +9,31 @@ from django.http import FileResponse, JsonResponse
 def get_xml_file_content(file_content: str) -> str:
     """Return file content converted for XML"""
 
-    return str(dicttoxml(loads(file_content)))
+    if isinstance(file_content, str):
+        xml_file_content = str(dicttoxml(loads(file_content)))
+    else:
+        xml_file_content = ''
+
+    return xml_file_content
 
 
 def get_response_with_file(
-        file_content: str, file_name: str,
-        extension: str) -> FileResponse | JsonResponse:
+        file_content: str, file_name: str) -> FileResponse | JsonResponse:
     """Return FileResponse or JsonResponse with file"""
 
-    if extension == 'json':
-        response = _get_json_file_response(file_content)
-    else:
-        response = FileResponse(
-            file_content, content_type=f'application/{extension}',
-        )
+    if isinstance(file_content, str) and isinstance(file_name, str):
+        _, extension = file_name.split('.')
 
-    _add_file_disposition_to_response(response, f'{file_name}.{extension}')
+        if extension == 'json':
+            response = _get_json_response(file_content)
+        else:
+            response = FileResponse(
+                file_content, content_type=f'application/{extension}',
+            )
+
+        _add_file_disposition_to_response(response, file_name)
+    else:
+        response = FileResponse('', content_type='application/json')
 
     return response
 
@@ -33,12 +42,21 @@ def _add_file_disposition_to_response(
         response: FileResponse | JsonResponse, file_name: str) -> None:
     """Add file Content-Disposition to the response"""
 
-    response['Content-Disposition'] = f'attachment; filename={file_name};'
+    if not isinstance(file_name, str):
+        file_name = ''
+
+    if isinstance(response, (FileResponse, JsonResponse)):
+        response['Content-Disposition'] = f'attachment; filename={file_name};'
 
 
-def _get_json_file_response(file_content: str) -> JsonResponse:
+def _get_json_response(file_content: str) -> JsonResponse:
     """Return JsonResponse with file"""
 
-    return JsonResponse(
-        loads(file_content), json_dumps_params={'ensure_ascii': False},
-    )
+    if isinstance(file_content, str):
+        json_response = JsonResponse(
+            loads(file_content), json_dumps_params={'ensure_ascii': False},
+        )
+    else:
+        json_response = JsonResponse({})
+
+    return json_response

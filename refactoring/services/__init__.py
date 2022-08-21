@@ -50,7 +50,7 @@ def get_file_response_with_refactoring_recommendations(
         recommendations = get_xml_file_content(recommendations)
 
     return get_response_with_file(
-        recommendations, 'refactoring_recommendations', extension,
+        recommendations, f'refactoring_recommendations.{extension}',
     )
 
 
