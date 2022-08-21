@@ -991,3 +991,17 @@ FUNCTION_TYPE_AND_BODY = {
     (Pass(),): PASS_TYPE,
     (Pass(), Pass()): PASS_TYPE,
 }
+
+# For testing files_download.py
+
+# For testing _get_json_file_response function
+
+FILE_CONTENT = """
+{"Функции не начинаются с префикса «get»": "a",
+"Функции не начинаются с префикса «is»": "test1",
+"Функции или методы не имеют стиль именования snake_case": "a",
+"Классы не имеют стиль именования CapWords": "a_b, a_b_c",
+"Для функций не указана документация": "a",
+"Для классов не указана документация": "a_b, a_b_c",
+"Для функций не указан type hint": "a, test1"}
+"""
