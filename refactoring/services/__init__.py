@@ -35,11 +35,17 @@ def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
 def create_refactoring_recommendation(recommendation_data: dict) -> None:
     """Create refactoring recommendation"""
 
-    RefactoringRecommendation.objects.create(
-        user=User.objects.get(username=recommendation_data['username']),
-        code=get_code_to_display_in_html(recommendation_data['code']),
-        recommendation=recommendation_data['recommendation'],
-    )
+    if isinstance(recommendation_data, dict):
+        code = recommendation_data.get('code')
+        username = recommendation_data.get('username')
+        recommendation = recommendation_data.get('recommendation')
+
+        if username and code and recommendation:
+            RefactoringRecommendation.objects.create(
+                user=User.objects.get(username=username),
+                code=get_code_to_display_in_html(code),
+                recommendation=recommendation,
+            )
 
 
 def get_file_response_with_refactoring_recommendations(

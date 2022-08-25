@@ -1015,3 +1015,21 @@ EXTENSION_AND_RESPONSE = {
     'pdf': FileResponse(),
     'json': JsonResponse(loads(FILE_CONTENT)),
 }
+
+# For testing services.__init__py
+
+# For testing create_refactoring_recommendation function
+
+REFACTORING_RECOMMENDATION_DATA = {
+    'code': """
+def test():
+    return 1
+""",
+    'recommendation': 'Функции не начинаются с префикса «get»: '
+                      '<span class="code_item">test</span><br><br>'
+                      'Для функций не указана документация: '
+                      '<span class="code_item">test</span><br><br>'
+                      'Для функций не указан type hint: '
+                      '<span class="code_item">test</span><br><br>',
+    'username': 'test',
+}
