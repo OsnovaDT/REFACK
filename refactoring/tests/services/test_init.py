@@ -1,11 +1,19 @@
 """Test services.__init__ module"""
 
+from json import loads
+
 from django.contrib.auth import get_user_model
 from django.test import TestCase, tag
+from django.http import JsonResponse, FileResponse
 
 from refactoring.models import RefactoringRecommendation
-from refactoring.services import create_refactoring_recommendation
-from refactoring.tests.constants import REFACTORING_RECOMMENDATION_DATA
+from refactoring.services import (
+    create_refactoring_recommendation,
+    get_file_response_with_refactoring_recommendations,
+)
+from refactoring.tests.constants import (
+    REFACTORING_RECOMMENDATION_DATA, FILE_CONTENT, NOT_STRING_VALUES,
+)
 
 
 User = get_user_model()
@@ -60,3 +68,64 @@ class FunctionsTests(TestCase):
         create_refactoring_recommendation(100)
 
         self.assertEqual(RefactoringRecommendation.objects.count(), 1)
+
+    def test_get_file_response_with_refactoring_recommendations(self) -> None:
+        """Test get_file_response_with_refactoring_recommendations function"""
+
+        # PDF and XML
+
+        for extension in ('pdf', 'xml'):
+            pdf_response = get_file_response_with_refactoring_recommendations(
+                FILE_CONTENT, extension,
+            )
+
+            self.assertTrue(isinstance(pdf_response, FileResponse))
+
+            self.assertEqual(
+                pdf_response['Content-Type'],
+                f'application/{extension}',
+            )
+
+            self.assertEqual(
+                pdf_response['Content-Disposition'],
+                'attachment; filename='
+                f'refactoring_recommendations.{extension};',
+            )
+
+        # JSON
+
+        json_response = get_file_response_with_refactoring_recommendations(
+            FILE_CONTENT, 'json',
+        )
+
+        expected_json_response = JsonResponse(
+            loads(FILE_CONTENT), json_dumps_params={'ensure_ascii': False},
+        )
+
+        self.assertTrue(isinstance(json_response, JsonResponse))
+
+        self.assertEqual(
+            json_response.__dict__['_container'],
+            expected_json_response.__dict__['_container'],
+        )
+
+        self.assertEqual(json_response['Content-Type'], 'application/json')
+
+        self.assertEqual(
+            json_response['Content-Disposition'],
+            'attachment; filename=refactoring_recommendations.json;',
+        )
+
+        # Wrong values
+
+        for value in NOT_STRING_VALUES:
+            wrong_response = \
+                get_file_response_with_refactoring_recommendations(
+                    value, value
+                )
+
+            self.assertEqual(
+                wrong_response['Content-Type'], 'application/json'
+            )
+
+            self.assertTrue(isinstance(wrong_response, FileResponse))

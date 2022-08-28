@@ -71,7 +71,6 @@ def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
     recommendation = request.GET.get('recommendation', None)
-
     code = request.GET.get('code', None)
 
     if recommendation and code:

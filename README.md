@@ -71,3 +71,4 @@ Tags of refactoring app:
     - **refactoring_services_rules_checker**
     - **refactoring_services_code_parser**
     - **refactoring_services_files_download**
+    - **refactoring_services_init**
