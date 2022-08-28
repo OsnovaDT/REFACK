@@ -64,7 +64,7 @@ DIFFERENT_VALUES = DIFFERENT_STRINGS + NOT_STRING_VALUES
 # For testing refactoring app urls
 
 TEST_REFACTORING_RESULTS = {
-    'results': '{"Функции не начинаются с префикса «get»": "a",'
+    'results': '{"Функции не начинаются с префикса «get_»": "a",'
                '"Для функций не указана документация": "a",'
                '"Для функций не указан type hint": "a"}'
 }
@@ -755,7 +755,7 @@ INCORRECT_GET_FUNCTIONS = [
     for name in INCORRECT_GET_NAMES
 ]
 
-PREFIX_GET = "Функции не начинаются с префикса «get»"
+PREFIX_GET = "Функции не начинаются с префикса «get_»"
 
 # For testing _check_bool_functions_start_with_is method
 
@@ -786,7 +786,7 @@ INCORRECT_BOOL_FUNCTIONS = [
     for name in INCORRECT_BOOL_NAMES
 ]
 
-PREFIX_IS = "Функции не начинаются с префикса «is»"
+PREFIX_IS = "Функции не начинаются с префикса «is_»"
 
 # For testing CleanCodeRulesChecker class
 
@@ -1000,8 +1000,8 @@ FUNCTION_TYPE_AND_BODY = {
 # For testing _get_json_response function
 
 FILE_CONTENT = """
-{"Функции не начинаются с префикса «get»": "a",
-"Функции не начинаются с префикса «is»": "test1",
+{"Функции не начинаются с префикса «get_»": "a",
+"Функции не начинаются с префикса «is_»": "test1",
 "Функции или методы не имеют стиль именования snake_case": "a",
 "Классы не имеют стиль именования CapWords": "a_b, a_b_c",
 "Для функций не указана документация": "a",
@@ -1025,11 +1025,166 @@ REFACTORING_RECOMMENDATION_DATA = {
 def test():
     return 1
 """,
-    'recommendation': 'Функции не начинаются с префикса «get»: '
+    'recommendation': 'Функции не начинаются с префикса «get_»: '
                       '<span class="code_item">test</span><br><br>'
                       'Для функций не указана документация: '
                       '<span class="code_item">test</span><br><br>'
                       'Для функций не указан type hint: '
                       '<span class="code_item">test</span><br><br>',
     'username': 'test',
+}
+
+# For testing _get_code_recommendations
+
+CODE_AND_ERROR = {
+    """def check""": (SyntaxError, 'invalid syntax (<unknown>, line 1)'),
+
+    """def check(""":
+        (SyntaxError, "'(' was never closed (<unknown>, line 1)"),
+
+    """def check()""": (SyntaxError, "expected ':' (<unknown>, line 1)"),
+
+    """def check():""":
+        (
+            IndentationError,
+            "expected an indented block after function "
+            "definition on line 1 (<unknown>, line 1)",
+        ),
+
+    """class""": (SyntaxError, 'invalid syntax (<unknown>, line 1)'),
+
+    """class A""":  (SyntaxError, "expected ':' (<unknown>, line 1)"),
+
+    """Class A: pass""": (SyntaxError, 'invalid syntax (<unknown>, line 1)'),
+}
+
+CODE_AND_RECOMMENDATIONS = {
+    """
+def check():
+    return 1
+    """: {
+        'Для функций не указан type hint': 'check',
+        'Для функций не указана документация': 'check',
+        'Функции не начинаются с префикса «get_»': 'check'
+    },
+
+    """
+def check_value():
+    return True
+    """:
+    {
+        'Для функций не указан type hint': 'check_value',
+        'Для функций не указана документация': 'check_value',
+        'Функции не начинаются с префикса «is_»': 'check_value'
+    },
+
+    """
+def check_value() -> bool:
+    return True
+    """:
+    {
+        'Для функций не указана документация': 'check_value',
+        'Функции не начинаются с префикса «is_»': 'check_value'
+    },
+
+    """
+def is_value_correct() -> bool:
+    return True
+    """:
+    {
+        'Для функций не указана документация': 'is_value_correct',
+    },
+
+    """
+def is_value_correct() -> bool:
+    '''Check is value correct'''
+
+    return True
+    """: {},
+
+    """
+def is_value_correct(value) -> bool:
+    '''Check is value correct'''
+
+    return True
+    """:
+    {
+        'Для аргументов функций не указан type hint':
+            'аргумент «value» (функция «is_value_correct»)',
+    },
+
+    """
+def is_value_correct(value1, value2) -> bool:
+    '''Check is value correct'''
+
+    return False
+    """:
+    {
+        'Для аргументов функций не указан type hint':
+            'аргумент «value1» (функция «is_value_correct»), '
+            'аргумент «value2» (функция «is_value_correct»)'
+    },
+
+    """
+def is_value_correct(value1: int, value2: str) -> bool:
+    '''Check is value correct'''
+
+    return False
+    """:
+    {},
+
+    """
+def isValueCorrect() -> bool:
+    '''Check is value correct'''
+
+    return False
+    """:
+    {
+        'Функции или методы не имеют стиль именования snake_case':
+            'isValueCorrect',
+        'Функции не начинаются с префикса «is_»': 'isValueCorrect'
+    },
+
+    """
+def get_value() -> int:
+    '''Return value'''
+
+    return 10
+    """:
+    {},
+
+    """
+def getValue() -> int:
+    '''Return value'''
+
+    return 10
+    """:
+    {
+        'Функции или методы не имеют стиль именования snake_case': 'getValue',
+        'Функции не начинаются с префикса «get_»': 'getValue'
+    },
+
+    """
+class a_b_c:
+    pass
+    """:
+    {
+        'Для классов не указана документация': 'a_b_c',
+        'Классы не имеют стиль именования CapWords': 'a_b_c'
+    },
+
+    """
+class a_b_c:
+    '''Class ABC'''
+
+    pass
+    """:
+    {'Классы не имеют стиль именования CapWords': 'a_b_c'},
+
+    """
+class Car:
+    '''Class Car'''
+
+    pass
+    """: {},
 }

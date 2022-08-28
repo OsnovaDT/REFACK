@@ -8,11 +8,12 @@ from django.http import JsonResponse, FileResponse
 
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
-    create_refactoring_recommendation,
+    create_refactoring_recommendation, _get_code_recommendations,
     get_file_response_with_refactoring_recommendations,
 )
 from refactoring.tests.constants import (
     REFACTORING_RECOMMENDATION_DATA, FILE_CONTENT, NOT_STRING_VALUES,
+    CODE_AND_RECOMMENDATIONS, CODE_AND_ERROR,
 )
 
 
@@ -129,3 +130,18 @@ class FunctionsTests(TestCase):
             )
 
             self.assertTrue(isinstance(wrong_response, FileResponse))
+
+    def test_get_code_recommendations(self) -> None:
+        """Test _get_code_recommendations function"""
+
+        for code, expected_recommendations in CODE_AND_RECOMMENDATIONS.items():
+            self.assertEqual(
+                _get_code_recommendations(code),
+                expected_recommendations,
+            )
+
+        for code, error_and_message in CODE_AND_ERROR.items():
+            error, message = error_and_message
+
+            with self.assertRaisesMessage(error, message):
+                _get_code_recommendations(code)

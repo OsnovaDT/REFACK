@@ -19,7 +19,7 @@ from refactoring.services.files_download import (
 User = get_user_model()
 
 
-def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
+def get_recommendations_or_error_response(code: str) -> JsonResponse:
     """Return response with recommendations or with error"""
 
     code_error = get_code_error(code)
@@ -60,7 +60,7 @@ def get_file_response_with_refactoring_recommendations(
     )
 
 
-def _get_code_recommendations(code: bytes | str) -> dict:
+def _get_code_recommendations(code: str) -> dict:
     """Return refactoring recommendations for user's code"""
 
     parser = CodeParser()
