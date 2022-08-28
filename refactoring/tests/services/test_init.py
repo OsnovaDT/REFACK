@@ -10,6 +10,7 @@ from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
     create_refactoring_recommendation, _get_code_recommendations,
     get_file_response_with_refactoring_recommendations,
+    get_recommendations_or_error_response,
 )
 from refactoring.tests.constants import (
     REFACTORING_RECOMMENDATION_DATA, FILE_CONTENT, NOT_STRING_VALUES,
@@ -145,3 +146,33 @@ class FunctionsTests(TestCase):
 
             with self.assertRaisesMessage(error, message):
                 _get_code_recommendations(code)
+
+        for value in NOT_STRING_VALUES:
+            self.assertEqual(_get_code_recommendations(value), {})
+
+    def test_get_recommendations_or_error_response(self) -> None:
+        """Test get_recommendations_or_error_response function"""
+
+        for code in tuple(CODE_AND_RECOMMENDATIONS) + NOT_STRING_VALUES:
+            response = get_recommendations_or_error_response(code)
+
+            self.assertNotEqual(response._container, 0)
+            self.assertEqual(response.status_code, 200)
+
+            self.assertIn(b'recommendations', response._container[0])
+            self.assertNotIn(b'error', response._container[0])
+
+            self.assertTrue(isinstance(response, JsonResponse))
+            self.assertEqual(response['Content-Type'], 'application/json')\
+
+        for code in CODE_AND_ERROR:
+            response = get_recommendations_or_error_response(code)
+
+            self.assertNotEqual(response._container, 0)
+            self.assertEqual(response.status_code, 200)
+
+            self.assertIn(b'error', response._container[0])
+            self.assertNotIn(b'recommendations', response._container[0])
+
+            self.assertTrue(isinstance(response, JsonResponse))
+            self.assertEqual(response['Content-Type'], 'application/json')

@@ -63,12 +63,19 @@ def get_file_response_with_refactoring_recommendations(
 def _get_code_recommendations(code: str) -> dict:
     """Return refactoring recommendations for user's code"""
 
-    parser = CodeParser()
-    parser.visit(parse(code))
+    code_recommendations = {}
 
-    recommendations = CleanCodeRulesChecker(parser.code_items).recommendations
+    if isinstance(code, str):
+        parser = CodeParser()
+        parser.visit(parse(code))
 
-    return {
-        rule: ", ".join(wrong_code_items)
-        for rule, wrong_code_items in recommendations.items()
-    }
+        recommendations = CleanCodeRulesChecker(
+            parser.code_items
+        ).recommendations
+
+        code_recommendations = {
+            rule: ", ".join(wrong_code_items)
+            for rule, wrong_code_items in recommendations.items()
+        }
+
+    return code_recommendations
