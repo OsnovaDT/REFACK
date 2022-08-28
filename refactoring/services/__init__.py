@@ -19,7 +19,7 @@ from refactoring.services.files_download import (
 User = get_user_model()
 
 
-def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
+def get_recommendations_or_error_response(code: str) -> JsonResponse:
     """Return response with recommendations or with error"""
 
     code_error = get_code_error(code)
@@ -35,11 +35,17 @@ def get_recommendations_or_error_response(code: bytes | str) -> JsonResponse:
 def create_refactoring_recommendation(recommendation_data: dict) -> None:
     """Create refactoring recommendation"""
 
-    RefactoringRecommendation.objects.create(
-        user=User.objects.get(username=recommendation_data['username']),
-        code=get_code_to_display_in_html(recommendation_data['code']),
-        recommendation=recommendation_data['recommendation'],
-    )
+    if isinstance(recommendation_data, dict):
+        code = recommendation_data.get('code')
+        username = recommendation_data.get('username')
+        recommendation = recommendation_data.get('recommendation')
+
+        if username and code and recommendation:
+            RefactoringRecommendation.objects.create(
+                user=User.objects.get(username=username),
+                code=get_code_to_display_in_html(code),
+                recommendation=recommendation,
+            )
 
 
 def get_file_response_with_refactoring_recommendations(
@@ -54,15 +60,22 @@ def get_file_response_with_refactoring_recommendations(
     )
 
 
-def _get_code_recommendations(code: bytes | str) -> dict:
+def _get_code_recommendations(code: str) -> dict:
     """Return refactoring recommendations for user's code"""
 
-    parser = CodeParser()
-    parser.visit(parse(code))
+    code_recommendations = {}
 
-    recommendations = CleanCodeRulesChecker(parser.code_items).recommendations
+    if isinstance(code, str):
+        parser = CodeParser()
+        parser.visit(parse(code))
 
-    return {
-        rule: ", ".join(wrong_code_items)
-        for rule, wrong_code_items in recommendations.items()
-    }
+        recommendations = CleanCodeRulesChecker(
+            parser.code_items
+        ).recommendations
+
+        code_recommendations = {
+            rule: ", ".join(wrong_code_items)
+            for rule, wrong_code_items in recommendations.items()
+        }
+
+    return code_recommendations

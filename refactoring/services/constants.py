@@ -7,9 +7,9 @@ from keyword import kwlist
 
 # Naming
 
-PREFIX_GET = "Функции не начинаются с префикса «get»"
+PREFIX_GET = "Функции не начинаются с префикса «get_»"
 
-PREFIX_IS = "Функции не начинаются с префикса «is»"
+PREFIX_IS = "Функции не начинаются с префикса «is_»"
 
 # Naming style
 
