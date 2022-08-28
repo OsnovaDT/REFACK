@@ -1,26 +1,25 @@
 [![Django CI/CD Workflow](https://github.com/OsnovaDT/REFACK/actions/workflows/main.yaml/badge.svg)](https://github.com/OsnovaDT/REFACK/actions/workflows/main.yaml)
-[![codecov](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graph/badge.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
+[![coverage percentage](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graph/badge.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
 # REFACK
 ![REFACK](./static_readme/app_work.gif)
 
 ## What is REFACK?
-REFACK is a web application for refactoring Python code.
-REFACK parse your code and checks on different rules:
-- All functions and methods have **snake_case** naming style;
+REFACK is a web linter for Python. It checks your code on different rules:
+- All functions have **snake_case** naming style;
 - All classes have **CapWords** naming style;
-- All functions, methods and classes have **documentation**;
-- If function / method returns boolean, its name should starts with **«is» prefix**;
-- If function / method returns not boolean, its name should starts with **«get» prefix**;
-- All functions and methods have **type hints**;
-- All arguments for functions / methods have **type hints**.
+- All functions and classes have **docstring**;
+- If a function returns boolean, its name should starts with «**is_**» prefix;
+- If a function returns not boolean, its name should starts with «**get_**» prefix;
+- All functions have **type hints**;
+- All functions arguments have **type hints**.
 
 ## Requirements
-Python 3.10, Django, Docker.
+Python 3.10, Django.
 
 See requirements.txt for the Python modules.
 
 ## Deploy
-Create a file **.env** in your project (next to manage.py) with this data:
+Create **.env** file in root of your project with these environment variables:
 ```env
 SECRET_KEY="<your_secret_key>"
 ```
@@ -30,19 +29,15 @@ Run the project
 sudo docker-compose up --build
 ```
 
-Make migrations
+Make and run migrations
 ```bash
 docker-compose exec web python manage.py makemigrations
-```
-
-Run migrations
-```bash
 docker-compose exec web python manage.py migrate
 ```
 
 ## Tests
 ### Coverage
-[![codecov](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graphs/tree.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
+[![coverage tree](https://codecov.io/gh/OsnovaDT/REFACK/branch/master/graphs/tree.svg?token=6GOUES7M7E)](https://codecov.io/gh/OsnovaDT/REFACK)
 
 ### Running
 ```bash
@@ -54,20 +49,27 @@ docker-compose exec web python manage.py test --tag=<tag>
 ```
 
 ### Tags
-Tags of account app:
-- **account_config**
-- **account_forms**
-- **account_urls**
-- **account_views**
+**App «account»**
+- account_config
+- account_forms
+- account_urls
+- account_views
 
-Tags of refactoring app:
-- **refactoring_admin**
-- **refactoring_config**
-- **refactoring_models**
-- **refactoring_urls**
-- **refactoring_services**
-    - **refactoring_services_utils**
-    - **refactoring_services_code_items**
-    - **refactoring_services_rules_checker**
-    - **refactoring_services_code_parser**
-    - **refactoring_services_files_download**
+**App «refactoring»**
+- refactoring_admin
+- refactoring_config
+- refactoring_models
+- refactoring_urls
+- refactoring_services
+    - refactoring_services_code_items
+    - refactoring_services_code_parser
+    - refactoring_services_files_download
+    - refactoring_services_rules_checker
+    - refactoring_services_utils
+
+## CI/CD Workflow
+
+Workflow will passing successfully if:
+- Code style meets conditions of Flake8
+- All tests passed successfully
+- Tests coverage >= 90%
