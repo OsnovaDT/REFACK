@@ -1,4 +1,4 @@
-"""Test urls of account app"""
+"""Tests for account app urls"""
 
 from django.test import tag
 
@@ -9,8 +9,8 @@ from config.tests.mixins import TestURLMixin
 
 
 @tag('account_urls')
-class PagesTests(TestURLMixin):
-    """Test pages of account app"""
+class UrlsTests(TestURLMixin):
+    """Test urls of account app"""
 
     def test_login(self) -> None:
         """Test login page"""

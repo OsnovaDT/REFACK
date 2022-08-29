@@ -55,22 +55,11 @@ urlpatterns = [
 
     # Password reset
     path(
-        'password_reset/',
-        PasswordResetView.as_view(
-            template_name='account/password_reset/main.html',
-            subject_template_name='account/password_reset/email/subject.txt',
-            email_template_name='account/password_reset/email/message.html',
-            success_url=reverse_lazy('account:password_reset_done'),
+        'password_reset/complete/',
+        PasswordResetCompleteView.as_view(
+            template_name='account/password_reset/done.html',
         ),
-        name='password_reset',
-    ),
-
-    path(
-        'password_reset/message_sent/',
-        PasswordResetDoneView.as_view(
-            template_name='account/password_reset/email/sent.html',
-        ),
-        name='password_reset_done',
+        name='password_reset_complete',
     ),
 
     path(
@@ -83,10 +72,21 @@ urlpatterns = [
     ),
 
     path(
-        'password_reset/complete/',
-        PasswordResetCompleteView.as_view(
-            template_name='account/password_reset/done.html',
+        'password_reset/message_sent/',
+        PasswordResetDoneView.as_view(
+            template_name='account/password_reset/email/sent.html',
         ),
-        name='password_reset_complete',
+        name='password_reset_done',
+    ),
+
+    path(
+        'password_reset/',
+        PasswordResetView.as_view(
+            template_name='account/password_reset/main.html',
+            subject_template_name='account/password_reset/email/subject.txt',
+            email_template_name='account/password_reset/email/message.html',
+            success_url=reverse_lazy('account:password_reset_done'),
+        ),
+        name='password_reset',
     ),
 ]

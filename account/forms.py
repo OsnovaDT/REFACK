@@ -8,8 +8,8 @@ class RegistrationForm(UserCreationForm):
     """User registration form"""
 
     class Meta:
-        """RegistrationForm info"""
+        """Form metainformation"""
 
-        fields = ('username', 'email', 'password1', 'password2',)
+        fields = ('username', 'email', 'password1', 'password2')
 
         model = User

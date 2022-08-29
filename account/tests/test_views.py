@@ -1,6 +1,6 @@
-"""Test views of account app"""
+"""Tests for account app views"""
 
-from django.test import TestCase, tag
+from django.test import tag, TestCase
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
@@ -10,24 +10,27 @@ from account.views import RegistrationView
 
 @tag('account_views')
 class RegistrationViewTests(TestCase):
-    """Test RegistrationView of account app"""
+    """Test RegistrationView"""
 
-    def test_registration_view(self) -> None:
-        """Test RegistrationView"""
+    def test_fields(self) -> None:
+        """Test fields of RegistrationView"""
 
         self.assertEqual(
-            RegistrationView.form_class, RegistrationForm,
+            RegistrationView.form_class,
+            RegistrationForm,
         )
 
         self.assertEqual(
-            RegistrationView.template_name, 'account/registration.html',
+            RegistrationView.template_name,
+            'account/registration.html',
         )
 
         self.assertEqual(
-            RegistrationView.success_url, reverse_lazy('account:login'),
+            RegistrationView.success_url,
+            reverse_lazy('account:login'),
         )
 
-    def test_create_view_in_mro(self) -> None:
-        """Test that CreateView in RegistrationView MRO"""
+    def test_mro(self) -> None:
+        """Test RegistrationView MRO"""
 
         self.assertIn(CreateView, RegistrationView.mro())

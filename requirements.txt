@@ -1,17 +1,17 @@
+# Test coverage
+coverage~=6.4.4
+
+# For converting refactoring recommendations to XML file
+dicttoxml~=1.7.4
+
 # Django
 Django>=3.0,<4.0
+
+# Logging
+loguru~=0.6.0
 
 # PostgreSQL
 psycopg2>=2.8
 
 # For environment variables
 python-decouple~=3.6
-
-# For converting recommendations to XML 
-dicttoxml~=1.7.4
-
-# For logging
-loguru~=0.6.0
-
-# Test coverage
-coverage~=6.4.4

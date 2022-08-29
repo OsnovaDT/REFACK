@@ -3,29 +3,25 @@
     GET параметрами
 
 2) ТЕСТЫ
-    2. Написать тесты для приложения refactoring
-        - services/
-            - __init__.py
-        - views.py
-    3. Написать тесты для static/js/scripts.js
-        - navbarDropdownMenuLink -> click
+    1. Написать тесты для static/js/scripts.js
+        - dropdown_menu_link -> click
         - save_recommendations_link -> click
         - file_upload -> click
-        - file_upload_input -> change
-    4. Написать прочие тесты
-        - Написать тесты на стутус-коды страниц
+        - login_button -> click
+        - updateSaveRecommendationFormData
+        - updateResultsForFileDownload
+        - getErrorForHtmlDisplay
+        - updateRecommendationsBlock
+        - saveRecommendation
+        - pasteCodeFromFileToTextarea
+    2. Написать прочие тесты
         - Написать тесты на то что все ссылки не битые
-        - Написать тесты на то что на англ странице нет русского текста
         - Написать Selenium-тесты на проверку работы форм
+    3. На будущее
+        - Написать тесты на то что на англ странице нет русского текста
         - Написать тест на работу темной темы
-    5. Пофиксить ворнинги при запуске тестов
-    6. Добавить doctest
 
 3) ФУНКЦИОНАЛ
-    0. Логи:
-        - Добавить логирование (loguru)
-        - Добавить обработку ошибок
-        - Добавить глобальную обработку ошибок
     1. Документация
         - Добавить приложиние documentation
         - Добавить раздел с документациями
