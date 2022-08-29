@@ -6,7 +6,7 @@ from account.apps import AccountConfig
 from config.tests.constants import DEFAULT_AUTO_FIELD
 
 
-@tag('account_config')
+@tag("account_config")
 class AccountConfigTests(TestCase):
     """Test AccountConfig class"""
 
@@ -23,5 +23,5 @@ class AccountConfigTests(TestCase):
 
         self.assertEqual(
             AccountConfig.name,
-            'account',
+            "account",
         )

@@ -8,7 +8,7 @@ from account.forms import RegistrationForm
 from account.views import RegistrationView
 
 
-@tag('account_views')
+@tag("account_views")
 class RegistrationViewTests(TestCase):
     """Test RegistrationView"""
 
@@ -22,12 +22,12 @@ class RegistrationViewTests(TestCase):
 
         self.assertEqual(
             RegistrationView.template_name,
-            'account/registration.html',
+            "account/registration.html",
         )
 
         self.assertEqual(
             RegistrationView.success_url,
-            reverse_lazy('account:login'),
+            reverse_lazy("account:login"),
         )
 
     def test_mro(self) -> None:

@@ -2,48 +2,48 @@
 
 # SUPERUSER CREDENTIALS
 
-SUPERUSER_USERNAME = 'superuser'
+SUPERUSER_USERNAME = "superuser"
 
-SUPERUSER_PASSWORD = 'superpassword'
+SUPERUSER_PASSWORD = "superpassword"
 
 # PATHS
 
 # account app
 
-ACCOUNT = '/account/'
+ACCOUNT = "/account/"
 
-LOGIN = 'login/'
+LOGIN = "login/"
 
-LOGOUT = 'logout/'
+LOGOUT = "logout/"
 
-PASSWORD_CHANGE = 'password_change/'
+PASSWORD_CHANGE = "password_change/"
 
-PASSWORD_RESET = 'password_reset/'
+PASSWORD_RESET = "password_reset/"
 
-REGISTRATION = 'registration/'
+REGISTRATION = "registration/"
 
 # refactoring app
 
-RULES = '/rules/'
+RULES = "/rules/"
 
-INDEX = '/'
+INDEX = "/"
 
-CODE_INPUT = '/code_input/'
+CODE_INPUT = "/code_input/"
 
-SAVED_RECOMMENDATIONS = '/saved_recommendations/'
+SAVED_RECOMMENDATIONS = "/saved_recommendations/"
 
-CODE_REFACTORING = '/code_refactoring/'
+CODE_REFACTORING = "/code_refactoring/"
 
-DOWNLOAD_PATH = '/download/'
+DOWNLOAD_PATH = "/download/"
 
-DOWNLOAD_JSON = DOWNLOAD_PATH + 'json/'
+DOWNLOAD_JSON = DOWNLOAD_PATH + "json/"
 
-DOWNLOAD_PDF = DOWNLOAD_PATH + 'pdf/'
+DOWNLOAD_PDF = DOWNLOAD_PATH + "pdf/"
 
-DOWNLOAD_XML = DOWNLOAD_PATH + 'xml/'
+DOWNLOAD_XML = DOWNLOAD_PATH + "xml/"
 
-SAVE_RECOMMENDATION = '/save_recommendation/'
+SAVE_RECOMMENDATION = "/save_recommendation/"
 
 # OTHERS
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

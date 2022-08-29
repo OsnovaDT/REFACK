@@ -37,14 +37,15 @@ class ExceptionHandlerMiddleware:
 
         logger.error(f"«{exception}»\n{format_exc()}")
 
-        if extention := request.resolver_match.kwargs.get('extention'):
+        if extention := request.resolver_match.kwargs.get("extention"):
             response = get_file_response_with_refactoring_recommendations(
-                request.POST['results'], extention,
+                request.POST["results"],
+                extention,
             )
         else:
             response = JsonResponse({
-                'error': 'Произошла внутренняя ошибка сервера',
-                'recommendations': '',
+                "error": "Произошла внутренняя ошибка сервера",
+                "recommendations": "",
             })
 
         return response

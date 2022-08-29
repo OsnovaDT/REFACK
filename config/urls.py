@@ -8,13 +8,13 @@ from django.urls import include, path
 
 urlpatterns = [
     # Refactoring app
-    path('', include('refactoring.urls')),
+    path("", include("refactoring.urls")),
 
     # Account app
-    path('account/', include('account.urls')),
+    path("account/", include("account.urls")),
 
     # Admin panel
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
 if settings.DEBUG:

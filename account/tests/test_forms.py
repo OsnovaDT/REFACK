@@ -7,7 +7,7 @@ from django.test import tag, TestCase
 from account.forms import RegistrationForm
 
 
-@tag('account_forms')
+@tag("account_forms")
 class RegistrationFormTests(TestCase):
     """Test RegistrationForm"""
 
@@ -16,7 +16,7 @@ class RegistrationFormTests(TestCase):
 
         self.assertEqual(
             RegistrationForm._meta.fields,
-            ('username', 'email', 'password1', 'password2'),
+            ("username", "email", "password1", "password2"),
         )
 
     def test_model_attr(self) -> None:

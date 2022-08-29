@@ -15,9 +15,10 @@ def run_field_attribute_test(
 
     for object_ in model.objects.all():
         for field, expected_value in field_and_attribute_value.items():
-            with self_.subTest(f'{field=}'):
+            with self_.subTest(f"{field=}"):
                 real_value = getattr(
-                    object_._meta.get_field(field), attribute_name,
+                    object_._meta.get_field(field),
+                    attribute_name,
                 )
 
                 self_.assertEqual(real_value, expected_value)
