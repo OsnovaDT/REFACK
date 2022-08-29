@@ -1,22 +1,49 @@
-// Dropdown menu
+// Secondary functions
+
+function getErrorForHtmlDisplay(error){
+    return `Ошибка: <span class="error_code">${error}</span>`;
+}
+
+// Menu
 
 $('#dropdown_menu_link').on('click', function(){
     $('#dropdown_menu').toggle();
 });
 
-// Save recommendations link
+// Buttons
 
-$('#save_recommendations_link').on('click', function(event){
-    $('#save_recommendations_form').submit();
-
-    event.preventDefault();
+$('#login_button').on('click', function(){
+    $('form').submit();
 });
 
-function updateSaveRecommendationFormData(response){
-    let code = $("textarea[name='code']").val();
+// File code paste
+
+$('#paste_code_from_file_button').on('click', function(){
+    $("#paste_code_from_file").trigger('click');
+});
+
+function pasteFileCodeToInput(input){
+    const fileWithCode = input.files[0];
+
+    let reader = new FileReader();
+
+    reader.readAsText(fileWithCode);
+
+    reader.onload = function() {
+        $('#source_code').val(reader.result);
+    };
+
+    reader.onerror = function() {
+        $('#source_code').val(reader.error);
+    };
+}
+
+// Refactoring
+
+function addCodeAndRecommendationToSaveRecommendationForm(response){
+    const code = $("textarea[name='code']").val();
 
     let recommendationsForDisplayInHtml = "";
-
     for (const [rule, code_item] of Object.entries(response.recommendations)){
         recommendationsForDisplayInHtml += `${rule}: <span class="code_item">${code_item}</span><br><br>`;
     }
@@ -25,7 +52,7 @@ function updateSaveRecommendationFormData(response){
     $("input[name='recommendation']").val(recommendationsForDisplayInHtml);
 };
 
-function updateResultsForFileDownload(response){
+function addResultsToFilesDownloadForm(response){
     results = "{";
 
     for (const [rule, code_item] of Object.entries(response.recommendations)){
@@ -41,15 +68,11 @@ function updateResultsForFileDownload(response){
     $("input[name='results']").val(results);
 };
 
-function getErrorForHtmlDisplay(error){
-    return `Ошибка: <span class="error_code">${error}</span>`;
-}
-
-function updateRecommendationsBlock(response){
+function showRefactoringRecommendations(response){
     $('#recommendations').empty();
 
     if (response.error){
-        let error = getErrorForHtmlDisplay(response.error);
+        const error = getErrorForHtmlDisplay(response.error);
 
         $('#recommendations').append(error);
     }
@@ -62,7 +85,9 @@ function updateRecommendationsBlock(response){
     };
 };
 
-function saveRecommendation(response){
+// Recommendations saving
+
+function saveRefactoringRecommendations(response){
     if (response.error){
         $('#recommendations').empty();
         $('#recommendations').prepend(getErrorForHtmlDisplay(response.error));
@@ -72,29 +97,8 @@ function saveRecommendation(response){
     }
 }
 
-// Refactoring
+$('#save_recommendations_link').on('click', function(event){
+    $('#save_recommendations_form').submit();
 
-function pasteCodeFromFileToTextarea(input){
-    let reader = new FileReader();
-    let codeFile = input.files[0];
-
-    reader.readAsText(codeFile);
-
-    reader.onload = function() {
-        $('#source_code').val(reader.result);
-    };
-
-    reader.onerror = function() {
-        $('#source_code').val(reader.error);
-    };
-}
-
-$('#file_upload').click(function(){
-    $("#file_upload_input").trigger('click');
-});
-
-// Login
-
-$('#login_button').on('click', function(){
-    $('form').submit();
+    event.preventDefault();
 });
