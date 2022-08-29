@@ -1,30 +1,30 @@
-"""Test forms of account app"""
+"""Tests for account app forms"""
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.test import TestCase, tag
+from django.test import tag, TestCase
 
 from account.forms import RegistrationForm
 
 
 @tag('account_forms')
 class RegistrationFormTests(TestCase):
-    """Test RegistrationForm of account app"""
+    """Test RegistrationForm"""
 
-    def test_form_fields(self) -> None:
-        """Test fields attribute"""
+    def test_fields_attr(self) -> None:
+        """Test fields attr from metainformation"""
 
         self.assertEqual(
             RegistrationForm._meta.fields,
-            ('username', 'email', 'password1', 'password2',),
+            ('username', 'email', 'password1', 'password2'),
         )
 
-    def test_form_model(self) -> None:
-        """Test model attribute"""
+    def test_model_attr(self) -> None:
+        """Test model attr from metainformation"""
 
         self.assertEqual(RegistrationForm._meta.model, User)
 
-    def test_user_creation_form_in_mro(self) -> None:
-        """Test that UserCreationForm in RegistrationForm MRO"""
+    def test_mro(self) -> None:
+        """Test RegistrationForm MRO"""
 
         self.assertIn(UserCreationForm, RegistrationForm.mro())
