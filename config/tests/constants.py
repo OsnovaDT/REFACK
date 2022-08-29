@@ -1,4 +1,4 @@
-"""Constants for tests of project"""
+"""Constants for project tests"""
 
 # SUPERUSER CREDENTIALS
 
@@ -34,14 +34,16 @@ SAVED_RECOMMENDATIONS = '/saved_recommendations/'
 
 CODE_REFACTORING = '/code_refactoring/'
 
-DOWNLOAD_JSON = '/download/json/'
+DOWNLOAD_PATH = '/download/'
 
-DOWNLOAD_PDF = '/download/pdf/'
+DOWNLOAD_JSON = DOWNLOAD_PATH + 'json/'
 
-DOWNLOAD_XML = '/download/xml/'
+DOWNLOAD_PDF = DOWNLOAD_PATH + 'pdf/'
+
+DOWNLOAD_XML = DOWNLOAD_PATH + 'xml/'
 
 SAVE_RECOMMENDATION = '/save_recommendation/'
 
-# OTHER
+# OTHERS
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

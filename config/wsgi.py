@@ -1,4 +1,4 @@
-"""WSGI config of project"""
+"""WSGI config of the project"""
 
 from os import environ
 

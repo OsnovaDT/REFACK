@@ -1,4 +1,4 @@
-"""Settings of project"""
+"""Settings of the project"""
 
 from os import path
 from pathlib import Path
@@ -8,13 +8,18 @@ from decouple import config
 
 # MAIN
 
+ALLOWED_HOSTS = []
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+}
 
 DEBUG = True
-
-ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -25,8 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Custom apps
-    'refactoring',
     'account',
+    'refactoring',
 ]
 
 MIDDLEWARE = [
@@ -44,6 +49,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+SECRET_KEY = config('SECRET_KEY')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -60,13 +67,6 @@ TEMPLATES = [
     },
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-}
-
 # INTERNATIONALIZATION
 
 LANGUAGE_CODE = 'ru'
@@ -79,35 +79,35 @@ USE_TZ = True
 
 # STATIC
 
-STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     path.join(BASE_DIR, 'static/'),
 )
 
+STATIC_URL = '/static/'
+
 # MEDIA
 
-MEDIA_URL = '/media/'
-
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
 
 # LOGIN AND LOGOUT
 
 LOGIN_REDIRECT_URL = 'refactoring:index'
 
-LOGOUT_REDIRECT_URL = 'account:login'
-
 LOGIN_URL = 'account:login'
 
-# LOGGING
+LOGOUT_REDIRECT_URL = 'account:login'
+
+# LOGGING (loguru)
+
+LOG_COMPRESSION = 'zip'
 
 LOG_FORMAT = "{level.icon} {level} {time:DD.MM.YYYY HH:mm:ss (Z)} {message}"
 
 LOG_ROTATION = '1 MB'
 
-LOG_COMPRESSION = 'zip'
-
-# OTHER
+# OTHERS
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -128,6 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+WSGI_APPLICATION = 'config.wsgi.application'

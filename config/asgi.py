@@ -1,4 +1,4 @@
-"""ASGI config of project"""
+"""ASGI config of the project"""
 
 from os import environ
 

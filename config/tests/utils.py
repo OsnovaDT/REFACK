@@ -4,14 +4,13 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 def run_field_attribute_test(
-        model, self_,
-        field_and_attribute_value: dict,
-        attribute_name: str) -> None:
-    """Test attribute value for all model's objects"""
+        model, self_, field_and_attribute_value: dict, attribute_name: str
+        ) -> None:
+    """Test attribute for all model objects"""
 
     if not model.objects.exists():
         raise ObjectDoesNotExist(
-            f'There is no test objects for {model.__name__} model'
+            f"There is no test objects for {model.__name__} model"
         )
 
     for object_ in model.objects.all():

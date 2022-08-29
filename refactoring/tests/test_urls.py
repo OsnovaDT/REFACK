@@ -47,19 +47,19 @@ class PagesTests(TestURLMixin):
     def test_download_json(self) -> None:
         """Test download_json page"""
 
-        self._test_url(DOWNLOAD_JSON, data=TEST_REFACTORING_RESULTS)
+        self._test_url(DOWNLOAD_JSON, post_data=TEST_REFACTORING_RESULTS)
         self._test_url(DOWNLOAD_JSON, 200, True, TEST_REFACTORING_RESULTS)
 
     def test_download_pdf(self) -> None:
         """Test download_pdf page"""
 
-        self._test_url(DOWNLOAD_PDF, data=TEST_REFACTORING_RESULTS)
+        self._test_url(DOWNLOAD_PDF, post_data=TEST_REFACTORING_RESULTS)
         self._test_url(DOWNLOAD_PDF, 200, True, TEST_REFACTORING_RESULTS)
 
     def test_download_xml(self) -> None:
         """Test download_xml page"""
 
-        self._test_url(DOWNLOAD_XML, data=TEST_REFACTORING_RESULTS)
+        self._test_url(DOWNLOAD_XML, post_data=TEST_REFACTORING_RESULTS)
         self._test_url(DOWNLOAD_XML, 200, True, TEST_REFACTORING_RESULTS)
 
     def test_save_recommendation(self) -> None:
