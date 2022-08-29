@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
 <div class="row">
@@ -7,7 +7,7 @@
             <p>{% block success_text %}{% endblock success_text %}</p>
 
             <a href="{% url 'refactoring:index' %}">
-                <input type="submit" class='button_green' value="На главную">
+                <input type="submit" class="button_green" value="На главную">
             </a>
         </div>
     </div>

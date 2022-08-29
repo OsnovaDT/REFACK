@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 
 {% load static %}
 
@@ -36,10 +36,9 @@
 
         {# Recommendations #}
         <div class="col-md-4">
-            <div style="text-align: left;">
+            <div class="left_align">
                 <span class="text_middle">Рекомендации</span>
 
-                {# Saving #}
                 <a id="save_recommendations_link">Сохранить</a>
             </div>
 
@@ -53,7 +52,7 @@
             <div id="recommendations"></div>
 
             {# Recommendations in files #}
-            <div class="row" id="recommendations_in_files">
+            <div class="row" id="files_with_recommendations">
                 {# PDF #}
                 <div class="col-md-4">
                     <form action="{% url 'refactoring:download' 'pdf' %}" method="post">
@@ -88,10 +87,10 @@
     </div>
 
     <script>
-        $('#save_recommendations_link').hide();
-        $('#recommendations_in_files').hide();
+        $("#save_recommendations_link").hide();
+        $("#files_with_recommendations").hide();
 
-        $('#refactoring_form').on('submit', function () {
+        $("#refactoring_form").on("submit", function () {
             $.ajax({
                 data: $(this).serialize(),
                 url: "{% url 'refactoring:code_refactoring' %}",
@@ -101,15 +100,15 @@
                     addResultsToFilesDownloadForm(response);
                     addCodeAndRecommendationToSaveRecommendationForm(response);
 
-                    $('#save_recommendations_link').show();
-                    $('#recommendations_in_files').show();
+                    $("#save_recommendations_link").show();
+                    $("#files_with_recommendations").show();
                 },
             });
 
             return false;
         });
 
-        $('#save_recommendations_form').on('submit', function () {
+        $("#save_recommendations_form").on("submit", function () {
             $.ajax({
                 data: $(this).serialize(),
                 url: "{% url 'refactoring:save_recommendation' %}",

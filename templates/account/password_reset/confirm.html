@@ -1,4 +1,4 @@
-{% extends 'layouts/account_form.html' %}
+{% extends "layouts/account_form.html" %}
 
 {% block title %}Сброс пароля{% endblock title %}
 
@@ -10,8 +10,8 @@
             {{ field }}
         </p>
 
-        {% include 'includes/field_errors.html' %}
+        {% include "includes/field_errors.html" %}
     {% endfor %}
 
-    <input class='button_green' type="submit" value="Сбросить">
+    <input class="button_green" type="submit" value="Сбросить">
 {% endblock form_content %}

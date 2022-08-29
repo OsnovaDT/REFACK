@@ -1,6 +1,6 @@
-{% extends 'layouts/account_form.html' %}
+{% extends "layouts/account_form.html" %}
 
-{% block title %}Вход в аккаунт{% endblock title %}
+{% block title %}Авторизация{% endblock title %}
 
 {% block form_content %}
     {# Logi input #}
@@ -8,28 +8,28 @@
         <input type="text" name="username" autofocus autocapitalize="none"
             autocomplete="username" placeholder="Логин">
     </p>
-    {% include 'includes/field_errors.html' with field=form.username %}
+    {% include "includes/field_errors.html" with field=form.username %}
 
     {# Password input #}
     <p>
         <input type="password" name="password" autocomplete="current-password"
             placeholder="Пароль">
     </p>
-    {% include 'includes/field_errors.html' with field=form.password %}
+    {% include "includes/field_errors.html" with field=form.password %}
 {% endblock form_content %}
 
 {% block after_form %}
     {# Login button #}
     <div class="row">
         <div class="col-md-6">
-        <input class='button_green max_width' type="submit" id="login_button" value="Войти">
+        <input class="button_green max_width" type="submit" id="login_button" value="Войти">
     </div>
 
     {# Password reset button #}
     <div class="col-md-6">
         <p>
-            <a class='text-dark' href="{% url 'account:password_reset' %}">
-                <input class='button_blue' type="submit" value="Забыли пароль?">
+            <a class="text-dark" href="{% url 'account:password_reset' %}">
+                <input class="button_blue" type="submit" value="Забыли пароль?">
             </a>
         </p>
     </div>
