@@ -10,7 +10,7 @@ from django.views.generic.list import ListView
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
     create_refactoring_recommendation,
-    get_file_response_with_refactoring_recommendations,
+    get_file_with_refactoring_recommendations,
     get_recommendations_or_error_response,
 )
 
@@ -84,7 +84,7 @@ def download_recommendations_file_view(
         file_extention: str) -> FileResponse | JsonResponse:
     """Download file with refactoring recommendations"""
 
-    return get_file_response_with_refactoring_recommendations(
+    return get_file_with_refactoring_recommendations(
         request.POST["results"],
         file_extention,
     )

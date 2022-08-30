@@ -9,7 +9,7 @@ from django.http import FileResponse, JsonResponse
 from loguru import logger
 
 from refactoring.services import (
-    get_file_response_with_refactoring_recommendations,
+    get_file_with_refactoring_recommendations,
 )
 
 
@@ -38,7 +38,7 @@ class ExceptionHandlerMiddleware:
         logger.error(f"«{exception}»\n{format_exc()}")
 
         if extention := request.resolver_match.kwargs.get("extention"):
-            response = get_file_response_with_refactoring_recommendations(
+            response = get_file_with_refactoring_recommendations(
                 request.POST["results"],
                 extention,
             )

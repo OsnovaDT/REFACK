@@ -10,27 +10,27 @@ class RefactoringRecommendation(models.Model):
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        verbose_name='Пользователь',
+        verbose_name="Пользователь",
     )
 
     code = models.TextField(
-        'Исходный код',
+        "Исходный код",
         max_length=10_000,
     )
 
     recommendation = models.TextField(
-        'Рекомендация по рефакторингу',
+        "Рекомендация по рефакторингу",
     )
 
     date = models.DateTimeField(
-        'Дата рефакторинга',
+        "Дата рефакторинга",
         auto_now_add=True,
     )
 
     class Meta:
         """Meta info for RefactoringRecommendation model"""
 
-        verbose_name = 'Рекомендация по рефакторингу'
-        verbose_name_plural = 'Рекомендации по рефакторингу'
+        verbose_name = "Рекомендация по рефакторингу"
+        verbose_name_plural = "Рекомендации по рефакторингу"
 
-        ordering = ['-date']
+        ordering = ["-date"]

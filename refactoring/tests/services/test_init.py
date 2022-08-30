@@ -9,7 +9,7 @@ from django.http import JsonResponse, FileResponse
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
     create_refactoring_recommendation, _get_code_recommendations,
-    get_file_response_with_refactoring_recommendations,
+    get_file_with_refactoring_recommendations,
     get_recommendations_or_error_response,
 )
 from refactoring.tests.constants import (
@@ -72,12 +72,12 @@ class FunctionsTests(TestCase):
         self.assertEqual(RefactoringRecommendation.objects.count(), 1)
 
     def test_get_file_response_with_refactoring_recommendations(self) -> None:
-        """Test get_file_response_with_refactoring_recommendations function"""
+        """Test get_file_with_refactoring_recommendations function"""
 
         # PDF and XML
 
         for extension in ('pdf', 'xml'):
-            pdf_response = get_file_response_with_refactoring_recommendations(
+            pdf_response = get_file_with_refactoring_recommendations(
                 FILE_CONTENT, extension,
             )
 
@@ -96,7 +96,7 @@ class FunctionsTests(TestCase):
 
         # JSON
 
-        json_response = get_file_response_with_refactoring_recommendations(
+        json_response = get_file_with_refactoring_recommendations(
             FILE_CONTENT, 'json',
         )
 
@@ -122,7 +122,7 @@ class FunctionsTests(TestCase):
 
         for value in NOT_STRING_VALUES:
             wrong_response = \
-                get_file_response_with_refactoring_recommendations(
+                get_file_with_refactoring_recommendations(
                     value, value
                 )
 
