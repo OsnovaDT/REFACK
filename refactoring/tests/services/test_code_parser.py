@@ -83,15 +83,17 @@ class CodeParserTests(TestCase):
         self.assertNotEqual(len(self.code_parser.code_items), 0)
         self.assertEqual(self.code_parser.code_items, self.code_parser_items)
 
-    def test_get_type_of_return(self) -> None:
-        """Test __get_type_of_return method"""
+    def test_get_type_of_returned_code(self) -> None:
+        """Test __get_type_of_returned_code method"""
 
         true_return = Return(value=Constant(value=True))
         false_return = Return(value=Constant(value=False))
 
         for bool_return in [true_return, false_return]:
             self.assertEqual(
-                self.code_parser._CodeParser__get_type_of_return(bool_return),
+                self.code_parser._CodeParser__get_type_of_returned_code(
+                    bool_return,
+                ),
                 BOOL_TYPE,
             )
 
@@ -102,13 +104,15 @@ class CodeParserTests(TestCase):
 
         for return_ in [int_return, str_return, bytes_return, float_return]:
             self.assertEqual(
-                self.code_parser._CodeParser__get_type_of_return(return_),
+                self.code_parser._CodeParser__get_type_of_returned_code(
+                    return_,
+                ),
                 NOT_BOOL_TYPE,
             )
 
         for value in DIFFERENT_VALUES:
             self.assertEqual(
-                self.code_parser._CodeParser__get_type_of_return(value),
+                self.code_parser._CodeParser__get_type_of_returned_code(value),
                 NOT_BOOL_TYPE,
             )
 
