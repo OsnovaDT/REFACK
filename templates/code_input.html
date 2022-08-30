@@ -45,7 +45,7 @@
             <form method="post" id="save_recommendations_form">
                 {% csrf_token %}
 
-                <input type="hidden" name="recommendations" value="{{ results }}">
+                <input type="hidden" name="recommendation" value="{{ results }}">
                 <input type="hidden" name="code" value="{{ code }}">
             </form>
 
@@ -55,7 +55,7 @@
             <div class="row" id="files_with_recommendations">
                 {# PDF #}
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:download' 'pdf' %}" method="post">
+                    <form action="{% url 'refactoring:download_recommendations_file' 'pdf' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -65,7 +65,7 @@
 
                 {# JSON #}
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:download' 'json' %}" method="post">
+                    <form action="{% url 'refactoring:download_recommendations_file' 'json' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -75,7 +75,7 @@
 
                 {# XML #}
                 <div class="col-md-4">
-                    <form action="{% url 'refactoring:download' 'xml' %}" method="post">
+                    <form action="{% url 'refactoring:download_recommendations_file' 'xml' %}" method="post">
                         {% csrf_token %}
 
                         <input type="hidden" name="results" value="{{ results }}">
@@ -111,7 +111,7 @@
         $("#save_recommendations_form").on("submit", function () {
             $.ajax({
                 data: $(this).serialize(),
-                url: "{% url 'refactoring:save_recommendation' %}",
+                url: "{% url 'refactoring:save_recommendations' %}",
                 success: function (response) {
                     saveRefactoringRecommendations(response);
                 }

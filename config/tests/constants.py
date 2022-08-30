@@ -24,7 +24,7 @@ REGISTRATION = "registration/"
 
 # refactoring app
 
-RULES = "/rules/"
+RULES = "/refactoring_rules/"
 
 INDEX = "/"
 
@@ -42,7 +42,7 @@ DOWNLOAD_PDF = DOWNLOAD_PATH + "pdf/"
 
 DOWNLOAD_XML = DOWNLOAD_PATH + "xml/"
 
-SAVE_RECOMMENDATION = "/save_recommendation/"
+SAVE_RECOMMENDATION = "/save_recommendations/"
 
 # OTHERS
 

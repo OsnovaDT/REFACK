@@ -27,7 +27,7 @@ class IndexView(LoginRequiredMixin, TemplateView):
     template_name = "index.html"
 
 
-class RulesView(LoginRequiredMixin, TemplateView):
+class RefactoringRulesView(LoginRequiredMixin, TemplateView):
     """Refactoring rules page"""
 
     template_name = "rules.html"
@@ -62,16 +62,16 @@ class SavedRecommendationsView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
+def save_recommendations_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
     code = request.GET.get("code", None)
-    recommendations = request.GET.get("recommendations", None)
+    recommendation = request.GET.get("recommendation", None)
 
-    if code and recommendations:
+    if code and recommendation:
         create_refactoring_recommendation({
             "code": code,
-            "recommendations": recommendations,
+            "recommendation": recommendation,
             "username": request.user,
         })
 
