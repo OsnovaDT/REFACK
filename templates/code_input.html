@@ -45,7 +45,7 @@
             <form method="post" id="save_recommendations_form">
                 {% csrf_token %}
 
-                <input type="hidden" name="recommendation" value="{{ results }}">
+                <input type="hidden" name="recommendations" value="{{ results }}">
                 <input type="hidden" name="code" value="{{ code }}">
             </form>
 

@@ -38,13 +38,13 @@ def create_refactoring_recommendation(recommendation_data: dict) -> None:
     if isinstance(recommendation_data, dict):
         code = recommendation_data.get('code')
         username = recommendation_data.get('username')
-        recommendation = recommendation_data.get('recommendation')
+        recommendations = recommendation_data.get('recommendations')
 
-        if username and code and recommendation:
+        if username and code and recommendations:
             RefactoringRecommendation.objects.create(
                 user=User.objects.get(username=username),
                 code=get_code_to_display_in_html(code),
-                recommendation=recommendation,
+                recommendation=recommendations,
             )
 
 
