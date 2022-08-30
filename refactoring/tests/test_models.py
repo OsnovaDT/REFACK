@@ -31,10 +31,10 @@ class RefactoringRecommendationTests(TestCase):
         )
 
         self.field_and_verbose_name = {
-            'user': 'пользователь',
-            'code': 'исходный код',
-            'recommendation': 'рекомендация по рефакторингу',
-            'date': 'дата рефакторинга',
+            'user': 'Пользователь',
+            'code': 'Исходный код',
+            'recommendation': 'Рекомендация по рефакторингу',
+            'date': 'Дата рефакторинга',
         }
 
         self.field_and_max_length = {
