@@ -15,7 +15,7 @@ class RefactoringRecommendationAdminTests(TestCase):
 
         self.assertEqual(
             RefactoringRecommendationAdmin.list_display,
-            ('user', 'code', 'recommendation', 'date'),
+            ('user', 'date', 'code'),
         )
 
     def test_list_filter(self) -> None:
