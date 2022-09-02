@@ -1,4 +1,4 @@
-"""Main urls of project"""
+"""Main urls of the project"""
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -8,13 +8,13 @@ from django.urls import include, path
 
 urlpatterns = [
     # Refactoring app
-    path('', include('refactoring.urls')),
+    path("", include("refactoring.urls")),
 
     # Account app
-    path('account/', include('account.urls')),
+    path("account/", include("account.urls")),
 
     # Admin panel
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
 ]
 
 if settings.DEBUG:

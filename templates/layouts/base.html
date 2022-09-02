@@ -28,14 +28,14 @@
 
     <body>
         {# Navbar #}
-        <nav class='navbar navbar-expand-lg'>
+        <nav class="navbar navbar-expand-lg">
             {# Logo #}
-            <a class='navbar-brand' href="{% url 'refactoring:index' %}">
-                <img src='{% static "images/logo.png" %}' width='87' height='59'>
+            <a class="navbar-brand" href="{% url 'refactoring:index' %}">
+                <img src="{% static 'images/logo.png' %}" width="87" height="59">
             </a>
 
-            <div class='collapse navbar-collapse'>
-                <div class='navbar-nav'>
+            <div class="collapse navbar-collapse">
+                <div class="navbar-nav">
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
                             {# User name #}
@@ -43,18 +43,18 @@
 
                             {# Dropdown menu #}
                             <div class="dropdown-menu" aria-labelledby="dropdown_menu_link" id="dropdown_menu">
-                                <a class='dropdown-item' href="{% url 'account:logout' %}">Выйти</a>
-                                <a class='dropdown-item' href="{% url 'account:password_change' %}">Сменить пароль</a>
-                                <a class='dropdown-item' href="{% url 'refactoring:saved_recommendations' %}">Мои рекомендации</a>
+                                <a class="dropdown-item" href="{% url 'account:logout' %}">Выйти</a>
+                                <a class="dropdown-item" href="{% url 'account:password_change' %}">Сменить пароль</a>
+                                <a class="dropdown-item" href="{% url 'refactoring:saved_recommendations' %}">Мои рекомендации</a>
                             </div>
                         </li>
                     {% else %}
-                        <a class='navbar-brand' href="{% url 'account:login' %}">Войти</a>
-                        <a class='navbar-brand' href="{% url 'account:registration' %}">Регистрация</a>
+                        <a class="navbar-brand" href="{% url 'account:login' %}">Войти</a>
+                        <a class="navbar-brand" href="{% url 'account:registration' %}">Регистрация</a>
                     {% endif %}
                 </div>
 
-                <a class='navbar-brand' href="{% url 'refactoring:rules' %}">Правила рефакторинга</a>
+                <a class="navbar-brand" href="{% url 'refactoring:refactoring_rules' %}">Правила рефакторинга</a>
             </div>
         </nav>
 

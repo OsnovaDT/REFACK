@@ -1,18 +1,25 @@
-"""Tests urls of refactoring app"""
+"""Tests for urls of refactoring app"""
 
 from django.test import tag
 
 from config.tests.constants import (
-    RULES, INDEX, CODE_INPUT, SAVED_RECOMMENDATIONS, CODE_REFACTORING,
-    DOWNLOAD_JSON, DOWNLOAD_PDF, DOWNLOAD_XML, SAVE_RECOMMENDATION,
+    CODE_INPUT,
+    CODE_REFACTORING,
+    DOWNLOAD_JSON,
+    DOWNLOAD_PDF,
+    DOWNLOAD_XML,
+    INDEX,
+    RULES,
+    SAVE_RECOMMENDATION,
+    SAVED_RECOMMENDATIONS,
 )
 from config.tests.mixins import TestURLMixin
 from refactoring.tests.constants import TEST_REFACTORING_RESULTS
 
 
-@tag('refactoring_urls')
+@tag("refactoring_urls")
 class PagesTests(TestURLMixin):
-    """Test pages of refactoring app"""
+    """Test urls of refactoring app"""
 
     def test_index(self) -> None:
         """Test index page"""
@@ -47,19 +54,19 @@ class PagesTests(TestURLMixin):
     def test_download_json(self) -> None:
         """Test download_json page"""
 
-        self._test_url(DOWNLOAD_JSON, data=TEST_REFACTORING_RESULTS)
+        self._test_url(DOWNLOAD_JSON, post_data=TEST_REFACTORING_RESULTS)
         self._test_url(DOWNLOAD_JSON, 200, True, TEST_REFACTORING_RESULTS)
 
     def test_download_pdf(self) -> None:
         """Test download_pdf page"""
 
-        self._test_url(DOWNLOAD_PDF, data=TEST_REFACTORING_RESULTS)
+        self._test_url(DOWNLOAD_PDF, post_data=TEST_REFACTORING_RESULTS)
         self._test_url(DOWNLOAD_PDF, 200, True, TEST_REFACTORING_RESULTS)
 
     def test_download_xml(self) -> None:
         """Test download_xml page"""
 
-        self._test_url(DOWNLOAD_XML, data=TEST_REFACTORING_RESULTS)
+        self._test_url(DOWNLOAD_XML, post_data=TEST_REFACTORING_RESULTS)
         self._test_url(DOWNLOAD_XML, 200, True, TEST_REFACTORING_RESULTS)
 
     def test_save_recommendation(self) -> None:

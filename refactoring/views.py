@@ -3,49 +3,44 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import JsonResponse
+from django.http import FileResponse, JsonResponse
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
 
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
-    get_recommendations_or_error_response, create_refactoring_recommendation,
-    get_file_response_with_refactoring_recommendations,
+    create_refactoring_recommendation,
+    get_file_with_refactoring_recommendations,
+    get_recommendations_or_error_response,
 )
 
 
-# Code input
-
-
 class CodeInputView(LoginRequiredMixin, TemplateView):
-    """Manual code input"""
+    """Code input page"""
 
-    template_name = 'code_input.html'
-
-
-# Index, and rules
+    template_name = "code_input.html"
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
     """Index page"""
 
-    template_name = 'index.html'
+    template_name = "index.html"
 
 
-class RulesView(LoginRequiredMixin, TemplateView):
-    """Rules page"""
+class RefactoringRulesView(LoginRequiredMixin, TemplateView):
+    """Refactoring rules page"""
 
-    template_name = 'rules.html'
+    template_name = "rules.html"
 
 
-# Refactoring
+# Code refactoring
 
 
 @login_required
-def refactor_code_view(request: WSGIRequest) -> JsonResponse:
-    """Refactor code and return recommendations or error"""
+def code_refactoring_view(request: WSGIRequest) -> JsonResponse:
+    """Refactor the code and return recommendations or error"""
 
-    code = request.GET.get('code', '')
+    code = request.GET.get("code", "")
 
     return get_recommendations_or_error_response(code)
 
@@ -53,12 +48,12 @@ def refactor_code_view(request: WSGIRequest) -> JsonResponse:
 # Refactoring recommendations
 
 
-class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
-    """Refactoring recommendations owned by the user"""
+class SavedRecommendationsView(LoginRequiredMixin, ListView):
+    """Refactoring recommendations saved by the user"""
 
-    template_name = 'saved_recommendations.html'
+    template_name = "saved_recommendations.html"
 
-    context_object_name = 'recommendations'
+    context_object_name = "recommendations"
 
     def get_queryset(self):
         return RefactoringRecommendation.objects.filter(
@@ -67,27 +62,29 @@ class RefactoringRecommendationListView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def save_recommendation_view(request: WSGIRequest) -> JsonResponse:
+def save_recommendations_view(request: WSGIRequest) -> JsonResponse:
     """Save refactoring recommendation for the user"""
 
-    recommendation = request.GET.get('recommendation', None)
-    code = request.GET.get('code', None)
+    code = request.GET.get("code", None)
+    recommendation = request.GET.get("recommendation", None)
 
-    if recommendation and code:
+    if code and recommendation:
         create_refactoring_recommendation({
-            'username': request.user,
-            'code': code,
-            'recommendation': recommendation,
+            "code": code,
+            "recommendation": recommendation,
+            "username": request.user,
         })
 
     return JsonResponse({})
 
 
 @login_required
-def download_recommendations_view(
-        request: WSGIRequest, extention: str) -> JsonResponse:
-    """Download JSON file with refactoring recommendations"""
+def download_recommendations_file_view(
+        request: WSGIRequest,
+        file_extention: str) -> FileResponse | JsonResponse:
+    """Download file with refactoring recommendations"""
 
-    return get_file_response_with_refactoring_recommendations(
-        request.POST['results'], extention,
+    return get_file_with_refactoring_recommendations(
+        request.POST["results"],
+        file_extention,
     )

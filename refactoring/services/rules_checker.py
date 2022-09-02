@@ -8,24 +8,32 @@ Clean code rules:
     3) All functions, methods and classes have documentation.
 
 2. Others:
-    1) If function / method returns boolean, its name should starts
-        with «is» prefix;
-    2) If function / method returns not boolean, its name should starts
-        with «get» prefix;
-    3) All functions and methods have type hints;
-    4) All arguments for functions / methods have type hints.
+    1) If a function returns boolean, its name should starts
+        with «is_» prefix;
+    2) If a function returns not boolean, its name should starts
+        with «get_» prefix;
+    3) All functions have type hints;
+    4) All arguments for functions have type hints.
 
 """
 
 from collections import defaultdict
 
 from refactoring.services.constants import (
-    PREFIX_GET, PREFIX_IS, SNAKE_CASE_STYLE, CAP_WORDS_STYLE,
-    FUNCTION_DOCSTRING, CLASS_DOCSTRING, FUNCTION_TYPE_HINT,
-    ARGUMENT_TYPE_HINT, BOOL_TYPE,
+    ARGUMENT_TYPE_HINT,
+    BOOL_TYPE,
+    CAP_WORDS_STYLE,
+    CLASS_DOCSTRING,
+    FUNCTION_DOCSTRING,
+    FUNCTION_TYPE_HINT,
+    PREFIX_GET,
+    PREFIX_IS,
+    SNAKE_CASE_STYLE,
 )
 from refactoring.services.utils import (
-    is_in_cap_words, is_in_snake_case, get_code_items_without_duplicates,
+    get_code_items_without_duplicates,
+    is_in_cap_words,
+    is_in_snake_case,
 )
 
 
@@ -44,7 +52,7 @@ class TypeHintCheckerMixin:
             for arg in func.args:
                 if not arg.annotation:
                     self._recommendations[ARGUMENT_TYPE_HINT].append(
-                        f'аргумент «{arg.arg}» (функция «{func.name}»)'
+                        f"аргумент «{arg.arg}» (функция «{func.name}»)"
                     )
 
     def _check_functions_have_type_hint(self) -> None:
@@ -107,7 +115,7 @@ class NamingCheckerMixin(NamingStyleCheckerMixin):
     """Check naming for functions"""
 
     def _check_not_bool_functions_start_with_get(self) -> None:
-        """Check that not bool functions start with «get» prefix.
+        """Check that not bool functions start with «get_» prefix.
 
         Examples:
         1. get_value - correct;
@@ -122,7 +130,7 @@ class NamingCheckerMixin(NamingStyleCheckerMixin):
                 self._recommendations[PREFIX_GET].append(func.name)
 
     def _check_bool_functions_start_with_is(self) -> None:
-        """Check that bool functions start with «is» prefix.
+        """Check that bool functions start with «is_» prefix.
 
         Examples:
         1. is_empty - correct;
@@ -147,7 +155,7 @@ class CleanCodeRulesChecker(
 
     @property
     def recommendations(self) -> dict:
-        """Recommendations for refactoring user's code"""
+        """Recommendations for code refactoring"""
 
         self.__check_all_rules()
 
@@ -157,7 +165,7 @@ class CleanCodeRulesChecker(
     def _functions(self) -> set:
         """Return functions from the code"""
 
-        code_functions = self.__code_items.get('functions', [])
+        code_functions = self.__code_items.get("functions", [])
 
         return get_code_items_without_duplicates(code_functions)
 
@@ -165,7 +173,7 @@ class CleanCodeRulesChecker(
     def _classes(self) -> set:
         """Return classes from the code"""
 
-        code_classes = self.__code_items.get('classes', [])
+        code_classes = self.__code_items.get("classes", [])
 
         return get_code_items_without_duplicates(code_classes)
 

@@ -1,27 +1,31 @@
 """Parse user's code and save it's items.
 
-For parsing uses «ast» module.
+For parsing uses module «ast».
 
-Code items:
-1. Function (FunctionItem);
-2. Class (ClassItem).
+Current code items:
+1. Function (FunctionItem)
+2. Class (ClassItem)
 
 """
 
+from ast import ClassDef, get_docstring, FunctionDef, NodeVisitor, Pass, Return
 from collections import defaultdict
-from ast import (
-    NodeVisitor, FunctionDef, Return, ClassDef, get_docstring, Pass
-)
 
-from refactoring.services.code_items import FunctionItem, ClassItem
+from refactoring.services.code_items import ClassItem, FunctionItem
 from refactoring.services.constants import BOOL_TYPE, NOT_BOOL_TYPE
 
 
 class CodeParser(NodeVisitor):
-    """Parse user's code, save and return it's items"""
+    """Parse user's code and save it to code items"""
 
     def __init__(self):
         self.__code_items = defaultdict(list)
+
+    @property
+    def code_items(self) -> dict:
+        """Return code items"""
+
+        return dict(self.__code_items)
 
     def visit_FunctionDef(self, function_: FunctionDef) -> None:
         """Function parser.
@@ -32,13 +36,13 @@ class CodeParser(NodeVisitor):
         """
 
         if isinstance(function_, FunctionDef):
-            self.__code_items['functions'].append(
+            self.__code_items["functions"].append(
                 FunctionItem({
-                    'name': function_.name,
-                    'type': self.__get_function_type(function_.body),
-                    'docstring': get_docstring(function_),
-                    'type_hint': function_.returns,
-                    'args': function_.args.args,
+                    "args": function_.args.args,
+                    "docstring": get_docstring(function_),
+                    "name": function_.name,
+                    "type": self.__get_function_type(function_.body),
+                    "type_hint": function_.returns,
                 }),
             )
 
@@ -51,36 +55,30 @@ class CodeParser(NodeVisitor):
         """
 
         if isinstance(class_, ClassDef):
-            self.__code_items['classes'].append(
+            self.__code_items["classes"].append(
                 ClassItem({
-                    'name': class_.name,
-                    'docstring': get_docstring(class_),
+                    "docstring": get_docstring(class_),
+                    "name": class_.name,
                 }),
             )
 
-    @property
-    def code_items(self) -> dict:
-        """Return code items"""
-
-        return dict(self.__code_items)
-
     @staticmethod
-    def __get_type_of_return(return_: Return) -> str:
-        """Get type of code returned.
+    def __get_type_of_returned_code(returned_code: Return) -> str:
+        """Return type of returned code.
 
-        Types:
-        1. bool (e.g. return True, return False);
-        2. not bool (e.g. return 1, return 1.23, return "string").
+        Possible types:
+        1. bool (e.g. True, False);
+        2. not bool (e.g. 1, 1.23, "Hello world").
 
         """
 
-        if isinstance(return_, Return) \
-                and isinstance(return_.value.value, bool):
-            type_of_return = BOOL_TYPE
+        if isinstance(returned_code, Return) \
+                and isinstance(returned_code.value.value, bool):
+            returned_code_type = BOOL_TYPE
         else:
-            type_of_return = NOT_BOOL_TYPE
+            returned_code_type = NOT_BOOL_TYPE
 
-        return type_of_return
+        return returned_code_type
 
     def __get_function_type(self, function_body: list | tuple) -> str:
         """Return type of the function.
@@ -92,16 +90,16 @@ class CodeParser(NodeVisitor):
 
         """
 
-        function_type = ''
+        function_type = ""
 
         if isinstance(function_body, (list, tuple)):
             for action in function_body:
                 if isinstance(action, Return):
-                    function_type = self.__get_type_of_return(action)
+                    function_type = self.__get_type_of_returned_code(action)
 
                     break
 
                 if isinstance(action, Pass):
-                    function_type = 'pass'
+                    function_type = "pass"
 
         return function_type

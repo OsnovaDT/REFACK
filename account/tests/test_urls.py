@@ -3,12 +3,17 @@
 from django.test import tag
 
 from config.tests.constants import (
-    ACCOUNT, LOGIN, LOGOUT, PASSWORD_CHANGE, PASSWORD_RESET, REGISTRATION,
+    ACCOUNT,
+    LOGIN,
+    LOGOUT,
+    PASSWORD_CHANGE,
+    PASSWORD_RESET,
+    REGISTRATION,
 )
 from config.tests.mixins import TestURLMixin
 
 
-@tag('account_urls')
+@tag("account_urls")
 class UrlsTests(TestURLMixin):
     """Test urls of account app"""
 

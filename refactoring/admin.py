@@ -9,6 +9,6 @@ from refactoring.models import RefactoringRecommendation
 class RefactoringRecommendationAdmin(ModelAdmin):
     """Admin panel for RefactoringRecommendation model"""
 
-    list_display = ('user', 'code', 'recommendation', 'date')
+    list_display = ("user", "date", "code")
 
-    list_filter = ('user',)
+    list_filter = ("user",)

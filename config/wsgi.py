@@ -1,10 +1,10 @@
-"""WSGI config of project"""
+"""WSGI config of the project"""
 
 from os import environ
 
 from django.core.wsgi import get_wsgi_application
 
 
-environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 application = get_wsgi_application()

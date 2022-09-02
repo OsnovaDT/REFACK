@@ -1,6 +1,6 @@
-"""Contain classes for code's items.
+"""Contain classes for code items.
 
-Code item is any code module. E.g. function, variable, class, etc.
+Code item is an any code module. E.g. function, variable, class, etc.
 It's used by code parser.
 
 E.g. for function parser actions will be next:
@@ -21,13 +21,13 @@ class DefaultItem:
     def name(self) -> str:
         """Item name"""
 
-        return self._get_attr('name') or ''
+        return self._get_attr("name") or ""
 
     @property
     def docstring(self) -> str | None:
         """Item docstring"""
 
-        return self._get_attr('docstring')
+        return self._get_attr("docstring")
 
     def _get_attr(self, attr_name: str) -> str | list | None:
         """Return attr from item's attributes or None"""
@@ -54,6 +54,10 @@ class DefaultItem:
         return hash(str(self.name))
 
 
+class ClassItem(DefaultItem):
+    """Class item"""
+
+
 class FunctionItem(DefaultItem):
     """Function item"""
 
@@ -67,7 +71,7 @@ class FunctionItem(DefaultItem):
 
         """
 
-        return self.__is_start_with_prefix('get_')
+        return self.__is_start_with_prefix("get_")
 
     def is_start_with_prefix_is_(self) -> bool:
         """Check is the function starts with prefix «is_».
@@ -79,7 +83,7 @@ class FunctionItem(DefaultItem):
 
         """
 
-        return self.__is_start_with_prefix('is_')
+        return self.__is_start_with_prefix("is_")
 
     @property
     def type(self) -> str | None:
@@ -90,19 +94,19 @@ class FunctionItem(DefaultItem):
 
         """
 
-        return self._get_attr('type')
+        return self._get_attr("type")
 
     @property
     def type_hint(self) -> str | None:
         """Function type hint"""
 
-        return self._get_attr('type_hint')
+        return self._get_attr("type_hint")
 
     @property
     def args(self) -> list | None:
         """Function arguments"""
 
-        return self._get_attr('args')
+        return self._get_attr("args")
 
     def __is_start_with_prefix(self, prefix: str) -> bool:
         """Check is the function starts with the prefix.
@@ -110,7 +114,6 @@ class FunctionItem(DefaultItem):
         Return True if:
         1. The function name starts with the prefix;
         2. The function name is not equal to prefix;
-        3. The function name is not equal to prefix + underscore.
 
         """
 
@@ -121,7 +124,3 @@ class FunctionItem(DefaultItem):
             is_start_with_prefix = False
 
         return is_start_with_prefix
-
-
-class ClassItem(DefaultItem):
-    """Class item"""

@@ -2,9 +2,7 @@ body {
   background-color: #e6e6e6 !important;
 }
 
-input[type=text],
-input[type=password],
-input[type=email] {
+input[type=email] input[type=password] input[type=text] {
   width: 100%;
   border-radius: 4px;
   background-color: #e6e6e6;
@@ -33,6 +31,9 @@ textarea {
   outline: none;
 }
 
+.block_content {
+  margin-top: 50px;
+}
 .block_white {
   background: #fff;
   margin-bottom: 100px;
@@ -42,9 +43,6 @@ textarea {
   padding: 30px;
   text-align: center;
   margin-top: 25px;
-}
-.block_content {
-  margin-top: 50px;
 }
 .block_with_button {
   margin-top: 15px;
@@ -57,17 +55,17 @@ textarea {
   outline: none;
   padding: 12px 39px;
 }
-.button_green {
-  background-color: #15c6b9;
-}
-.button_green:hover {
-  background-color: #01a8e5;
-}
 .button_blue {
   background-color: #01a8e5;
 }
 .button_blue:hover {
   background-color: #15c6b9;
+}
+.button_green {
+  background-color: #15c6b9;
+}
+.button_green:hover {
+  background-color: #01a8e5;
 }
 
 .code_item {
@@ -79,19 +77,19 @@ textarea {
   text-align: center;
 }
 
+.error_code {
+  color: #ee3030;
+}
+.error_form_field {
+  font-size: 16px;
+}
+
 .left_align {
   text-align: left !important;
 }
 
 .max_width {
   width: 100%;
-}
-
-.error_code {
-  color: #ee3030;
-}
-.error_form_field {
-  font-size: 16px;
 }
 
 .nav-link, .navbar-brand {
@@ -112,22 +110,29 @@ textarea {
   border-bottom: 5px solid #01a8e5;
 }
 
-.text_small {
-  font-size: 16px;
+.text_big {
+  font-size: 45px;
+  color: #01a8e5;
 }
 .text_middle {
   font-size: 30px;
   font-weight: 700;
   margin-bottom: 48px;
 }
-.text_big {
-  font-size: 45px;
-  color: #01a8e5;
+.text_small {
+  font-size: 16px;
 }
 
 .title {
   text-align: center;
   font-weight: 700;
+}
+
+#paste_code_from_file_button:hover {
+  cursor: pointer;
+}
+#paste_code_from_file {
+  display: none;
 }
 
 #recommendations {
@@ -147,13 +152,6 @@ textarea {
 }
 #save_recommendations_form {
   text-align: right;
-}
-
-#file_upload:hover {
-  cursor: pointer;
-}
-#file_upload_input {
-  display: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

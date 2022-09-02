@@ -1,4 +1,4 @@
-"""Services for files download"""
+"""Services for downloading files with refactoring recommendations"""
 
 from json import loads
 
@@ -9,10 +9,10 @@ from django.http import FileResponse, JsonResponse
 def get_xml_file_content(file_content: str) -> str:
     """Return file content converted for XML"""
 
+    xml_file_content = ""
+
     if isinstance(file_content, str):
         xml_file_content = str(dicttoxml(loads(file_content)))
-    else:
-        xml_file_content = ''
 
     return xml_file_content
 
@@ -22,18 +22,19 @@ def get_response_with_file(
     """Return FileResponse or JsonResponse with file"""
 
     if isinstance(file_content, str) and isinstance(file_name, str):
-        _, extension = file_name.split('.')
+        _, file_extension = file_name.split(".")
 
-        if extension == 'json':
+        if file_extension == "json":
             response = _get_json_response(file_content)
         else:
             response = FileResponse(
-                file_content, content_type=f'application/{extension}',
+                file_content,
+                content_type=f"application/{file_extension}",
             )
 
         _add_file_disposition_to_response(response, file_name)
     else:
-        response = FileResponse('', content_type='application/json')
+        response = FileResponse("", content_type="application/json")
 
     return response
 
@@ -43,10 +44,10 @@ def _add_file_disposition_to_response(
     """Add file Content-Disposition to the response"""
 
     if not isinstance(file_name, str):
-        file_name = ''
+        file_name = ""
 
     if isinstance(response, (FileResponse, JsonResponse)):
-        response['Content-Disposition'] = f'attachment; filename={file_name};'
+        response["Content-Disposition"] = f"attachment; filename={file_name};"
 
 
 def _get_json_response(file_content: str) -> JsonResponse:
@@ -54,7 +55,8 @@ def _get_json_response(file_content: str) -> JsonResponse:
 
     if isinstance(file_content, str):
         json_response = JsonResponse(
-            loads(file_content), json_dumps_params={'ensure_ascii': False},
+            loads(file_content),
+            json_dumps_params={"ensure_ascii": False},
         )
     else:
         json_response = JsonResponse({})

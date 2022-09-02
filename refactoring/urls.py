@@ -3,67 +3,65 @@
 from django.urls import path
 
 from refactoring.views import (
-    CodeInputView, IndexView, RulesView, refactor_code_view,
-    RefactoringRecommendationListView, download_recommendations_view,
-    save_recommendation_view,
+    CodeInputView,
+    code_refactoring_view,
+    download_recommendations_file_view,
+    IndexView,
+    RefactoringRulesView,
+    SavedRecommendationsView,
+    save_recommendations_view,
 )
 
 
-app_name = 'refactoring'
+app_name = "refactoring"
 
 urlpatterns = [
-    # Index page
-    path(
-        '',
-        IndexView.as_view(),
-        name='index',
-    ),
-
     # Code input
-
     path(
-        'code_input/',
+        "code_input/",
         CodeInputView.as_view(),
-        name='code_input',
-    ),
-
-    # Saved recommendations
-
-    path(
-        'saved_recommendations/',
-        RefactoringRecommendationListView.as_view(),
-        name='saved_recommendations',
-    ),
-
-    # Rules
-
-    path(
-        'rules/',
-        RulesView.as_view(),
-        name='rules',
+        name="code_input",
     ),
 
     # Code refactoring
-
     path(
-        'code_refactoring/',
-        refactor_code_view,
-        name='code_refactoring',
+        "code_refactoring/",
+        code_refactoring_view,
+        name="code_refactoring",
     ),
 
-    # Recommendations downloading
-
+    # Recommendations files downloading
     path(
-        'download/<str:extention>/',
-        download_recommendations_view,
-        name='download',
+        "download/<str:file_extention>/",
+        download_recommendations_file_view,
+        name="download_recommendations_file",
+    ),
+
+    # Index
+    path(
+        "",
+        IndexView.as_view(),
+        name="index",
+    ),
+
+    # Refactoring rules
+    path(
+        "refactoring_rules/",
+        RefactoringRulesView.as_view(),
+        name="refactoring_rules",
+    ),
+
+    # Saved recommendations
+    path(
+        "saved_recommendations/",
+        SavedRecommendationsView.as_view(),
+        name="saved_recommendations",
     ),
 
     # Recommendations saving
-
     path(
-        'save_recommendation/',
-        save_recommendation_view,
-        name='save_recommendation',
+        "save_recommendations/",
+        save_recommendations_view,
+        name="save_recommendations",
     ),
 ]

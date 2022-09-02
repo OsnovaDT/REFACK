@@ -1,32 +1,32 @@
-{% extends 'layouts/account_form.html' %}
+{% extends "layouts/account_form.html" %}
 
 {% block title %}Регистрация{% endblock title %}
 
 {% block form_content %}
     {# Login #}
     <p><input type="text" name="username" autofocus placeholder="Логин"></p>
-    {% include 'includes/field_errors.html' with field=form.username %}
+    {% include "includes/field_errors.html" with field=form.username %}
 
     {# Email #}
     <p><input type="email" name="email" placeholder="Почта"></p>
-    {% include 'includes/field_errors.html' with field=form.email %}
+    {% include "includes/field_errors.html" with field=form.email %}
 
     {# Password #}
     <p>
         <input type="password" name="password1" autocomplete="new-password"
             placeholder="Пароль" aria-autocomplete="list">
     </p>
-    {% include 'includes/field_errors.html' with field=form.password1 %}
+    {% include "includes/field_errors.html" with field=form.password1 %}
 
-    {# Password repeat #}
+    {# Password confirm #}
     <p>
         <input type="password" name="password2" autocomplete="new-password"
             placeholder="Подтверждение пароля">
     </p>
-    {% include 'includes/field_errors.html' with field=form.password2 %}
+    {% include "includes/field_errors.html" with field=form.password2 %}
 
     {# Button #}
     <div class="block_with_button">
-        <input class='button_green' type="submit" value="Зарегистрироваться">
+        <input class="button_green" type="submit" value="Зарегистрироваться">
     </div>
 {% endblock form_content %}

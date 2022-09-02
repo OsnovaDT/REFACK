@@ -1,4 +1,4 @@
-"""Constants of services app"""
+"""Constants for services of refactoring app"""
 
 from keyword import kwlist
 
@@ -32,21 +32,30 @@ ARGUMENT_TYPE_HINT = "Для аргументов функций не указа
 
 # TYPES OF RETURN COMMAND
 
-BOOL_TYPE = 'bool'
+BOOL_TYPE = "bool"
 
-NOT_BOOL_TYPE = 'not bool'
+NOT_BOOL_TYPE = "not bool"
 
 # OTHER
 
 KEYWORDS = (
-    'class', 'list', 'tuple', 'set', 'dict', 'arrow', 'str', 'int',
-    'type', 'float',
+    "class",
+    "list",
+    "tuple",
+    "set",
+    "dict",
+    "arrow",
+    "str",
+    "int",
+    "type",
+    "float",
 ) + tuple([str(kw) for kw in kwlist])
 
 SNAKE_CASE_REGEXP = r"(_){,2}([a-z])([a-z0-9]{1,})(_[a-z0-9]{2,})*(_?)"
 
 # CapWords regexp
 
-ONE_CAP_WORD_REGEXP = r'([A-Z])([a-z0-9])+'
+SINGLE_CAP_WORD_REGEXP = r"([A-Z])([a-z0-9])+"
 
-CAP_WORDS_REGEXP = ONE_CAP_WORD_REGEXP + '(' + ONE_CAP_WORD_REGEXP + r')*'
+CAP_WORDS_REGEXP = \
+    SINGLE_CAP_WORD_REGEXP + "(" + SINGLE_CAP_WORD_REGEXP + r")*"

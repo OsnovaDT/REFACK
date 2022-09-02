@@ -6,14 +6,14 @@
     1. Написать тесты для static/js/scripts.js
         - dropdown_menu_link -> click
         - save_recommendations_link -> click
-        - file_upload -> click
+        - paste_code_from_file_button -> click
         - login_button -> click
-        - updateSaveRecommendationFormData
-        - updateResultsForFileDownload
+        - addCodeAndRecommendationToSaveRecommendationForm
+        - addResultsToFilesDownloadForm
         - getErrorForHtmlDisplay
-        - updateRecommendationsBlock
-        - saveRecommendation
-        - pasteCodeFromFileToTextarea
+        - showRefactoringRecommendations
+        - saveRefactoringRecommendations
+        - pasteFileCodeToInput
     2. Написать прочие тесты
         - Написать тесты на то что все ссылки не битые
         - Написать Selenium-тесты на проверку работы форм
@@ -49,6 +49,7 @@
         - Пофиксить вывод ошибок в формах
         - Пофиксить подтверждение почты
     4. Рефакторинг
+        - Сохранение рекомендаций в модели как JSON
         - Добавить правило что переменные и поля имеют одинаковый стиль именования
         - Добавить проверку методов с _ и с __
         - Добавить проверки методов

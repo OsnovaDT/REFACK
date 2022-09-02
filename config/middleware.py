@@ -1,29 +1,29 @@
 """Project middlewares"""
 
 from traceback import format_exc
-from typing import Callable, Any
+from typing import Any, Callable
 
 from django.conf import settings
 from django.core.handlers.wsgi import WSGIRequest
-from django.http import JsonResponse, FileResponse
+from django.http import FileResponse, JsonResponse
 from loguru import logger
 
 from refactoring.services import (
-    get_file_response_with_refactoring_recommendations,
+    get_file_with_refactoring_recommendations,
 )
 
 
 logger.add(
     f"logs/{__name__}.log",
-    level="ERROR",
-    format=settings.LOG_FORMAT,
-    rotation=settings.LOG_ROTATION,
     compression=settings.LOG_COMPRESSION,
+    format=settings.LOG_FORMAT,
+    level="ERROR",
+    rotation=settings.LOG_ROTATION,
 )
 
 
 class ExceptionHandlerMiddleware:
-    """Handle exception"""
+    """Handle any exception"""
 
     def __init__(self, get_response: Callable):
         self.get_response = get_response
@@ -37,16 +37,15 @@ class ExceptionHandlerMiddleware:
 
         logger.error(f"«{exception}»\n{format_exc()}")
 
-        extention = request.resolver_match.kwargs.get('extention')
-
-        if extention:
-            response = get_file_response_with_refactoring_recommendations(
-                request.POST['results'], extention,
+        if extention := request.resolver_match.kwargs.get("extention"):
+            response = get_file_with_refactoring_recommendations(
+                request.POST["results"],
+                extention,
             )
         else:
             response = JsonResponse({
-                'error': 'Произошла внутренняя ошибка сервера',
-                'recommendations': '',
+                "error": "Произошла внутренняя ошибка сервера",
+                "recommendations": "",
             })
 
         return response

@@ -1,47 +1,49 @@
-"""Constants for tests of project"""
+"""Constants for project tests"""
 
 # SUPERUSER CREDENTIALS
 
-SUPERUSER_USERNAME = 'superuser'
+SUPERUSER_USERNAME = "superuser"
 
-SUPERUSER_PASSWORD = 'superpassword'
+SUPERUSER_PASSWORD = "superpassword"
 
 # PATHS
 
 # account app
 
-ACCOUNT = '/account/'
+ACCOUNT = "/account/"
 
-LOGIN = 'login/'
+LOGIN = "login/"
 
-LOGOUT = 'logout/'
+LOGOUT = "logout/"
 
-PASSWORD_CHANGE = 'password_change/'
+PASSWORD_CHANGE = "password_change/"
 
-PASSWORD_RESET = 'password_reset/'
+PASSWORD_RESET = "password_reset/"
 
-REGISTRATION = 'registration/'
+REGISTRATION = "registration/"
 
 # refactoring app
 
-RULES = '/rules/'
+RULES = "/refactoring_rules/"
 
-INDEX = '/'
+INDEX = "/"
 
-CODE_INPUT = '/code_input/'
+CODE_INPUT = "/code_input/"
 
-SAVED_RECOMMENDATIONS = '/saved_recommendations/'
+SAVED_RECOMMENDATIONS = "/saved_recommendations/"
 
-CODE_REFACTORING = '/code_refactoring/'
+CODE_REFACTORING = "/code_refactoring/"
 
-DOWNLOAD_JSON = '/download/json/'
+DOWNLOAD_PATH = "/download/"
 
-DOWNLOAD_PDF = '/download/pdf/'
+DOWNLOAD_JSON = DOWNLOAD_PATH + "json/"
 
-DOWNLOAD_XML = '/download/xml/'
+DOWNLOAD_PDF = DOWNLOAD_PATH + "pdf/"
 
-SAVE_RECOMMENDATION = '/save_recommendation/'
+DOWNLOAD_XML = DOWNLOAD_PATH + "xml/"
 
-# OTHER
+SAVE_RECOMMENDATION = "/save_recommendations/"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# OTHERS
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

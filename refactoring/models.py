@@ -5,33 +5,32 @@ from django.db import models
 
 
 class RefactoringRecommendation(models.Model):
-    """Refactoring recommendation that user saved"""
+    """Refactoring recommendation saved by user"""
 
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
-        verbose_name='пользователь',
+        verbose_name="Пользователь",
     )
 
     code = models.TextField(
-        'исходный код',
+        "Исходный код",
         max_length=10_000,
     )
 
     recommendation = models.TextField(
-        'рекомендация по рефакторингу',
+        "Рекомендация по рефакторингу",
     )
 
     date = models.DateTimeField(
-        'дата рефакторинга',
+        "Дата рефакторинга",
         auto_now_add=True,
     )
 
     class Meta:
-        """Info of RefactoringRecommendation model"""
+        """Meta info for RefactoringRecommendation model"""
 
-        verbose_name = 'Рекомендация по рефакторингу'
+        verbose_name = "Рекомендация по рефакторингу"
+        verbose_name_plural = "Рекомендации по рефакторингу"
 
-        verbose_name_plural = 'Рекомендации по рефакторингу'
-
-        ordering = ['-date']
+        ordering = ["-date"]

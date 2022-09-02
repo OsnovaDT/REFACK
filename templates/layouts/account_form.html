@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 
 {% block content %}
 <div class="row">
@@ -9,9 +9,9 @@
 
                 {% block before_form %}{% endblock before_form %}
 
-                <input type="hidden" name="next" value='{{ next }}'>
+                <input type="hidden" name="next" value="{{ next }}">
 
-                {% include 'includes/form_errors.html' %}
+                {% include "includes/form_errors.html" %}
 
                 {% block form_content %}{% endblock form_content %}
             </form>

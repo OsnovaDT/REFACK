@@ -1,10 +1,10 @@
-{% extends 'layouts/base.html' %}
+{% extends "layouts/base.html" %}
 
 {% block title %}Отрефакторите ваш код{% endblock title %}
 
 {% block content %}
     <div class="container">
-        {# REFACK #}
+        {# Description #}
         <div class="col-md-10 offset-md-1 block_white">
             <strong class="text_big">REFACK</strong>
 
@@ -15,7 +15,7 @@
             <p class="text_small">Делает код на Python чище, читабильнее и лучше</p>
         </div>
 
-        {# Code input button #}
+        {# Button #}
         <div class="col-md-6 offset-md-3">
             <a href="{% url 'refactoring:code_input' %}">
                 <input type="button" class="button_green" value="Начать прямо сейчас">
