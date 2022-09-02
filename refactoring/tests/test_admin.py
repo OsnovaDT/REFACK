@@ -1,12 +1,12 @@
-"""Test admin of refactoring app"""
+"""Tests for admin of refactoring app"""
 
 from django.contrib.admin import ModelAdmin
-from django.test import TestCase, tag
+from django.test import tag, TestCase
 
 from refactoring.admin import RefactoringRecommendationAdmin
 
 
-@tag('refactoring_admin')
+@tag("refactoring_admin")
 class RefactoringRecommendationAdminTests(TestCase):
     """Test RefactoringRecommendationAdmin class"""
 
@@ -15,17 +15,15 @@ class RefactoringRecommendationAdminTests(TestCase):
 
         self.assertEqual(
             RefactoringRecommendationAdmin.list_display,
-            ('user', 'date', 'code'),
+            ("user", "date", "code"),
         )
 
     def test_list_filter(self) -> None:
         """Test list_filter attribute"""
 
-        self.assertEqual(
-            RefactoringRecommendationAdmin.list_filter, ('user',)
-        )
+        self.assertEqual(RefactoringRecommendationAdmin.list_filter, ("user",))
 
-    def test_model_admin_in_mro(self) -> None:
-        """Test that ModelAdmin in RefactoringRecommendationAdmin MRO"""
+    def test_mro(self) -> None:
+        """Test model MRO"""
 
         self.assertIn(ModelAdmin, RefactoringRecommendationAdmin.mro())

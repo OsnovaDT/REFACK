@@ -1,27 +1,47 @@
-"""Test services.rules_checker module"""
+"""Tests for services.rules_checker module"""
 
-from django.test import TestCase, tag
+from django.test import tag, TestCase
 
 from refactoring.services.rules_checker import (
-    CleanCodeRulesChecker, NamingStyleCheckerMixin, NamingCheckerMixin,
-    TypeHintCheckerMixin, DocstringCheckerMixin,
+    CleanCodeRulesChecker,
+    DocstringCheckerMixin,
+    NamingCheckerMixin,
+    NamingStyleCheckerMixin,
+    TypeHintCheckerMixin,
 )
 from refactoring.tests.constants import (
-    ARGUMENT_TYPE_HINT, CLASSES_WITHOUT_DOCSTRING, CLASS_DOCSTRING,
-    CLASSES_WITH_DOCSTRING, CORRECT_SNAKE_CASE_FUNCTIONS,
-    INCORRECT_SNAKE_CASE_FUNCTIONS, FUNCTIONS_WITH_ARGS,
-    FUNCTION_TYPE_HINT, FUNCTIONS_WITHOUT_DOCSTRING,
-    FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT_ERRORS, FUNCTIONS_WITH_TYPE_HINT,
-    FUNCTIONS_WITHOUT_TYPE_HINT, FUNCTIONS_WITH_DOCSTRING, FUNCTION_DOCSTRING,
-    SNAKE_CASE_STYLE, CAP_WORDS_STYLE, CORRECT_CAP_WORDS_CLASSES,
-    INCORRECT_CAP_WORDS_CLASSES, CORRECT_GET_FUNCTIONS,
-    INCORRECT_GET_FUNCTIONS, CORRECT_BOOL_FUNCTIONS, INCORRECT_BOOL_FUNCTIONS,
-    PREFIX_GET, PREFIX_IS, BOOL_TYPE, ALL_RULES_FUNCTIONS, ALL_RULES_CLASSES,
+    ALL_RULES_CLASSES,
+    ALL_RULES_FUNCTIONS,
+    ARGUMENT_TYPE_HINT,
+    BOOL_TYPE,
+    CAP_WORDS_STYLE,
+    CLASS_DOCSTRING,
+    CLASSES_WITH_DOCSTRING,
+    CLASSES_WITHOUT_DOCSTRING,
+    CORRECT_BOOL_FUNCTIONS,
+    CORRECT_CAP_WORDS_CLASSES,
+    CORRECT_GET_FUNCTIONS,
+    CORRECT_SNAKE_CASE_FUNCTIONS,
+    FUNCTION_DOCSTRING,
+    FUNCTION_TYPE_HINT,
+    FUNCTIONS_WITH_ARGS,
+    FUNCTIONS_WITH_DOCSTRING,
+    FUNCTIONS_WITH_INCORRECT_ARG_TYPE_HINT_ERRORS,
+    FUNCTIONS_WITH_TYPE_HINT,
+    FUNCTIONS_WITHOUT_DOCSTRING,
+    FUNCTIONS_WITHOUT_TYPE_HINT,
     get_arg_type_hint_error,
+    INCORRECT_BOOL_FUNCTIONS,
+    INCORRECT_CAP_WORDS_CLASSES,
+    INCORRECT_GET_FUNCTIONS,
+    INCORRECT_SNAKE_CASE_FUNCTIONS,
+    PREFIX_GET,
+    PREFIX_IS,
+    SNAKE_CASE_STYLE,
 )
 
 
-@tag('refactoring_services', 'refactoring_services_rules_checker')
+@tag("refactoring_services", "refactoring_services_rules_checker")
 class TypeHintCheckerMixinTests(TestCase):
     """Test TypeHintCheckerMixin mixin"""
 
@@ -29,7 +49,7 @@ class TypeHintCheckerMixinTests(TestCase):
         """Test _check_functions_args_have_type_hints method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions': FUNCTIONS_WITH_ARGS,
+            "functions": FUNCTIONS_WITH_ARGS,
         })
 
         rules_checker._check_functions_args_have_type_hints()
@@ -43,8 +63,8 @@ class TypeHintCheckerMixinTests(TestCase):
         """Test _check_functions_have_type_hint method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions':
-                FUNCTIONS_WITH_TYPE_HINT + FUNCTIONS_WITHOUT_TYPE_HINT,
+            "functions": FUNCTIONS_WITH_TYPE_HINT
+            + FUNCTIONS_WITHOUT_TYPE_HINT,
         })
 
         rules_checker._check_functions_have_type_hint()
@@ -55,7 +75,7 @@ class TypeHintCheckerMixinTests(TestCase):
         )
 
 
-@tag('refactoring_services', 'refactoring_services_rules_checker')
+@tag("refactoring_services", "refactoring_services_rules_checker")
 class DocstringCheckerMixinTests(TestCase):
     """Test DocstringCheckerMixin mixin"""
 
@@ -63,10 +83,9 @@ class DocstringCheckerMixinTests(TestCase):
         """Test _check_functions_and_classes_have_docstring method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions':
-                FUNCTIONS_WITH_DOCSTRING + FUNCTIONS_WITHOUT_DOCSTRING,
-            'classes':
-                CLASSES_WITH_DOCSTRING + CLASSES_WITHOUT_DOCSTRING,
+            "functions": FUNCTIONS_WITH_DOCSTRING
+            + FUNCTIONS_WITHOUT_DOCSTRING,
+            "classes": CLASSES_WITH_DOCSTRING + CLASSES_WITHOUT_DOCSTRING,
         })
 
         rules_checker._check_functions_and_classes_have_docstring()
@@ -82,7 +101,7 @@ class DocstringCheckerMixinTests(TestCase):
         )
 
 
-@tag('refactoring_services', 'refactoring_services_rules_checker')
+@tag("refactoring_services", "refactoring_services_rules_checker")
 class NamingStyleCheckerMixinTests(TestCase):
     """Test NamingStyleCheckerMixin mixin"""
 
@@ -90,8 +109,8 @@ class NamingStyleCheckerMixinTests(TestCase):
         """Test _check_functions_naming_style_is_snake_case method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions':
-                CORRECT_SNAKE_CASE_FUNCTIONS + INCORRECT_SNAKE_CASE_FUNCTIONS,
+            "functions": CORRECT_SNAKE_CASE_FUNCTIONS
+            + INCORRECT_SNAKE_CASE_FUNCTIONS,
         })
 
         rules_checker._check_functions_naming_style_is_snake_case()
@@ -105,8 +124,8 @@ class NamingStyleCheckerMixinTests(TestCase):
         """Test _check_classes_naming_style_is_cap_words method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'classes':
-                CORRECT_CAP_WORDS_CLASSES + INCORRECT_CAP_WORDS_CLASSES,
+            "classes": CORRECT_CAP_WORDS_CLASSES
+            + INCORRECT_CAP_WORDS_CLASSES,
         })
 
         rules_checker._check_classes_naming_style_is_cap_words()
@@ -117,7 +136,7 @@ class NamingStyleCheckerMixinTests(TestCase):
         )
 
 
-@tag('refactoring_services', 'refactoring_services_rules_checker')
+@tag("refactoring_services", "refactoring_services_rules_checker")
 class NamingCheckerMixinTests(TestCase):
     """Test NamingCheckerMixin mixin"""
 
@@ -125,7 +144,7 @@ class NamingCheckerMixinTests(TestCase):
         """Test _check_not_bool_functions_start_with_get method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions': CORRECT_GET_FUNCTIONS + INCORRECT_GET_FUNCTIONS,
+            "functions": CORRECT_GET_FUNCTIONS + INCORRECT_GET_FUNCTIONS,
         })
 
         rules_checker._check_not_bool_functions_start_with_get()
@@ -139,7 +158,7 @@ class NamingCheckerMixinTests(TestCase):
         """Test _check_bool_functions_start_with_is method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions': CORRECT_BOOL_FUNCTIONS + INCORRECT_BOOL_FUNCTIONS,
+            "functions": CORRECT_BOOL_FUNCTIONS + INCORRECT_BOOL_FUNCTIONS,
         })
 
         rules_checker._check_bool_functions_start_with_is()
@@ -155,29 +174,36 @@ class NamingCheckerMixinTests(TestCase):
         self.assertIn(NamingStyleCheckerMixin, NamingCheckerMixin.mro())
 
 
-@tag('refactoring_services', 'refactoring_services_rules_checker')
+@tag("refactoring_services", "refactoring_services_rules_checker")
 class CleanCodeRulesCheckerTests(TestCase):
     """Test CleanCodeRulesChecker mixin"""
 
     def setUp(self) -> None:
-        self.all_functions = CORRECT_BOOL_FUNCTIONS + CORRECT_GET_FUNCTIONS + \
-            INCORRECT_BOOL_FUNCTIONS + INCORRECT_GET_FUNCTIONS
+        self.all_functions = (
+            CORRECT_BOOL_FUNCTIONS
+            + CORRECT_GET_FUNCTIONS
+            + INCORRECT_BOOL_FUNCTIONS
+            + INCORRECT_GET_FUNCTIONS
+        )
 
-        self.all_classes = CORRECT_CAP_WORDS_CLASSES + \
-            INCORRECT_CAP_WORDS_CLASSES
+        self.all_classes = (
+            CORRECT_CAP_WORDS_CLASSES + INCORRECT_CAP_WORDS_CLASSES
+        )
 
         self.rules_checker_without_code_items = CleanCodeRulesChecker({})
 
         self.rules_checker = CleanCodeRulesChecker({
-            'functions': self.all_functions,
-            'classes': self.all_classes,
+            "functions": self.all_functions,
+            "classes": self.all_classes,
         })
 
     def test_mro(self) -> None:
         """Test that clean code mixins in CleanCodeRulesChecker MRO"""
 
         clean_code_mixins = (
-            TypeHintCheckerMixin, DocstringCheckerMixin, NamingCheckerMixin,
+            DocstringCheckerMixin,
+            NamingCheckerMixin,
+            TypeHintCheckerMixin,
         )
 
         for mixin in clean_code_mixins:
@@ -220,7 +246,8 @@ class CleanCodeRulesCheckerTests(TestCase):
         self.assertEqual(
             self.rules_checker._not_bool_functions,
             {
-                func for func in set(reversed(self.all_functions))
+                func
+                for func in set(reversed(self.all_functions))
                 if func.type != BOOL_TYPE
             },
         )
@@ -236,7 +263,8 @@ class CleanCodeRulesCheckerTests(TestCase):
         self.assertEqual(
             self.rules_checker._bool_functions,
             {
-                func for func in set(reversed(self.all_functions))
+                func
+                for func in set(reversed(self.all_functions))
                 if func.type == BOOL_TYPE
             },
         )
@@ -245,73 +273,80 @@ class CleanCodeRulesCheckerTests(TestCase):
         """Test recommendations property"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions': ALL_RULES_FUNCTIONS,
-            'classes': ALL_RULES_CLASSES,
+            "functions": ALL_RULES_FUNCTIONS,
+            "classes": ALL_RULES_CLASSES,
         })
 
         self.assertEqual(
             {
                 rule: sorted(code_items)
-                for rule, code_items
-                in dict(rules_checker.recommendations).items()
+                for rule, code_items in dict(
+                    rules_checker.recommendations
+                ).items()
             },
             {
                 # Naming
                 PREFIX_GET: [str(ALL_RULES_FUNCTIONS[1])],
-
                 PREFIX_IS: [str(ALL_RULES_FUNCTIONS[3])],
 
                 # Naming style
-                SNAKE_CASE_STYLE: sorted([
-                    str(ALL_RULES_FUNCTIONS[1]),
-                    str(ALL_RULES_FUNCTIONS[3]),
-                ]),
-
-                CAP_WORDS_STYLE: sorted([
-                    str(ALL_RULES_CLASSES[0]),
-                    str(ALL_RULES_CLASSES[1]),
-                    str(ALL_RULES_CLASSES[2]),
-                ]),
+                SNAKE_CASE_STYLE: sorted(
+                    [
+                        str(ALL_RULES_FUNCTIONS[1]),
+                        str(ALL_RULES_FUNCTIONS[3]),
+                    ]
+                ),
+                CAP_WORDS_STYLE: sorted(
+                    [
+                        str(ALL_RULES_CLASSES[0]),
+                        str(ALL_RULES_CLASSES[1]),
+                        str(ALL_RULES_CLASSES[2]),
+                    ]
+                ),
 
                 # Docstring
-
-                FUNCTION_DOCSTRING: sorted([
-                    str(ALL_RULES_FUNCTIONS[1]),
-                    str(ALL_RULES_FUNCTIONS[3]),
-                ]),
-
-                CLASS_DOCSTRING: sorted([
-                    str(ALL_RULES_CLASSES[1]),
-                    str(ALL_RULES_CLASSES[2])
-                ]),
+                FUNCTION_DOCSTRING: sorted(
+                    [
+                        str(ALL_RULES_FUNCTIONS[1]),
+                        str(ALL_RULES_FUNCTIONS[3]),
+                    ]
+                ),
+                CLASS_DOCSTRING: sorted(
+                    [str(ALL_RULES_CLASSES[1]), str(ALL_RULES_CLASSES[2])]
+                ),
 
                 # Type hint
-
-                FUNCTION_TYPE_HINT: sorted([
-                    str(ALL_RULES_FUNCTIONS[1]),
-                    str(ALL_RULES_FUNCTIONS[3]),
-                ]),
-
-                ARGUMENT_TYPE_HINT: sorted([
-                    get_arg_type_hint_error(
-                        "value2", str(ALL_RULES_FUNCTIONS[1]),
-                    ),
-                    get_arg_type_hint_error(
-                        "value1", str(ALL_RULES_FUNCTIONS[2]),
-                    ),
-                    get_arg_type_hint_error(
-                        "value2", str(ALL_RULES_FUNCTIONS[2]),
-                    ),
-                ]),
-            }
+                FUNCTION_TYPE_HINT: sorted(
+                    [
+                        str(ALL_RULES_FUNCTIONS[1]),
+                        str(ALL_RULES_FUNCTIONS[3]),
+                    ]
+                ),
+                ARGUMENT_TYPE_HINT: sorted(
+                    [
+                        get_arg_type_hint_error(
+                            "value2",
+                            str(ALL_RULES_FUNCTIONS[1]),
+                        ),
+                        get_arg_type_hint_error(
+                            "value1",
+                            str(ALL_RULES_FUNCTIONS[2]),
+                        ),
+                        get_arg_type_hint_error(
+                            "value2",
+                            str(ALL_RULES_FUNCTIONS[2]),
+                        ),
+                    ]
+                ),
+            },
         )
 
     def test_check_all_rules(self) -> None:
         """Test __check_all_rules method"""
 
         rules_checker = CleanCodeRulesChecker({
-            'functions': ALL_RULES_FUNCTIONS,
-            'classes': ALL_RULES_CLASSES,
+            "functions": ALL_RULES_FUNCTIONS,
+            "classes": ALL_RULES_CLASSES,
         })
 
         rules_checker._CleanCodeRulesChecker__check_all_rules()
@@ -337,11 +372,13 @@ class CleanCodeRulesCheckerTests(TestCase):
         # Check _check_classes_naming_style_is_cap_words
         self.assertEqual(
             sorted(rules_checker._recommendations[CAP_WORDS_STYLE]),
-            sorted([
-                str(ALL_RULES_CLASSES[0]),
-                str(ALL_RULES_CLASSES[1]),
-                str(ALL_RULES_CLASSES[2]),
-            ]),
+            sorted(
+                [
+                    str(ALL_RULES_CLASSES[0]),
+                    str(ALL_RULES_CLASSES[1]),
+                    str(ALL_RULES_CLASSES[2]),
+                ]
+            ),
         )
 
         # Check _check_functions_and_classes_have_docstring
@@ -364,9 +401,17 @@ class CleanCodeRulesCheckerTests(TestCase):
         # Check _check_functions_args_have_type_hints
         self.assertEqual(
             sorted(rules_checker._recommendations[ARGUMENT_TYPE_HINT]),
-            sorted([
-                get_arg_type_hint_error("value2", str(ALL_RULES_FUNCTIONS[1])),
-                get_arg_type_hint_error("value1", str(ALL_RULES_FUNCTIONS[2])),
-                get_arg_type_hint_error("value2", str(ALL_RULES_FUNCTIONS[2])),
-            ]),
+            sorted(
+                [
+                    get_arg_type_hint_error(
+                        "value2", str(ALL_RULES_FUNCTIONS[1])
+                    ),
+                    get_arg_type_hint_error(
+                        "value1", str(ALL_RULES_FUNCTIONS[2])
+                    ),
+                    get_arg_type_hint_error(
+                        "value2", str(ALL_RULES_FUNCTIONS[2])
+                    ),
+                ]
+            ),
         )

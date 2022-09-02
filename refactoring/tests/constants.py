@@ -1,12 +1,12 @@
-"""Constants for testing refactoring app"""
+"""Constants for refactoring app tests"""
 
 from ast import Name, arg, Return, Constant, Pass
-from keyword import kwlist
 from json import loads
+from keyword import kwlist
 
-from django.http import JsonResponse, FileResponse
+from django.http import FileResponse, JsonResponse
 
-from refactoring.services.code_items import FunctionItem, ClassItem
+from refactoring.services.code_items import ClassItem, FunctionItem
 
 
 def get_arg_type_hint_error(argument: str, func_name: str) -> str:

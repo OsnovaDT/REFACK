@@ -1,33 +1,37 @@
-"""Test services.__init__ module"""
+"""Tests for services.__init__ module"""
 
 from json import loads
 
 from django.contrib.auth import get_user_model
-from django.test import TestCase, tag
-from django.http import JsonResponse, FileResponse
+from django.http import FileResponse, JsonResponse
+from django.test import tag, TestCase
 
 from refactoring.models import RefactoringRecommendation
 from refactoring.services import (
-    create_refactoring_recommendation, _get_code_recommendations,
+    create_refactoring_recommendation,
     get_file_with_refactoring_recommendations,
     get_recommendations_or_error_response,
+    _get_code_recommendations,
 )
 from refactoring.tests.constants import (
-    REFACTORING_RECOMMENDATION_DATA, FILE_CONTENT, NOT_STRING_VALUES,
-    CODE_AND_RECOMMENDATIONS, CODE_AND_ERROR,
+    CODE_AND_ERROR,
+    CODE_AND_RECOMMENDATIONS,
+    FILE_CONTENT,
+    NOT_STRING_VALUES,
+    REFACTORING_RECOMMENDATION_DATA,
 )
 
 
 User = get_user_model()
 
 
-@tag('refactoring_services', 'refactoring_services_init')
+@tag("refactoring_services", "refactoring_services_init")
 class FunctionsTests(TestCase):
     """Test module functions"""
 
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.test_user_name = 'test'
+        cls.test_user_name = "test"
 
         User.objects.create(username=cls.test_user_name, password="1234")
 
@@ -44,7 +48,7 @@ class FunctionsTests(TestCase):
 
         self.assertEqual(
             recommendation.recommendation,
-            REFACTORING_RECOMMENDATION_DATA['recommendation'],
+            REFACTORING_RECOMMENDATION_DATA["recommendation"],
         )
 
         self.assertEqual(
@@ -54,9 +58,9 @@ class FunctionsTests(TestCase):
 
         self.assertEqual(
             recommendation.code,
-            REFACTORING_RECOMMENDATION_DATA[
-                'code'
-            ].replace('\n', '<br>').replace(' ', '&nbsp;'),
+            REFACTORING_RECOMMENDATION_DATA["code"]
+            .replace("\n", "<br>")
+            .replace(" ", "&nbsp;"),
         )
 
         # Empty data
@@ -76,58 +80,60 @@ class FunctionsTests(TestCase):
 
         # PDF and XML
 
-        for extension in ('pdf', 'xml'):
+        for extension in ("pdf", "xml"):
             pdf_response = get_file_with_refactoring_recommendations(
-                FILE_CONTENT, extension,
+                FILE_CONTENT,
+                extension,
             )
 
             self.assertTrue(isinstance(pdf_response, FileResponse))
 
             self.assertEqual(
-                pdf_response['Content-Type'],
-                f'application/{extension}',
+                pdf_response["Content-Type"],
+                f"application/{extension}",
             )
 
             self.assertEqual(
-                pdf_response['Content-Disposition'],
-                'attachment; filename='
-                f'refactoring_recommendations.{extension};',
+                pdf_response["Content-Disposition"],
+                "attachment; filename="
+                f"refactoring_recommendations.{extension};",
             )
 
         # JSON
 
         json_response = get_file_with_refactoring_recommendations(
-            FILE_CONTENT, 'json',
+            FILE_CONTENT,
+            "json",
         )
 
         expected_json_response = JsonResponse(
-            loads(FILE_CONTENT), json_dumps_params={'ensure_ascii': False},
+            loads(FILE_CONTENT),
+            json_dumps_params={"ensure_ascii": False},
         )
 
         self.assertTrue(isinstance(json_response, JsonResponse))
 
         self.assertEqual(
-            json_response.__dict__['_container'],
-            expected_json_response.__dict__['_container'],
+            json_response.__dict__["_container"],
+            expected_json_response.__dict__["_container"],
         )
 
-        self.assertEqual(json_response['Content-Type'], 'application/json')
+        self.assertEqual(json_response["Content-Type"], "application/json")
 
         self.assertEqual(
-            json_response['Content-Disposition'],
-            'attachment; filename=refactoring_recommendations.json;',
+            json_response["Content-Disposition"],
+            "attachment; filename=refactoring_recommendations.json;",
         )
 
         # Wrong values
 
         for value in NOT_STRING_VALUES:
-            wrong_response = \
-                get_file_with_refactoring_recommendations(
-                    value, value
-                )
+            wrong_response = get_file_with_refactoring_recommendations(
+                value, value
+            )
 
             self.assertEqual(
-                wrong_response['Content-Type'], 'application/json'
+                wrong_response["Content-Type"], "application/json"
             )
 
             self.assertTrue(isinstance(wrong_response, FileResponse))
@@ -159,11 +165,11 @@ class FunctionsTests(TestCase):
             self.assertNotEqual(response._container, 0)
             self.assertEqual(response.status_code, 200)
 
-            self.assertIn(b'recommendations', response._container[0])
-            self.assertNotIn(b'error', response._container[0])
+            self.assertIn(b"recommendations", response._container[0])
+            self.assertNotIn(b"error", response._container[0])
 
             self.assertTrue(isinstance(response, JsonResponse))
-            self.assertEqual(response['Content-Type'], 'application/json')\
+            self.assertEqual(response["Content-Type"], "application/json")
 
         for code in CODE_AND_ERROR:
             response = get_recommendations_or_error_response(code)
@@ -171,8 +177,8 @@ class FunctionsTests(TestCase):
             self.assertNotEqual(response._container, 0)
             self.assertEqual(response.status_code, 200)
 
-            self.assertIn(b'error', response._container[0])
-            self.assertNotIn(b'recommendations', response._container[0])
+            self.assertIn(b"error", response._container[0])
+            self.assertNotIn(b"recommendations", response._container[0])
 
             self.assertTrue(isinstance(response, JsonResponse))
-            self.assertEqual(response['Content-Type'], 'application/json')
+            self.assertEqual(response["Content-Type"], "application/json")
